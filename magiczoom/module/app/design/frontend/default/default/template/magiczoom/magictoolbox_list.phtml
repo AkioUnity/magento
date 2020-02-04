@@ -1,0 +1,187 @@
+<?php
+
+/**
+ * Magictoolbox product list template for Magento store.
+ * Allow use MagicTools on product list page.
+ * @mail support@magictoolbox.com
+ */
+
+$output_helper = $this->helper('catalog/output');
+$image_helper = $this->helper('catalog/image');
+$withLink = $tool->params->checkValue('link-to-product-page', 'Yes');
+$showSelectors = $tool->params->checkValue('show-selectors-on-category-page', 'Yes');
+$squareImages = $tool->params->checkValue('square-images', 'Yes');
+$baseMediaPath = Mage::getSingleton('catalog/product_media_config')->getBaseMediaPath();
+$mtDataHelper = Mage::helper('magiczoom');
+$labeledImageUrls = array();
+
+foreach($_productCollection as $_product) {
+
+    $pid = $_product->getId();
+    $id = $group.'_'.$pid;
+    $productUrl = $_product->getProductUrl();
+
+    $_small_image_file = $_product->getSmall_image();
+
+    if(!$_small_image_file || $_small_image_file == 'no_selection') {
+        continue;
+    }
+
+    if (0 !== strpos($_small_image_file, '/', 0)) {
+        $_small_image_file = '/' . $_small_image_file;
+    }
+
+    $_small_image_file_path = $baseMediaPath . $_small_image_file;
+
+    if(!file_exists($_small_image_file_path)) {
+        continue;
+    }
+
+    $img = $image_helper->init($_product, 'small_image', $_small_image_file)->__toString();
+    $originalSizeArray = getimagesize($_small_image_file_path);
+
+    if($squareImages) {
+        $big_image_size = ($originalSizeArray[0] > $originalSizeArray[1]) ? $originalSizeArray[0] : $originalSizeArray[1];
+        $img = $image_helper->watermark(null, null)->resize($big_image_size)->__toString();
+    }
+    list($w, $h) = $magicToolboxHelper->magicToolboxGetSizes('thumb', $originalSizeArray);
+    $thumb = $image_helper->watermark(null, null)->resize($w, $h)->__toString();
+
+    $link = $withLink ? $productUrl : '';
+
+    $title = $this->htmlEscape($_product->getName());
+    $description = $this->htmlEscape($output_helper->productAttribute($_product, $_product->getDescription(), 'description'));
+    $shortDescription = $this->htmlEscape($output_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description'));
+
+    $html = $tool->getMainTemplate(compact('id', 'group', 'title', 'description', 'shortDescription', 'img', 'thumb', 'link'));
+
+    if($showSelectors) {
+
+        //NOTE: load media gallery
+        $mediaGalleryAttribute = $_product->getResource()->getAttribute('media_gallery');
+        $mediaGalleryBackend = $mediaGalleryAttribute->getBackend();
+        $mediaGalleryBackend->afterLoad($_product);
+        $mediaGallery = $_product->getMediaGalleryImages();
+
+        if(count($mediaGallery) > 1) {
+            $html .= '<div class="MagicToolboxSelectorsContainer">';
+            foreach($mediaGallery  as $_image) {
+                $_image_path = $_image->getPath();
+                if(!file_exists($_image_path)) {
+                    continue;
+                }
+                $originalSizeArray = getimagesize($_image_path);
+                $_image_file = $_image->getFile();
+
+                if($squareImages) {
+                    $big_image_size = ($originalSizeArray[0] > $originalSizeArray[1]) ? $originalSizeArray[0] : $originalSizeArray[1];
+                    $img = $image_helper->init($_product, 'small_image', $_image_file)->resize($big_image_size)->__toString();
+                } else {
+                    $img = $image_helper->init($_product, 'small_image', $_image_file)->__toString();
+                }
+                list($w, $h) = $magicToolboxHelper->magicToolboxGetSizes('thumb', $originalSizeArray);
+                $medium = $image_helper->watermark(null, null)->resize($w, $h)->__toString();
+                list($w, $h) = $magicToolboxHelper->magicToolboxGetSizes('selector', $originalSizeArray);
+                $thumb = $image_helper->init($_product, 'thumbnail', $_image_file)->resize($w, $h)->__toString();
+                $title = $this->htmlEscape($_image->getLabel());
+                $selector = $tool->getSelectorTemplate(compact('id', 'img', 'thumb', 'medium', 'title'));
+                $html .= $selector;
+            }
+            $html .= '</div>';
+        }
+    }
+
+    $html = '<div class="product-image">' . $html . '</div>';
+
+    $anchorOpenTagPattern = '<a\b(?![^>]*?class="MagicZoom")';
+    $anchorHrefPattern = 'href="' . preg_quote($productUrl, '#') . '"';
+    $imgSrcPattern = 'src="[^"]*?' . preg_quote($_small_image_file, '#') . '"';
+    $pattern =                  $anchorOpenTagPattern . '[^>]*?' . $anchorHrefPattern . '[^>]*+>[^<]*+<img\b[^>]*+>[^<]*+</a>';
+    $pattern = $pattern . '|' . $anchorOpenTagPattern . '[^>]*+>[^<]*+<img\b[^>]*?' . $imgSrcPattern . '[^>]*+>[^<]*+</a>';
+    $pattern = $pattern . '|' . $anchorOpenTagPattern . '[^>]*?' . $anchorHrefPattern . '[^>]*+>[^<]*+<img\b[^>]*+>.*?</a>';
+    $pattern = $pattern . '|' . $anchorOpenTagPattern . '[^>]*+>[^<]*+<img\b[^>]*?' . $imgSrcPattern . '[^>]*+>.*?</a>';
+    $contents = preg_replace('#' . $pattern . '#is', $html, $contents, 1);
+
+    $labeledImageUrls[$pid] = $mtDataHelper->getUsedLabeledImageUrls($_product);
+}
+
+ob_start();
+?>
+<script type="text/javascript">
+
+mtLabeledImageUrls = <?php echo Mage::helper('core')->jsonEncode($labeledImageUrls); ?>;
+
+$mjs(window).jAddEvent('load', function() {
+    var $swatches = document.querySelectorAll('.configurable-swatch-list li');
+    for(var i = 0; i < $swatches.length; i++) {
+        var $a = $swatches[i].querySelector('a'),
+            label = $swatches[i].getAttribute('data-option-label'),
+            id = $swatches[i].getAttribute('data-product-id');
+        $mjs($a).jAddEvent('click', function(label, id) {
+            return function(event) {
+                if(typeof mtLabeledImageUrls[id] != 'undefined' && typeof mtLabeledImageUrls[id][label] != 'undefined') {
+                    var large = mtLabeledImageUrls[id][label]['large-image-url'],
+                        small = mtLabeledImageUrls[id][label]['small-image-url'];
+                        mtUpdateNode(id, large, small);
+                } else {
+                    //NOTE: check for associated product image
+                    var foundProductId = null;
+                    if(typeof ConfigurableMediaImages != 'undefined') {
+                        var fallback = ConfigurableMediaImages.productImages[id];
+                        if(fallback) {
+                            var compatibleProducts = ConfigurableMediaImages.getCompatibleProductImages(fallback, [label]);
+                            if(compatibleProducts.length > 0) {
+                                var childProductImages = fallback[ConfigurableMediaImages.imageType];
+                                compatibleProducts.each(function(productId) {
+                                    if(childProductImages[productId] && ConfigurableMediaImages.isValidImage(childProductImages[productId])) {
+                                        foundProductId = productId;
+                                        //NOTE: to break "loop"
+                                        return false;
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    if(foundProductId) {
+                        var url = "<?php echo $this->getUrl('magiczoom/ajax/getProductSmallImage') ?>";
+                        new Ajax.Request(url, {
+                            method: 'get',
+                            parameters: {product_id:foundProductId},
+                            onSuccess: function(transport) {
+                                var result = true;
+                                try{
+                                    var response = transport.responseJSON || transport.responseText.evalJSON(true) || {};
+                                    result = response.result || false;
+                                } catch (ex){
+                                    result = false;
+                                }
+                                if(result) {
+                                    mtUpdateNode(id, response.urls['large-image-url'], response.urls['small-image-url']);
+                                } else {
+                                    //NOTE: switch back to main image?
+                                }
+                            }
+                        });
+                    }
+                }
+                return false;
+            }
+        }(label, id));
+    }
+});
+
+function mtUpdateNode(id, large, small) {
+    //NOTE: use refresh for now because of issue with MZP when data-gallery attribute is set
+    var node = document.getElementById('MagicZoomImagecategory_'+id);
+    node.href = large;
+    node.setAttribute('data-image', large);
+    node.querySelector('img').src = small;
+    MagicZoom.refresh(node);
+}
+
+</script>
+<?php
+$script = ob_get_contents();
+ob_end_clean();
+
+$contents .= $script;

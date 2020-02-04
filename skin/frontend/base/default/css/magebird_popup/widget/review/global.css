@@ -1,0 +1,84 @@
+.cssLoadedChecker.moctod-dribegam{
+  display:none; /*DONT CHANGE THIS LINE! jQuery use this to check if css is loaded*/              
+}
+
+.review.popup{
+  text-align:left;                
+}
+
+.review.popup form {              
+    height:auto;
+    display:inline-block;
+    position: relative;
+}
+
+.review.popup form input {
+  margin:0; 
+  padding:0; 
+  -webkit-box-sizing:border-box;
+  box-sizing:content-box;
+}
+
+.review.popup form button {
+  background-image:none;    
+  margin-left:0;
+}
+
+.review.popup form button:hover{ 
+  cursor: pointer;
+  opacity:0.8;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  -moz-opacity:0.8;
+  -khtml-opacity: 0.8;
+  opacity: 0.8;   
+}
+
+.review.popup form  button:active,
+.review.popup form  button:focus{  
+    /*background: #c42f2f;*/
+  	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  	filter: alpha(opacity=100);
+  	-moz-opacity:1;
+  	-khtml-opacity: 1;
+  	opacity: 1;
+    outline: 0;  
+}
+
+
+.review.popup input::-webkit-input-placeholder,
+.review.popup input:-moz-placeholder,
+input:-ms-input-placeholder
+.moctoddribegam:-ms-input-placeholder {
+   color: #999;
+   font-weight: normal;
+   font-style: italic; 
+   font-size:14px;
+}
+.review.popup textarea{
+  font-size:14px;
+  padding:10px;
+}
+
+.review.popup form table {              
+    border-spacing:0 !important;
+    border-collapse:separate;
+} 
+
+.review.popup form input::-ms-clear {
+    display: none;
+}
+
+.jquery-ratings-star {
+  width: 36px;
+  height: 36px;
+  background-image: url('../../../../images/magebird_popup/empty-star.png');
+  background-repeat: no-repeat;
+  position: relative;
+  float: left;
+  margin-right: 2px;
+}
+
+.jquery-ratings-full {
+  background-image: url('../../../../images/magebird_popup/full-star.png');
+} 

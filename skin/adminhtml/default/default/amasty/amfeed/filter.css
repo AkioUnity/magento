@@ -1,0 +1,114 @@
+
+.amfeed-filter-grid td select,
+.amfeed-field-advanced .output-static-row .input-text,
+.amfeed-filter-grid td input.am-condition-input,
+.amfeed-filter-grid td input.am-output-input{
+    width: 60%;
+}
+
+.amfeed-field-advanced .inside-row{
+    padding: 5px 0px;
+}
+
+.amfeed-field-advanced .condition-select-row .select,
+.amfeed-field-advanced .condition-default-row .select,
+.amfeed-field-advanced .condition-default-row .input-text
+{
+    width: 30%;
+}
+
+.amfeed-field-advanced #change_condition{
+    width: 200px;
+}
+
+.amfeed-field-advanced #condition_operator{
+    width: 80px;
+}
+
+.amfeed-field-advanced #condition_value{
+    width: 200px;
+}
+
+.amfeed-field-advanced select#condition_value{
+    width: 208px;
+}
+
+.amfeed-field-advanced #delete_condition{
+    /*float: right;*/
+}
+
+
+
+.amfeed-field-advanced .condition-select-row .delete,
+.amfeed-field-advanced .condition-default-row .delete{
+    width: 30px;
+}
+
+
+.amfeed-field-advanced .modification-col .input-text{
+    width: 98%;
+}
+
+.amfeed-field-advanced .output-default-row .select{
+    width: 50%;
+}
+
+.amfeed-field-advanced .output-col{
+    width: 300px;
+}
+
+.amfeed-field-advanced .modification-col{
+    width: 300px;
+}
+
+
+
+.amfeed-field-advanced .actions-col{
+    width: 100px;
+}
+
+.amfeed-field-advanced .tpl-row{
+    display: none;
+}
+
+.amfeed-field-advanced .value-tpl-row td{
+    border-top: 1px solid #9BABB9;
+    border-bottom: 1px solid #9BABB9;
+    background: #E5ECF2;
+    line-height: 1.7em;
+}
+
+.amfeed-field-advanced .condition-tpl-row td{
+    border: 0px;
+}
+
+.amfeed-field-advanced .condition-col{
+    padding: 5px;
+}
+.empty-value{
+    padding: 2px;
+    border: 1px solid #C8C8C8;
+    vertical-align: middle;
+
+}
+
+.empty-value-select{
+    padding: 1px;
+}
+
+.empty-value select,
+.empty-value input{
+    margin-left: 3px;
+}
+
+
+.empty-value,
+select.condition-value-disabled,
+input.condition-value-disabled{
+    background-color: #EBEBE4; 
+}
+
+select.condition-value-disabled,
+input.condition-value-disabled{
+    visibility: hidden;
+}

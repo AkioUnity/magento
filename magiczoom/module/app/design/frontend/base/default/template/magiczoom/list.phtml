@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Magictoolbox product list template for Magento store.
+ * Allow use MagicTools on product list page.
+ * @mail support@magictoolbox.com
+ */
+
+$_productCollection = $this->getLoadedProductCollection();
+$magicToolboxHelper = Mage::helper('magiczoom/settings');
+
+if($_productCollection && $_productCollection->count()) {
+    $tool = $magicToolboxHelper->loadTool('category');
+    if(!$tool->params->checkValue('enable-effect', 'No')) {
+        ob_start();
+        require($magicToolboxHelper->getTemplateFilename($this->getBlockAlias()));
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $group = 'category';
+        require(Mage::getSingleton('core/design_package')->getTemplateFilename('magiczoom'.DS.'magictoolbox_list.phtml'));
+        echo $contents;
+    } else {
+        require($magicToolboxHelper->getTemplateFilename($this->getBlockAlias()));
+    }
+} else {
+    require($magicToolboxHelper->getTemplateFilename($this->getBlockAlias()));
+}

@@ -1,0 +1,965 @@
+/* media stylesheet starts */
+
+/*laptop with HiDP media queries start*/
+@media(max-width:1440px){
+    .logocolnew {
+    display: none;
+}
+
+    }/* @media(max-width:1440px)*/
+
+/*laptop with HiDP  media queries ends*/
+
+/* laptop with MDPI media queries start*/
+@media(max-width:1280px){
+.row.HeaderSeconPart {
+    padding-bottom: 13px;
+}
+  }/* @media(max-width:1280px)*/
+
+/*laptop with MDPI media queries ends*
+
+
+/*Ipad landscape media queries start*/
+@media(max-width:1024px){
+    nav.navbar.navbar-default.menu.fixed-header {
+   
+    display: none;
+}
+.navbar-nav {
+    
+    margin-top: 0;
+}
+	.navbar-default .navbar-nav>li>a {
+    padding: 0 0 0 33px;
+}
+.footImg {
+    margin-top: 16px;
+}
+p.Registar {
+    
+    margin-right: 29px;
+   
+}
+p.phoneNo {
+     padding-right: 10px;
+    margin-right: 10px;
+ }
+ .logo img {
+    width: 81%;
+}
+.content h1 {
+    font-size: 23px;
+    margin-top: -17px;
+}
+.content h1::first-letter {
+    color: #171717;
+    font-size: 32px;
+	}
+.content p {
+   
+    margin-top: -11px;
+}
+.WeOffer {
+      width: 67%;
+      background-color: rgba(255, 255, 255, 0.54);
+ }
+ p.MyWhislist {
+    color: #999;
+    float: left;
+    border-right: 1px solid;
+    padding-right: 9px;
+    margin-right: 7px;
+    font-size: 13px;
+    margin-left: 17px;
+}
+	}/* @media(max-width:1024px)*/
+
+/*Ipad landscape media queries ends*
+
+
+/*Ipad horizontal media queries start*/
+@media(max-width:768px){
+	.hh {
+    width: 75%;
+}
+.col-sm-5.chh {
+    width: 57%;
+    margin-top: 8px;
+}
+.navbar-default .navbar-nav>li>a {
+    padding: 0 0 0 0;
+    margin-left: 35px;
+}
+.logo img {
+    width: 72%;
+}
+.content h1 {
+    font-size: 17px;
+    margin-top: -17px;
+}
+.content h1::first-letter {
+    color: #171717;
+    font-size: 29px;}
+
+    .content p {
+    margin-top: -11px;
+    width: 80%;
+}
+.AppliancesContent h1 {
+       font-size: 27px;
+       margin: 30px 0 0 0;
+}
+.AppliancesContent h1::first-letter {
+   
+    font-size: 40px;
+}
+.content2 h1 {
+    font-size: 21px;
+    
+}
+.WeOffer {
+    width: 89%;
+    background-color: rgba(255, 255, 255, 0.34);
+}
+
+	}/* @media(max-width:1024px)*/
+
+/*Ipad horozontal media queries ends*
+
+
+/*iPhone 6 Plus landscap media queries start*/
+@media(max-width:736px){
+	.hh {
+    width: 60%;
+
+}
+p.extraHite {
+    margin-bottom: 55px;
+}
+.navbar-default .navbar-nav>li>a {
+    padding: 0 0 0 0;
+    margin-left: 0;
+    margin-top: 16px;
+    padding-top: 7px;
+}
+.navbar-default .navbar-nav>li>a:hover {
+    padding: 0 0 0 0;
+    margin-left: 0;
+    margin-top: 16px;
+    padding-top: 7px;
+}
+
+
+.col-sm-2.chh {
+    width: 27%;
+    float: right;
+    margin-top: -20px;
+}
+
+.logo img {
+    width: 69%;
+}
+.col-sm-4.GallColl {
+    
+    width: 50%;
+    float: left;
+}
+.content h1 {
+    font-size: 28px;
+    margin-top: -10px;
+}
+.content h1::first-letter {
+   
+    font-size: 37px;
+}
+.content p {
+    margin-top: -11px;
+    width: 60%;
+}
+p.link {
+    margin-top: 17px;
+}
+.col-sm-4.fc {
+    width: 33%;
+    float: left;
+}
+.ImgGallSecond img {
+    width: 88%;
+}
+    /*.col-sm-4.GallColl.sp {
+        margin-top: 50px;
+        margin-bottom: 51px;
+    }*/
+.Slider {
+    padding-top: 63px;
+   
+}
+.col-sm-4.GallColl.sp.sp1 {
+    margin-top: 50px;
+    margin-bottom: 51px;
+}
+.col-sm-4.GallColl.sp {
+    margin-top: 0;
+    margin-bottom: 51px;
+}
+
+	}/* @media(max-width:736px)*/
+
+/*iPhone 6 Plus landscap media queries ends*
+
+/*iPhone 6 Plus vartical media queries start*/
+@media(max-width:414px){
+    .col-sm-4.fc {
+    width: 42%;
+    float: left;
+}
+h1.fleft.vf {
+    padding: 0;
+}
+    p.time {
+    
+    display: none;
+}
+p.MyWhislist {
+  
+    margin-top: -8px;
+}
+p.Registar {
+   
+    margin-top: -8px;
+}
+.Headerdropdown {
+        padding-left: 10px;
+        float: left;
+}
+.search {
+    margin-top: 38px !important;
+    /* float: left; */
+}
+h1.fleft {
+    float: left;
+    width: 38%;
+}
+p.cart {
+   
+    margin-right: 43px;
+}
+.content p {
+    margin-top: -5px;
+    width: 74% !important;
+    font-size: 17px;
+    color: #000;
+}
+.content {
+    margin-top: 32px;
+}
+.owl-controls {
+      top: -99px;
+}
+span.letar {
+    padding-right: 5px;
+    line-height: 37px;
+    color: #fff;
+}
+
+/*************** slider customizations ****************/
+
+
+.bxslider .caption-contain h1 {
+    font-size:18px;
+}
+
+.bxslider .caption-contain h3 {
+    font-size:12px;
+}
+
+.bxslider .caption-contain button {
+    padding: 2px 14px;
+}
+
+    }/* @media(max-width:414px)*/
+
+/*iPhone 6 Plus vartical media queries ends*
+
+
+
+/*iPhone 6 landscap media queries start*/
+@media(max-width:667px){
+    .search {
+    margin-right: 16px;
+}
+	.hh {
+    width: 71%;
+}
+.navbar-default .navbar-nav>li>a {
+    padding: 0;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+.navbar-default .navbar-nav>li>a:hover {
+    
+    margin-top: 16px;
+}
+.content h1 {
+    font-size: 27px;
+    margin-top: -10px;
+}
+.content h1::first-letter {
+   
+    font-size: 35px;
+}
+/*.col-sm-4.GallColl.sp {
+    margin-top: 20px;
+    margin-bottom: 51px;
+}*/
+/*.col-sm-4.GallColl.sp.sp1 {
+    margin-top: 50px;
+    margin-bottom: 21px;
+}*/
+.WeOffer {
+    width: 96%;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+.dropdown h4 {
+    font-size: 15px;
+    padding-top: 2px;
+    padding: 13px 10px 0 10px;
+    margin-left: 0;
+    margin: 0;
+}
+.navbar-default .navbar-toggle {
+    border-color: #026536;
+    margin-top: -10px;
+}
+.heard-Cart {
+    font-size: 23px;
+   
+}
+p.cart {
+   
+    font-size: 15px;
+     margin-top: -5px;
+   }
+.caret-header {
+    float: none;
+    margin: -34px -94px 0 0;
+}
+.dropdown {
+    margin-left: 0;
+}
+span.letar {
+   
+    color: #fff;
+}
+.WeOffer p {
+   
+    color: #fff;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #026837;
+}
+.navbar-default .navbar-nav>li>a {
+    padding: 0;
+    padding-bottom: 5px;
+    padding-top: 2px;
+    width: 28%;
+    margin-bottom: 17px;
+}
+.navbar-nav {
+    margin-top: 0;
+    width: 50%;
+}
+.owl-controls {
+   
+    right: 18px;
+    top: -96px;
+}
+.content2 h1 {
+     
+    font-size: 19px;
+}
+
+
+	}/* @media(max-width:667px)*/
+
+/*iPhone 6 landscap media queries ends*
+
+
+/*iPhone 5 landscap media queries start*/
+@media(max-width:568px){
+    .navbar-default .navbar-nav>li>a {
+       width: 35%;
+    text-align: center;
+   }
+    
+    .fcnew {
+    width: 100% !important;
+}
+	.hh {
+    width: 78%;
+}
+p.MyWhislist {
+    padding-right: 5px;
+    margin-right: 5px;
+}
+p.Registar {
+    margin-right: 8px !important;
+}
+.col-sm-4.fc {
+    width: 50%;
+    float: left;
+}
+
+span.letar {
+    font-size: 30px;
+    padding: 5px;
+}
+.content p {
+   margin-top: -5px;
+    width: 94%;
+}
+.content2 h1 {
+    font-size: 15px;
+}
+.content2 p {
+    font-size: 12px;
+   
+}
+button#myButton {
+    padding: 13px 31px 13px 30px;
+    
+}
+.content2 h2 {
+    font-size: 18px;
+   
+}
+span.letar {
+    font-size: 31px;
+   
+}
+.copyRight p {
+   
+    font-size: 11px;
+ 
+}
+.search {
+    margin-top: 9px !important;
+    /* float: left; */
+}
+p.extraHite {
+    margin-bottom: 45px;
+}
+.heard-Cart {
+    padding-right: 4px !important;
+}
+	}/* @media(max-width:667px)*/
+
+/*iPhone 5 landscap media queries ends*
+
+
+/*iPhone 4 landscap media queries start*/
+@media(max-width:480px){
+	.hh {
+    width: 100%;
+}
+.col-sm-5.chh {
+    width: 81%;
+   }
+   
+.search {
+    margin-top: 19px;
+    /* float: left; */
+}
+p.MyWhislist {
+      padding-right: 10px;
+    margin-right: 10px;
+ }
+ .heard-Cart {
+        padding-right: 11px;
+}
+p.Registar {
+    margin-right: 16px;
+}
+.dr {
+    margin-left: -9px;
+}
+.heard-Cart {
+    font-size: 23px;
+   
+}
+p.cart {
+   
+    font-size: 14px;
+   
+}
+.logo img {
+    width: 63%;
+}
+.col-sm-4.GallColl {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 20px;
+}
+.content h1 {
+    font-size: 26px;
+}
+.content h1::first-letter {
+   
+    font-size: 31px;
+}
+.content p {
+    margin-top: -5px;
+    width: 61%;
+    font-size: 17px;
+}
+p.extraHite {
+    margin-bottom: 42px;
+}
+.content2 {
+    text-align: center;
+}
+.content2 p {
+    
+    width: 94%;
+}
+.WeOffer {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+span.letar {
+    padding-right: 12px;
+     line-height: 41px;
+    color: #fff;
+}
+.WeOffer p {
+    font-size: 16px;
+    color: #000;
+    color: #fff;
+}
+button#myButton {
+    padding: 10px 36px 10px 36px;
+   }
+   span.footSpace {
+    padding-left: 6px;
+}
+
+.foot p {
+   
+    margin-bottom: 3px;
+}
+.col-sm-4.fc.fcnew {
+    width: 100%;
+}
+.Facebook {
+      margin-top: 4px;
+}
+.footImg {
+    margin-top: 13px;
+}
+.search {
+    margin-top: 17px !important;
+    /* float: left; */
+}
+.navbar-default .navbar-nav>li>a {
+    width: 43%;
+    text-align: center;
+}
+.col-sm-4.GallColl.sp {
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+	}/* @media(max-width:667px)*/
+
+/*iPhone 4 landscap media queries ends*
+
+
+/*iPhone 6 horizontal media queries start*/
+@media(max-width:375px){
+    .vf {
+    padding: 0px !important;
+}
+span.letar {
+    font-size: 29px;
+}
+.col-sm-4.fc {
+    width: 43%;
+   
+}
+
+	p.time {
+    
+    clear: both;
+}
+.search {
+    margin-top: 32px !important;
+    /* float: left; */
+}
+.navbar-default .navbar-nav>li>a {
+    width: 55%;
+    text-align: center;
+}
+p.cart {
+    font-size: 14px;
+    float: right;
+    margin-top: 15px;
+}
+
+.col-sm-2.chh {
+    width: 36%;
+  
+}
+
+
+.logo img {
+    width: 59%;
+}
+.content h1 {
+    font-size: 24px;
+}
+.content h1::first-letter {
+   
+    font-size: 30px;
+}
+.content {
+    margin-top: 24px;
+}
+.content p {
+    margin-top: -5px;
+    width: 92%;
+    font-size: 17px;
+}
+.col-sm-4.GallColl {
+    width: 90%;
+    margin-left: 19px;
+}
+span.letar {
+    padding-right: 0;
+    line-height: 37px;
+     color: #fff;
+}
+.WeOffer p {
+   
+    color: #fff;
+}
+button#myButton {
+    padding: 7px 36px 7px 36px;
+}
+.WeOffer {
+        margin-top: 56px;
+}
+p.MyWhislist {
+   
+    display: none;
+}
+.togal-headerd {
+    margin-top: 0;
+}
+}/* @media(max-width:375px)*/
+
+/*iPhone 6 horizontal media queries ends*
+
+
+
+/*iPhone 5 horizontal media queries start*/
+@media(max-width:320px){
+	
+.sorte .btn-default {
+   
+    margin-left: 53px;
+}
+
+.logo img {
+    width: 56%;
+}
+.col-sm-4.GallColl {
+    width: 99%;
+    margin-left: 1px;
+}
+.owl-controls {
+   
+    right: 17px;
+    top: -102px;
+}
+.WeOffer {
+    margin-top: 56px;
+    margin-bottom: 62px;
+}
+span.letar {
+  
+    color: #fff;
+}
+.WeOffer p {
+   
+    color: #fff;
+}
+p.cart {
+    margin-top: -5px;
+    float: right;
+    margin-top: 10px;
+     margin-right: 33px;
+}
+.content h1 {
+    font-size: 19px;
+}
+.content h1::first-letter {
+    
+    font-size: 28px;
+}
+p.extraHite {
+    margin-bottom: 27px;
+}
+.content {
+    margin-top: 20px;
+}
+.col-sm-4.fc {
+    width: 45%;
+    margin-left: 0;
+}
+.footImg a img {
+    margin-bottom: -5px;
+    width: 20%;
+}
+.navbar-default .navbar-toggle {
+    border-color: #026536;
+    margin-top: -10px;
+    z-index: 4512;
+}
+.navbar-default .navbar-nav>li>a {
+    width: 65%;
+    text-align: center;
+}
+
+	}/* @media(max-width:320px)*/
+
+/*iPhone 5 horizontal media queries ends*
+
+
+
+
+/****** product page start ***/
+/*Ipad landscape media queries start*/
+@media(max-width:1024px){
+    .sorte {
+    
+    margin-right: 5px;
+}
+.update {
+   padding: 6px 17px;
+}
+.content2 h1 {
+        min-height: 23px;
+}
+.col-xs-6.galll {
+    width: 50%;
+}
+
+}/* @media(max-width:1024px)*/
+
+
+
+
+/*Ipad horizontal media queries start*/
+@media(max-width:767px){
+    .col-sm-4.galll {
+    width: 100%;
+    float: left;
+}
+.sorte .btn-default {
+   
+    margin-left: 59px;
+}
+.listHeading h2 {
+    font-size: 21px;
+    
+}
+.listHeading h2 ::first-letter {
+    
+    font-size: 24px ;
+}
+.ImgGallSecond1 {
+    text-align: center;
+    /* margin-bottom: 47px; */
+    border-bottom: 1px solid;
+    padding-bottom: 22px;
+    margin-bottom: 23px;
+}
+.ImgGallSecond1 img {
+    max-width: 100%;
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #eeeeee;
+}
+.sorte {
+    margin-right: 54px;
+}
+.left {
+    margin-left: 5px;
+}
+.update {
+    padding: 6px 6px;
+}
+}/* @media(max-width:768px)*/
+
+/*Ipad horozontal media queries ends*
+
+
+
+/*iPhone 6 Plus landscap media queries start*/
+@media(max-width:736px){
+    .batn {
+    margin-left: 11px;
+    text-align: center;
+}
+.update {
+    padding: 9px 22px;
+}
+}/* @media(max-width:736px)*/
+
+/*iPhone 6 Plus landscap media queries ends*
+
+/*iPhone 4 horizontal media queries start*/
+@media(max-width:480px){
+    .sorte {
+    margin-right: 79px;
+}
+}/* @media(max-width:480px)*/
+
+/*iPhone 5 horizontal media queries ends*
+/*iPhone 6 horizontal media queries start*/
+@media(max-width:375px){
+    .col-sm-4.galll {
+    width: 100%;
+    float: left;
+}
+}
+/*iPhone 6 horizontal media queries ends*
+
+
+
+
+
+
+
+
+/****** product detail page start ****/
+
+/*Ipad landscape media queries start*/
+@media(max-width:1024px){
+    .product-sider-border img {
+    width: 90%;
+}
+.product-slider-side-img {
+    margin-top: 12px;
+}
+.ex {
+    padding: 10px 31px;
+}
+i.fa.fa-shopping-cart {
+    /* padding-right: 15px; */
+    margin-left: -11px;
+   
+}
+}/* @media(max-width:1024px)*/
+
+/*iPad 6 vartical media queries start*/
+@media(max-width:768px){
+    .product-slider-side-img img {
+    border: 1px solid #ccc;
+    padding: 0 0 0;
+    margin: -2px 0 4px 0;
+}
+.product-slider-side-img {
+    margin-top: 0;
+}
+    }/* @media(max-width:736px)*/
+
+/*iPad vartical media queries en
+
+/*iPhone 6 Plus landscap media queries start*/
+@media(max-width:736px){
+    .breadcrumb {
+       margin-top: -58px;
+       /* color: black; */
+}
+.product-slider-side-img {
+    text-align: center;
+}
+.product-slider-side-img img {
+    margin: 4px;
+}
+.product-sider-border img {
+    width: 56%;
+}
+h1.sonsequuntur {
+    font-size: 32px;
+    
+}
+section.SecondColContent {
+    margin-top: 19px;
+    padding-left: 21px;
+}
+.ex {
+    padding: 12px 39px;
+}
+.ex {
+    padding: 13px 40px 13px 40px;
+    margin-left: 0;
+    padding-right: 43px !important;
+    margin-top: 3px;
+}
+h1.sonsequuntur {
+    font-size: 27px;
+}
+h1.SpecialPrice {
+    font-size: 19px;
+    
+}
+.sorte {
+    margin-right: 76px;
+}
+.sorte .btn-default {
+    color: #000;
+   
+    margin-left: 54px;
+    
+   
+}
+}/* @media(max-width:736px)*/
+
+/*iPhone 6 Plus landscap media queries ends*
+
+/*iPhone 6 horizontal media queries start*/
+@media(max-width:375px){
+    .product-slider-side-img img {
+    margin: -2px 0 4px 11px;
+}
+.ex {
+    padding: 13px 40px 13px 40px;
+    margin-left: 0;
+    padding-right: 43px !important;
+    margin-top: 0;
+}
+    }/* @media(max-width:736px)*/
+
+/*iPhone 6  horizontal media queries ends*
+
+/*iPhone 5 horizontal media queries start*/
+@media(max-width:320px){
+    .product-slider-side-img {
+    text-align: left;
+}
+button.btn.btn-default.update.s {
+    padding: 6px 15px 6px 15px;
+}
+button.btn.btn-default.update.s.ex {
+    padding: 7px 16px 11px 16px;
+}
+.owl-controls {
+    right: 17px;
+    top: 13px;
+}
+
+    }/* @media(max-width:320px)*/
+
+/*iPhone 5  horizontal media queries ends*

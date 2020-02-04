@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <adminhtml_magiczoom_index>
+        <reference name="content">
+            <block type="magiczoom/adminhtml_settings" name="settings" />
+        </reference>
+    </adminhtml_magiczoom_index>
+    <adminhtml_magiczoom_edit>
+        <update handle="editor"/>
+        <reference name="head">
+            <action method="addCss"><name>magiczoom/style.css</name></action>
+            <!--<action method="addJs"><name>magiczoom/options.js</name></action>-->
+            <action method="addItem"><type>skin_js</type><name>magiczoom/options.js</name></action>
+        </reference>
+        <reference name="left">
+            <block type="magiczoom/adminhtml_settings_edit_tabs" name="tabs" before="-"/>
+        </reference>
+        <reference name="content">
+            <block type="magiczoom/adminhtml_settings_edit" name="edit" />
+        </reference>
+    </adminhtml_magiczoom_edit>
+</layout>

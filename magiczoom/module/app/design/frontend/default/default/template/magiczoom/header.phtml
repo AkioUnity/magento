@@ -1,0 +1,58 @@
+<?php
+
+$magicToolboxHelper = Mage::helper('magiczoom/settings');
+
+$tool = $magicToolboxHelper->loadTool();
+$tool->params->resetProfile();
+
+$force = $tool->params->checkValue('include-headers-on-all-pages', 'Yes', 'default');
+$recentlyViewedProductsBlockEffectEnabled = !$tool->params->checkValue('enable-effect', 'No', 'recentlyviewedproductsblock');
+
+
+$page = $this->getPageType();
+
+
+if($force ||
+   $recentlyViewedProductsBlockEffectEnabled ||
+   ($tool->params->profileExists($page) && !$tool->params->checkValue('enable-effect', 'No', $page))) {
+    echo $tool->getHeadersTemplate(str_replace('/magiczoom.js', '', $this->getSkinUrl('js/magiczoom.js')), str_replace('/magiczoom.css', '', $this->getSkinUrl('css/magiczoom/magiczoom.css')));
+    if($page == 'product' && $this->displayProductPageScript() && $this->getRequest()->getModuleName() != 'review') {
+        $current_product = Mage::registry('current_product');
+        if($current_product) {
+            $current_product_id = $current_product->getId();
+        }
+        $mouseEvent = $tool->params->getValue('selectorTrigger', 'product');
+        if($mouseEvent == 'hover') $mouseEvent = 'mouseover';
+
+?>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/magictoolbox_utils.js'); ?>"></script>
+<script type="text/javascript">
+    var magicToolboxLinks = [];
+    var magicToolboxProductId = <?php echo $current_product_id; ?>;
+    var magicToolboxTool = 'magiczoom';
+    var magicToolboxToolMainId = 'MagicZoomImage'+magicToolboxProductId;
+    var magicToolboxOptionTitles = ['<?php echo strtolower(trim(preg_replace('/\s*,\s*/is', "','", $tool->params->getValue('option-associated-with-images', 'product')))); ?>'];
+    var magicToolboxSwitchMetod = '<?php echo $mouseEvent; ?>';
+    var magicToolboxMouseoverDelay = <?php echo $tool->params->checkValue('selectorTrigger', 'hover', 'product') ? 60 : 0; ?>;
+
+    $mjs(window).jAddEvent('load', function() {
+        magicToolboxPrepareOptions();
+    });
+    var allowHighlightActiveSelectorOnUpdate = true;
+    mzOptions['onUpdate'] = function(id, oldA, newA) {
+        if(allowHighlightActiveSelectorOnUpdate) {
+            magicToolboxHighlightActiveSelector(newA);
+        }
+        allowHighlightActiveSelectorOnUpdate = true;
+    };
+</script>
+<?php
+        $this->displayProductPageScript(false);
+    }
+    if($tool->params->checkValue('magicscroll', 'Yes', $page) && $this->displayAdditionalScroll()) {
+        $scroll = $magicToolboxHelper->loadScroll();
+        $scroll->params->resetProfile();
+        echo $scroll->getHeadersTemplate(str_replace('/magicscroll.js', '', $this->getSkinUrl('js/magicscroll.js')), str_replace('/magicscroll.css', '', $this->getSkinUrl('css/magiczoom/magicscroll.css')), false);
+        $this->displayAdditionalScroll(false);
+    }
+}

@@ -1,0 +1,21 @@
+#po-fpc-debug {
+    background-color: rgb(66, 169, 189);
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    color: #fff;
+    z-index: 99999;
+    min-width: 200px;
+    border: thin solid rgba(0, 0, 0, 0.1);
+    font-size: 32px;
+}
+#po-fpc-debug .po-fpc-debug__title {
+    background: rgba(0, 0, 0, 0.1);
+    color: #fff;
+    padding: 2px 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+#po-fpc-debug  .po-fpc-debug__content {
+    padding: 0 10px;
+}

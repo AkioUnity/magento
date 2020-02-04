@@ -1,0 +1,48 @@
+.magiczoom-edit-form > div {
+    /* NOTE: to limit the width of the tab */
+    max-width: 900px;
+}
+.magiczoom-fieldset table.form-list {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout:fixed;
+}
+/*
+.magiczoom-fieldset table.form-list tr:nth-last-child(n+2) {
+    border-bottom: 1px solid #d6d6d6;
+}
+*/
+.magiczoom-fieldset table.form-list td.label {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+}
+.magiczoom-fieldset table.form-list td.value {
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;    
+}
+.magiczoom-fieldset table.form-list td.label label {
+    width: 225px;
+}
+.magiczoom-fieldset table.form-list td.value .use-default {
+    float: right;
+}
+.magiczoom-edit-form .fieldset-open {
+    background: url("../images/entry_edit_head_arrow_up.gif") no-repeat scroll 100% 50% transparent !important;
+}
+.magiczoom-edit-form .fieldset-close {
+    background: url("../images/entry_edit_head_arrow_down.gif") no-repeat scroll 100% 50% transparent !important;
+}
+.magiczoom-fieldset #magicscroll_icon {
+    float: left;
+    margin: 0 5px 5px 0;
+}
+.magiczoom-fieldset #magicscroll_icon ~ p.note {
+    clear: both;
+}
+.magiczoom-fieldset table.form-list p.note {
+    line-height: 12px;
+    background-position: 1px 3px;
+    color: #888;
+}
