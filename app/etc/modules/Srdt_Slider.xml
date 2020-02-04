@@ -1,8 +1,8 @@
 <config>
     <modules>
         <Srdt_Slider>
-            <codePool>true</codePool>
-            <active>false</active>
+            <codePool>local</codePool>
+            <active>true</active>
         </Srdt_Slider>
     </modules>
 </config>
