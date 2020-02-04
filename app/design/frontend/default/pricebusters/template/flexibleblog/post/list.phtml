@@ -1,0 +1,60 @@
+<?php $postsCollection = $this->getCollection(); ?>
+<?php if (!$postsCollection->count()):?>
+    <div class="note-msg"><?php echo Mage::helper('flexibleblog')->__('There are no posts matching the selection.'); ?></div>
+<?php else: ?>
+
+    <?php foreach($postsCollection as $post):?>
+    <div class="blog post-content">
+        <div class="page-title post-title">
+            <h2><a href="<?php echo $this->getPostUrl($post->getPostUrlKey()); ?>"><?php echo $post->getPostTitle(); ?></a></h2>
+        </div>
+        <div class="post-metadata">
+            <div class="post-date"><?php echo Mage::helper('core')->formatDate($post->getPostPublishDate(), 'medium', false); ?></div>
+            <div class="post-author"><?php echo $this->__('By '); ?><a href="<?php echo $this->getAuthorUrl($post->getPostAuthor()); ?>"><?php echo $this->getAuthorName($post->getPostAuthor()); ?></a></div>
+            <?php if($this->getCommentCount($post->getPostId())): ?>
+            <div class="post-comment">
+                <a href="<?php echo $this->getPostUrl($post->getPostUrlKey()); ?>#post-comments">
+                    <?php 
+                    if( $this->getCommentCount($post->getPostId()) > 1 )
+                    {
+                        echo $this->__('%s Comments', $this->getCommentCount($post->getPostId()));
+                    } else {
+                        echo $this->__('%s Comment', $this->getCommentCount($post->getPostId()));
+                    }?>
+                </a>
+            </div>
+            <?php endif; ?>
+        </div>
+
+        <?php $postImage = $this->getPostThumb($post->getPostId());
+        if($postImage): ?>
+        <div class="post-image">
+            <figure><?php echo $this->getPostThumb($post->getPostId()); ?></figure>
+        </div>
+        <?php endif; ?>
+
+        <div class="post-summary">
+            <?php echo $this->getPostExcerpt($post->getPostId()); ?>
+            <div class="read-more"><a href="<?php echo $this->getPostUrl($post->getPostUrlKey()); ?>" class="button"><?php echo $this->__('Read More'); ?></a></div>
+        </div>
+
+        <div class="post-info">
+            <?php echo $this->__('Posted in: '); ?>
+            <ul class="post-categories">
+                <?php echo $this->getPostCategoryList($post->getPostCategories()); ?>
+            </ul>
+            <?php $tagList = $this->getPostTagList($post->getPostTags());
+            if($tagList): ?>
+            <?php echo $this->__('Tagged: '); ?>
+            <ul class="post-tags">
+                <?php echo $tagList; ?>
+            </ul>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php endforeach; ?>
+
+    <div class="toolbar flexibleblog">
+        <?php echo $this->getPagerHtml(); ?>
+    </div>
+<?php endif; ?>

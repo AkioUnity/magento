@@ -1,0 +1,39 @@
+<?php 
+/**
+ * Xcentia_Event extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Xcentia
+ * @package        Xcentia_Event
+ * @copyright      Copyright (c) 2016
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+/**
+ * Event Attendee list template
+ *
+ * @category    Xcentia
+ * @package     Xcentia_Event
+ * @author      Ultimate Module Creator
+ */
+?>
+<?php $_attendees = $this->getAttendees(); ?>
+<?php if ($_attendees->getSize() > 0) :?>
+<div class="attendee-title">
+    <h2><?php echo Mage::helper('xcentia_event')->__('Attendees') ?></h2>
+</div>
+<div class="attendees-list-container">
+    <?php foreach ($_attendees as $_attendee) : ?>
+        <div class="attendee-list-item">
+            <a href="<?php echo $_attendee->getAttendeeUrl()?>">
+                <?php echo $_attendee->getCustId();?>
+            </a><br />
+        </div>
+    <?php endforeach;?>
+</div>
+<?php endif;?>

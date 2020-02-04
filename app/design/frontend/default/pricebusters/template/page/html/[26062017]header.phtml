@@ -1,0 +1,190 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+
+<!-- header section start -->    
+  <header >
+    <div class="HeaderBaground">
+     <div class="logoResponsivPorpos">
+      <div class="container">
+        <div class="row">                     
+         <div class="col-sm-4">
+            <div class="logo">
+              <img src="<?php echo $this->getSkinUrl('') ?>images/logo.png" alt="">
+            </div><!-- logo end -->
+          </div><!-- col-sm-4 end -->
+        </div><!-- row end -->
+      </div><!-- container -->
+    </div><!-- logoResponsivPorpos -->
+    <div class="container">
+     <div class="row">                     
+      <div class="col-sm-5 hh">
+       <p class="phoneNo"><i class="fa fa-phone phone-Header" aria-hidden="true"></i>7062267202</p><!-- phoneNo end -->
+       <p class="time">Monday through Saturday 10.00 am to 6.00 pm</p><!-- time end -->
+      </div><!-- col-sm-5 end -->
+      <div class="col-sm-2 chh">
+       <?php echo $this->getChildHtml('topSearch') ?>
+      </div><!-- col-sm-2 end -->
+      <div class="col-sm-5 chh">
+      
+	   <?php if (Mage::getSingleton('customer/session')->isLoggedIn()==0): ?>
+	   <p class="Registar"> 
+      <a href="<?php echo $this->getUrl('customer/account/login') ?>">Login</a>      
+		  <a href="<?php echo $this->getUrl('customer/account/create') ?>">Register</a>
+    </p><!--Registar end-->
+	    <?php else: ?>
+	    <p class="MyWhislist"><a href="<?php echo $this->getUrl('wishlist') ?>">My Wishlist</a> </p><!-- MyWhislistend-->
+	    <p class="Registar"><a href="<?php echo $this->getUrl('customer/account/create') ?>">My Account</a></p><!--Registar end-->
+	   <?php endif; ?>
+       <p class="cart"><a href="<?php echo $this->getUrl('checkout/cart') ?>"><i class="fa fa-shopping-bag heard-Cart" aria-hidden="true"></i>CART</a></p><!-- cart end-->
+
+       <div class="dropdown cart-count">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <?php
+                  $count = $this->helper('checkout/cart')->getSummaryCount();  //get total items in cart
+                  $cart = Mage::getModel('checkout/cart')->getQuote();
+                  if($count==0)
+                  {
+                    echo $this->__('<a href="/checkout/cart" class="cartgo">(0 ITEMS)</a>',$count);
+                  }
+                  if($count==1)
+                  {
+                    echo $this->__('<a href="/checkout/cart" class="cartgo">(1 ITEM)</a>',$count);
+                  }
+                  if($count>1)
+                  {
+                    echo $this->__('<a href="/checkout/cart" class="cartgo">(%s ITMES)</a>',$count);
+                  }
+                  ?>
+            <span class="caret"></span>
+          </button>
+          <?php if($count>0){ ?>
+             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <?php foreach ($cart->getAllItems() as $item) { ?>
+                  <li> 
+                  <a href="<?php echo $item->getProduct()->getProductUrl(); ?>">
+                  <?php echo $item->getProduct()->getName(); ?> </a>
+                 </li>
+                 
+                <?php } ?>
+                    
+              </ul>
+          <?php } ?>        
+        </div>	 
+     </div><!-- col-sm-5 end -->
+    </div><!-- row end -->
+   </div><!-- container end -->
+  </div><!--HeaderBaground end -->
+<!-- header Fist section end -->
+      <div class="SecondHeaderBaground">
+       <div class="container">
+            <div class="logo">
+             <a class="navbar-brand" rel="home" href="<?php echo $this->getUrl('') ?>" title="Buy Sell Rent Everyting">
+            <img src="<?php echo $this->getSkinUrl('') ?>images/logo.png" alt="">
+            </a>
+            </div><!-- logo end -->
+            <div class="menuBar">
+            <nav class="navbar navbar-default menu">
+             <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> 
+              </button>
+             </div>
+             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+               <li ><a href="<?php echo $this->getUrl('') ?>" data-hover="Home">Home</a></li>
+               <li><a href="<?php echo $this->getUrl('aboutus') ?>" data-hover="About Us">About Us</a></li>
+
+                 <li class="dropdown">
+                  <a href="<?php echo $this->getUrl('brand') ?>" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-hover="Brand">Brand <span class="caret"></span></a>
+                      <ul class="dropdown-menu drop-menu">
+                      <li><a href="<?php //echo $this->getUrl('') ?>">Affordable</a></li>
+                      <li><a href="<?php ?>">BedTech</a></li>
+                       <li><a href="<?php ?>">Coaster</a></li>
+                      <li><a href="<?php ?>">Cramco </a></li>
+                      <li><a href="<?php ?>">Delta</a></li>
+
+                      <li><a href="<?php ?>">General Electric</a></li>
+                      <li><a href="<?php ?>">Frigidaire</a></li>
+                       <li><a href="<?php ?>">Furniture Zone</a></li>
+                        <li><a href="<?php ?>">Jimson</a></li>
+                       <li><a href="<?php ?>">Kith</a></li>
+
+
+
+                       
+                    </ul>
+                </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-hover="catagories"> Catagories <span class="caret"></span></a>
+                <ul class="dropdown-menu drop-menu">
+
+
+                  <li><a href="<?php echo $this->getUrl('') ?>/categories/appliances.html">Appliances</a></li>
+                  <li><a href="<?php echo $this->getUrl('') ?>/categories/bedroom.html">Bedroom</a></li>
+                   <li><a href="<?php echo $this->getUrl('') ?>/categories/dining.html">Dining Room</a></li>
+                  <li><a href="<?php echo $this->getUrl('') ?>/categories/living-room.html">Living Room</a></li>
+                  <li><a href="<?php echo $this->getUrl('') ?>/categories/home-office.html">Home Office</a></li>
+                  <li><a href="<?php echo $this->getUrl('') ?>/categories/recreation.html">Recreation</a></li>
+                   <li><a href="<?php echo $this->getUrl('') ?>/categories/accents.html">Accents Furniture</a></li>
+
+
+
+
+                </ul>
+              </li>
+              
+
+                  <li><a href="<?php echo $this->getUrl('financial-option') ?>" data-hover="Financial Option">Financial Option</a></li>
+                 <li><a href="<?php echo $this->getUrl('contacts') ?>" data-hover="Contact us">Contact us</a></li>
+                 
+              </ul>
+             </div>
+            </nav>
+           </div><!-- menu end -->
+        </div><!-- container end -->
+       </div><!--SecondHeaderBaground end -->
+      </header><!-- header end -->
+<!-- header End Slider start -->
+
+
+   <?php //echo $this->getChildHtml('topMenu') ?>

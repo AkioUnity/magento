@@ -1,0 +1,55 @@
+ <?php foreach ($this->getItems() as $_item):?>
+    <div class="checkbox">       
+        <?php if ($_item->getIsCurrent()): ?>
+		 <?php /* <label><?php echo $_item->getLabel() ?></label> */ ?>
+        <?php  else: ?>
+		<?php if (Mage::getStoreConfig('layerednav/layerednav/reload_categories')) { ?>
+		<?php $children = Mage::getModel('catalog/category')->getCategories($_item->getCategoryId()); ?>
+		 <?php $mainCategory=Mage::getModel('catalog/category')->load($_item->getCategoryId()); ?>
+		<h4><?php echo $mainCategory->getName(); ?></h4>
+		<?php foreach ($children as $category) {  ?>
+        <a id="cat-<?php echo $category->getId()?>" href="<?php echo $category->getUrl()?>" class="adj-nav-pad<?php echo $category->getLevel()?>">
+        <label><?php echo $category->getName() ?></label>
+                </a>
+		<?php } ?>		
+				<?php } else { ?>
+				<?php    ?>
+				 <?php $mainCategory2=Mage::getModel('catalog/category')->load($_item->getCategoryId());
+					?>
+				<h4><?php echo $mainCategory2->getName(); ?></h4>
+				<?php $children2 = Mage::getModel('catalog/category')->getCategories($_item->getCategoryId());
+				?>
+				 
+				<?php $catID= array(); foreach ($children2 as $category1) {  ?>
+                        <a id="cat-<?php echo $category1->getId()?>" href="<?php echo $category1->getUrl()?>" class="fme_layered_category adj-nav-pad<?php echo $category1->getLevel()?>">
+						<label><input type="checkbox" value=""><?php echo $category1->getName()  ?></label></a>
+						<?php } ?>	
+				 
+                <?php }
+                   /*if($_item->getCount()): ?>  
+                     (<?php echo $_item->getCount() ?>) 
+            <?php endif; */ ?>
+        <?php endif ?>
+ </div>   
+<?php endforeach ?>
+
+<?php /* foreach ($this->getItems() as $_item):?>
+    <div class="checkbox">       
+        <?php if ($_item->getIsCurrent()): ?>
+		 <label><?php echo $_item->getLabel() ?></label>
+        <?php  else: ?>
+		<?php if (Mage::getStoreConfig('layerednav/layerednav/reload_categories')) { ?>
+        <a id="cat-<?php echo $_item->getCategoryId()?>" href="<?php echo $this->htmlEscape($_item->getUri()) ?>" class="adj-nav-pad<?php echo $_item->getLevel()?>">
+        <label><?php echo $_item->getLabel() ?></label>
+                </a>
+				<?php } else { ?>
+                        <a id="cat-<?php echo $_item->getCategoryId()?>" href="<?php echo $this->htmlEscape($_item->getUri()) ?>" class="fme_layered_category adj-nav-pad<?php echo $_item->getLevel()?>">
+						<label><input type="checkbox" value=""><?php echo $_item->getLabel() ?></label></a>
+                <?php }
+                   if($_item->getCount()): ?>  
+                     (<?php echo $_item->getCount() ?>) 
+            <?php endif ?>
+        <?php endif ?>
+ </div>   
+<?php endforeach */ ?>
+ 

@@ -1,0 +1,44 @@
+
+<script type="text/javascript">
+//<![CDATA[
+<?php
+$previewId = 0;
+$templateId = 0;
+$targetPageId = 7;
+$filterId = 0;
+$isAjax = 1;
+$requestType = "POST";
+$storeId = 1;
+if(Mage::app()->getStore()->isCurrentlySecure()){
+  $baseUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_DIRECT_LINK, true);
+}else{
+  $baseUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_DIRECT_LINK);
+}                        
+$ajaxAsync = Mage::getStoreConfig('magebird_popup/statistics/ajax_async')==2 ? 'false':'true';
+$requestType = Mage::getStoreConfig('magebird_popup/settings/requesttype') == 1 ? 'GET' : 'POST';
+$doGaTracking = Mage::getStoreConfig('magebird_popup/statistics/ga_tracking') ? 'true':'false';
+$data = array('storeId'=>$storeId,
+              'previewId'=>$previewId,
+              'templateId'=>$templateId,
+              'popupPageId'=>$targetPageId,
+              'filterId'=>$filterId,
+              'isAjax'=>$isAjax,
+              'requestType'=>$requestType,              
+              'rootUrl'=>urlencode(str_replace("index.php/","",$baseUrl)),
+              'ajaxAsync'=>$ajaxAsync,
+              'doGaTracking'=>$doGaTracking,
+              'customParams'=>''
+              );           
+?>
+var mbPopupParams = <?php echo json_encode($data);?>;
+
+//]]>
+</script>
+<?php $async = Mage::getStoreConfig('magebird_popup/settings/asynchronous') ? 'async' : ''; ?>
+<?php if(Mage::app()->getStore()->isCurrentlySecure()): ?>
+  <link rel="stylesheet" property="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/magebird_popup/style_v147.css', array('_area' => 'frontend', '_secure' => true,'_nosid' => true)); ?>" />
+  <script <?php echo $async; ?> type="text/javascript" src="<?php echo $this->getSkinUrl('js/magebird_popup/main.js', array('_area' => 'frontend', '_secure' => true,'_nosid' => true)); ?>?v=1.4.7"></script>          
+<?php else:?>
+  <link rel="stylesheet" property="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/magebird_popup/style_v147.css', array('_area' => 'frontend')); ?>" />
+  <script <?php echo $async; ?> type="text/javascript" src="<?php echo $this->getSkinUrl('js/magebird_popup/main.js', array('_area' => 'frontend')) ?>?v=1.4.7"></script>
+<?php endif; ?> 

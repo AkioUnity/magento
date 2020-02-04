@@ -1,0 +1,54 @@
+<?php
+/**
+ * Xcentia_Event extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Xcentia
+ * @package        Xcentia_Event
+ * @copyright      Copyright (c) 2016
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+/**
+ * Event view template
+ *
+ * @category    Xcentia
+ * @package     Xcentia_Event
+ * @author      Ultimate Module Creator
+ */
+?>
+<?php $_event = $this->getCurrentEvent();?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+<div class="page-title event-title">
+    <h1><?php echo $_event->getLocation(); ?></h1>
+</div>
+<div class="event-view">
+    <div class="event-title">
+        <?php echo Mage::helper('xcentia_event')->__('Title');?>:<?php echo $_event->getTitle();?>
+
+    </div>
+    <div class="event-description">
+        <?php echo Mage::helper('xcentia_event')->__('Description');?>:<?php echo $_event->getDescription();?>
+
+    </div>
+    <div class="event-date">
+        <?php echo Mage::helper('xcentia_event')->__("Date");?>: <?php echo Mage::helper('core')->formatDate($_event->getDate(), 'full');?>
+
+    </div>
+    <div class="event-location">
+        <?php echo Mage::helper('xcentia_event')->__('Location');?>:<?php echo $_event->getLocation();?>
+
+    </div>
+    <div class="event-image">
+        <?php if ($_event->getImage()) :?>
+    <img src="<?php echo Mage::helper('xcentia_event/event_image')->init($_event, 'image')->resize(75);?>" alt="<?php echo $this->escapeHtml($_event->getLocation());?>" />
+<?php endif;?>
+
+    </div>
+
+</div>

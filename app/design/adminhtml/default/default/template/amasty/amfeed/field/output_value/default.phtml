@@ -1,0 +1,41 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<?php
+    $attributes = $this->getProductAttributes();
+    $other = $this->getCompoundAttributes();
+    $price = $this->getPriceAttributes();
+?>
+<div id="output_row" class="inside-row output-default-row">
+    <select id="output_attribute" name="advanced[:value_order][output][][attribute]">
+        <optgroup label="<?php print $this->__('Product Attributes');?>">
+            <?php foreach($attributes as $code => $label){ ?>
+            <option value="<?php print $code?>"><?php 
+                print $this->htmlEscape($label);
+            ?></option>
+            <?php }?>
+        </optgroup>
+        <optgroup label="<?php print $this->__('Price Attributes');?>">
+            <?php foreach($price as $code => $label){ ?>
+            <option value="<?php print $code?>"><?php
+                print $this->htmlEscape($label);
+            ?></option>
+            <?php }?>
+        </optgroup>
+        <optgroup label="<?php print $this->__('Other Attributes');?>">
+            <?php foreach($other as $code => $label){ ?>
+            <option value="<?php print $code?>"><?php 
+                print $this->htmlEscape($label);
+            ?></option>
+            <?php }?>
+        </optgroup>
+    </select>
+    <span style="float: right;">
+        <button id="delete_output" type="button" class="scalable delete" style=""><span><span><span></span></span></span></button>
+    </span>
+</div>
+

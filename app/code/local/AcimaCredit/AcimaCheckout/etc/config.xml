@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <AcimaCredit_AcimaCheckout>
+      <version>1.0.0.0</version>
+    </AcimaCredit_AcimaCheckout>
+  </modules>
+ 
+  <global>
+    <fieldsets>
+      <sales_convert_order_payment>
+        <acima_credit_lease_id>
+          <to_order_payment>*</to_order_payment>
+        </acima_credit_lease_id>
+        <acima_credit_checkout_token>
+          <to_order_payment>*</to_order_payment>
+        </acima_credit_checkout_token>
+      </sales_convert_order_payment>
+      <sales_convert_quote_payment>
+        <acima_credit_lease_id>
+          <to_order_payment>*</to_order_payment>
+        </acima_credit_lease_id>
+        <acima_credit_checkout_token>
+          <to_order_payment>*</to_order_payment>
+        </acima_credit_checkout_token>
+      </sales_convert_quote_payment>
+    </fieldsets>
+     
+    <helpers>
+      <acimacheckout>
+        <class>AcimaCredit_AcimaCheckout_Helper</class>
+      </acimacheckout>
+    </helpers>
+ 
+    <blocks>
+      <acimacheckout>
+        <class>AcimaCredit_AcimaCheckout_Block</class>
+      </acimacheckout>
+    </blocks>
+         
+    <models>
+      <acimacheckout>
+        <class>AcimaCredit_AcimaCheckout_Model</class>
+      </acimacheckout>
+    </models>
+    
+  </global>
+ 
+  <adminhtml>
+    <events>
+      <sales_order_save_after>
+        <observers>
+          <acimacheckout>
+            <type>singleton</type>
+            <class>acimacheckout/observer</class>
+            <method>filterStatus</method>
+          </acimacheckout>
+        </observers>
+      </sales_order_save_after>
+    </events>
+  </adminhtml>
+
+  <default>
+    <payment>
+      <acimacheckout>
+        <active>1</active>
+        <model>acimacheckout/paymentmethod</model>
+        <order_status>pending</order_status>
+        <title>Acima Credit</title>
+        <allowspecific>0</allowspecific>
+        <payment_action>sale</payment_action>
+      </acimacheckout>
+    </payment>
+  </default>
+   
+  <frontend>
+    <routers>
+      <acimacheckout>
+        <use>standard</use>
+        <args>
+          <module>AcimaCredit_AcimaCheckout</module>
+          <frontName>acimacheckout</frontName>
+        </args>
+      </acimacheckout>
+    </routers>
+    <layout>
+        <updates>
+            <module>
+                <file>AcimaCredit_AcimaCheckout.xml</file>
+            </module>
+        </updates>
+    </layout>
+  </frontend>
+</config>

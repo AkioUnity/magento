@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <global>
+        <cache>
+            <request_processors>
+                <po_fpc>Potato_FullPageCache_Model_Processor</po_fpc>
+            </request_processors>
+        </cache>
+    </global>
+</config>

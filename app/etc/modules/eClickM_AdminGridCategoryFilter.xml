@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <eClickM_AdminGridCategoryFilter>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Catalog />
+                <Mage_Adminhtml />
+            </depends>
+        </eClickM_AdminGridCategoryFilter>
+    </modules>
+</config>

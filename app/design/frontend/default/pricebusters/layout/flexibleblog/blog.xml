@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+        <reference name="head">
+            <block type="flexibleblog/post_list" name="addJsCss">
+                <action method="addJsCss"></action>
+            </block>
+        </reference>
+        <reference name="top.links">
+            <block type="flexibleblog/post_list" name="flexibleblog_top_link" >
+                <action method="addFlexibleblogTopLink"></action>
+            </block>
+        </reference>
+        <reference name="footer_links">
+            <block type="flexibleblog/post_list" name="flexibleblog_footer_link" >
+                <action method="addFlexibleblogFooterLink"></action>
+            </block>
+        </reference>
+    </default>
+
+    <flexibleblog_index_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="flexibleblog/post_list" name="blog.result" template="flexibleblog/post/list/result.phtml"/>
+            <block type="flexibleblog/post_list" name="blog" template="flexibleblog/post/list.phtml" />
+        </reference>
+    </flexibleblog_index_index>
+
+    <flexibleblog_category_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="flexibleblog/post_list" name="category.result" template="flexibleblog/post/list/result.phtml"/>
+            <block type="flexibleblog/post_list" name="category" template="flexibleblog/post/list.phtml" />
+        </reference>
+    </flexibleblog_category_index>
+
+    <flexibleblog_author_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="flexibleblog/post_list" name="author.result" template="flexibleblog/post/list/result.phtml"/>
+            <block type="flexibleblog/post_list" name="author" template="flexibleblog/post/list.phtml" />
+        </reference>
+    </flexibleblog_author_index>
+
+    <flexibleblog_tag_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="flexibleblog/post_list" name="tag.result" template="flexibleblog/post/list/result.phtml"/>
+            <block type="flexibleblog/post_list" name="tag" template="flexibleblog/post/list.phtml" />
+        </reference>
+    </flexibleblog_tag_index>
+
+    <flexibleblog_archive_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="flexibleblog/post_list" name="archive.result" template="flexibleblog/post/list/result.phtml"/>
+            <block type="flexibleblog/post_list" name="blog" template="flexibleblog/post/list.phtml" />
+        </reference>
+    </flexibleblog_archive_index>
+
+    <flexibleblog_index_view>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+       <reference name="content">
+            <block type="flexibleblog/post_detail" name="blog" template="flexibleblog/post/detail.phtml" />
+        </reference>
+    </flexibleblog_index_view>
+
+    <flexibleblog_search_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="flexibleblog/sidebar_search" name="searh.result" template="flexibleblog/sidebar/search/result.phtml"/>
+            <block type="flexibleblog/post_list" name="search" template="flexibleblog/post/list.phtml" />
+        </reference>
+    </flexibleblog_search_index>	
+
+</layout>

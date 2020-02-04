@@ -1,0 +1,139 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<?php echo $this->getChildHtml('after_body_start') ?>
+ 
+    <?php echo $this->getChildHtml('global_notices') ?>
+    
+        <?php echo $this->getChildHtml('header') ?>
+       <section class="bgcol">
+     <!-- col 3 section end and col 9 section start -->
+ 
+  
+    <div class="container">
+    <div class="row">
+       <div class="col-sm-3">
+      
+
+    </div><!-- col-sm-3 -->
+     <div class="col-sm-9">
+      
+<?php echo $this->getChildHtml('breadcrumbs') ?>
+
+
+<style type="text/css">
+    .bs-example{
+        margin: 20px;
+    }
+    .modal-content iframe{
+        margin: 0 auto;
+        display: block;
+    }
+</style>
+<script type="text/javascript">
+$(document).ready(function(){
+    /* Get iframe src attribute value i.e. YouTube video url
+    and store it in a variable */
+    var url = $("#cartoonVideo").attr('src');
+    
+    /* Assign empty url value to the iframe src attribute when
+    modal hide, which stop the video playing */
+    $("#myModal").on('hide.bs.modal', function(){
+        $("#cartoonVideo").attr('src', '');
+    });
+    
+    /* Assign the initially stored url back to the iframe src
+    attribute when modal is displayed again */
+    $("#myModal").on('show.bs.modal', function(){
+        $("#cartoonVideo").attr('src', url);
+    });
+});
+</script>
+
+<div class="bs-example">
+    <!-- Button HTML (to Trigger Modal) -->
+    <div class="col-md-4 col-sm-4">
+    <a href="#myModal" class="btn btn-lg" data-toggle="modal"> <img src="<?php echo $this->getSkinUrl('') ?>images/logo.png" alt=""></a>
+    <h4>0 Down 0 Interest for 12 Months  Credit Check Required</h4>
+    </div><!-- col-md-4 col-sm-4 -->
+
+        <div class="col-md-4 col-sm-4">
+    <a href="#myModal" class="btn btn-lg" data-toggle="modal"> <img src="<?php echo $this->getSkinUrl('') ?>images/logo.png" alt=""></a>
+    <h4>
+25% Down 0 Interest for 6 Months No Credit Check Required</h4>
+    </div><!-- col-md-4 col-sm-4 -->
+
+
+
+        <div class="col-md-4 col-sm-4">
+    <a href="#myModal" class="btn btn-lg" data-toggle="modal"> <img src="<?php echo $this->getSkinUrl('') ?>images/logo.png" alt=""></a>
+    <h4>50.00 Down 12 Month Lease Purchase Option No Credit Needed</h4>
+    </div><!-- col-md-4 col-sm-4 -->
+    
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">0 Down 0 Interest for 12 Months  Credit Check Required</h4>
+                </div>
+                <div class="modal-body">
+                    <iframe id="cartoonVideo" width="560" height="315" src="//www.youtube.com/embed/YE7VzlLtp-4" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>     
+                                   
+   
+    </div><!-- col-sm-9 -->
+
+    </div><!-- row -->
+   
+
+  <?php echo $this->getChildHtml('global_messages') ?>
+     <?php //echo $this->getChildHtml('content') ?>
+    </div>  
+    </section>    
+        <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('global_cookie_notice') ?>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+     
+<?php //echo $this->getAbsoluteFooter() ?>
+</body>
+</html>

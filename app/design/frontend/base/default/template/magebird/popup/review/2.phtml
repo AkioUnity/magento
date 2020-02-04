@@ -1,0 +1,110 @@
+<script type="text/javascript">
+    jQuery('head').append('<link rel="stylesheet" href="<?php echo $this->getSkinUrl('css/magebird_popup/widget/review/global.css?v=1.4.2') ?>" type="text/css" />');
+    jQuery('head').append('<link rel="stylesheet" href="<?php echo $this->getSkinUrl('css/magebird_popup/widget/review/2.css?v=1.4.2') ?>" type="text/css" />');
+    var workingText = '<?php echo $this->__('Working') ?>...';
+    var successMsg = decodeURIComponent(('<?php echo urlencode(Mage::helper('cms')->getBlockTemplateProcessor()->filter(urldecode($this->getData('success_msg')))) ?>' + '').replace(/\+/g, '%20'));
+    var LOCALE = {
+        "Working": "<?php echo $this->__('Working') ?>",
+        "Poor": "<?php echo $this->__('Poor') ?>",
+        "Fair": "<?php echo $this->__('Fair') ?>",
+        "Average": "<?php echo $this->__('Average') ?>",
+        "Good": "<?php echo $this->__('Good') ?>",
+        "Excellent": "<?php echo $this->__('Excellent') ?>",
+        "Please select one of each of the ratings above": "<?php echo $this->__('Please select one of each of the ratings above') ?>"
+    };
+</script> 
+<?php
+$randomId = substr(str_shuffle("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 7);
+$buttonColor = $this->getData('button_color') ? $this->getData('button_color') : '#d83c3c';
+if (strpos($buttonColor, '#') === false)
+    $buttonColor = "#" . $buttonColor;
+$buttonTextColor = $this->getData('button_text_color');
+if (!$buttonTextColor)
+    $buttonTextColor = "#FFFFFF";
+if (strpos($buttonTextColor, '#') === false)
+    $buttonTextColor = "#" . $buttonTextColor;
+if (!$this->getProduct()->getData('entity_id'))
+    echo $this->__('No product to review');
+?>
+<style>
+
+    #<?php echo $randomId ?>.popup form, #<?php echo $randomId ?>.popup.form-add, {              
+        width: <?php echo $this->getData('width') ?><?php echo $this->getData('width_unit') == 2 ? "%" : "px"; ?>;
+    }
+
+    #<?php echo $randomId ?>.popup form input,#<?php echo $randomId ?>.popup form textarea{
+        width: <?php echo $this->getData('width') - 15 ?>px;
+        <?php if ($this->getData('width_unit') == 2): ?>
+            width:100%;   
+            -moz-box-sizing:    border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing:        border-box;  
+        <?php endif; ?>
+    }
+
+    #<?php echo $randomId ?>.popup button {
+        background-color: <?php echo $buttonColor; ?>;  
+        width: <?php echo $this->getData('width') - 2 ?>px;    
+        color:<?php echo $buttonTextColor ?>;
+        <?php if ($this->getData('width_unit') == 2): ?>
+            width:100%;   
+            -moz-box-sizing:    border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing:        border-box;  
+        <?php endif; ?>        
+    } 
+</style>
+<div class="form-add popup review tp2" id="<?php echo $randomId ?>">
+    <div class="error" style="display:none;"></div>
+    <?php if ($this->getAllowWriteReviewFlag()): ?>
+        <form action="<?php echo $this->getFormAction() ?>" method="post" id="review-form-popup" onsubmit="return false">
+            <fieldset>
+                <?php echo $this->getChildHtml('form_fields_before') ?>
+                <h3><?php echo $this->__("Reviewing:"); ?> <span><?php echo $this->escapeHtml($this->getProduct()->getName()) ?></span></h3>
+                <?php if ($this->getRatings() && $this->getRatings()->getSize()): ?>
+                    <h4><?php echo $this->__('How do you rate this product?') ?> <em class="required">*</em></h4>
+                    <?php foreach ($this->getRatings() as $_rating): ?>
+                        <p><?php echo $this->escapeHtml($_rating->getRatingCode()) ?></p>
+                        <div style="overflow:auto" class="popupRatings" el-id="<?php echo $_rating->getId() ?>" id="rating_<?php echo $_rating->getId() ?>"> <span></span></div>
+                        <input type="hidden" class="ratings" name="ratings[<?php echo $_rating->getId() ?>]" value="">
+                        <?php
+                        $options = array();
+                        foreach ($_rating->getOptions() as $_option) {
+                            $options[] = $_option->getId();
+                        }
+                        ?>
+                        <input type="hidden" id="rating_<?php echo $_rating->getId() ?>_val" value="<?php echo implode(",", $options); ?>" />
+                    <?php endforeach; ?>
+                    <input type="hidden" name="validate_rating" class="validate-rating" value="" />
+                <?php endif; ?>
+                <ul class="form-list">
+                    <li>
+                        <div class="input-box">
+                            <input type="text" name="nickname" placeholder="<?php echo $this->__('Nickname') ?>" id="nickname_field" class="input-text required-entry" value="<?php echo $this->escapeHtml($data->getNickname()) ?>" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="input-box">
+                            <input type="text" name="title" placeholder="<?php echo $this->__('Summary of Your Review') ?>" id="summary_field" class="input-text required-entry" value="<?php echo $this->escapeHtml($data->getTitle()) ?>" />
+                        </div>
+                    </li>
+                    <li>
+                        <div class="input-box">
+                            <textarea name="detail" placeholder="<?php echo $this->__('Review') ?>" id="review_field" cols="5" rows="3" class="required-entry"><?php echo $this->escapeHtml($data->getDetail()) ?></textarea>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+            <div class="buttons-set">
+                <button type="submit" title="<?php echo $this->__('Submit Review') ?>" class="button"><?php echo $this->__('Submit Review') ?></button>
+            </div>
+            <input type="hidden" name="productId" value="<?php echo $this->getProduct()->getEntityId(); ?>" />
+        </form>
+    <?php else: ?>
+        <p class="review-nologged" id="review-form-popup">
+            <?php echo $this->__('Only registered users can write reviews. Please, <a href="%s">log in</a> or <a href="%s">register</a>', $this->getLoginLink(), Mage::helper('customer')->getRegisterUrl()) ?>
+        </p>
+    <?php endif ?>
+</div>
+<?php $async = Mage::getStoreConfig('magebird_popup/settings/asynchronous') ? 'async' : ''; ?>
+<script <?php echo $async; ?> src="<?php echo $this->getSkinUrl('js/magebird_popup/review.js') ?>"></script>

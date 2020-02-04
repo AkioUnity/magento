@@ -1,0 +1,47 @@
+<?php
+    $_zoom_w = Mage::getStoreConfig('pzoom/pzoom_config/zoom_w');
+    $_zoom_h = Mage::getStoreConfig('pzoom/pzoom_config/zoom_h');
+	$_border_w = Mage::getStoreConfig('pzoom/pzoom_config/zoom_border_w');
+	$_border_color = Mage::getStoreConfig('pzoom/pzoom_config/zoom_border_color');
+    $_lightbox_w = Mage::getStoreConfig('pzoom/pzoom_config/lightbox_w');   
+    $_lightbox_h = Mage::getStoreConfig('pzoom/pzoom_config/lightbox_h');
+    $_product = $this->getProduct();
+    $_helper = $this->helper('catalog/output');
+?>
+<p class="product-image">
+    <?php
+        $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(265).'" alt="'.$this->htmlEscape($this->getImageLabel()).'" title="'.$this->htmlEscape($this->getImageLabel()).'" />';
+    ?>
+	<a href="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize($_lightbox_w, $_lightbox_h); ?>" class = "ma-a-lighbox" rel="lightbox[rotation]"></a>
+	<a href="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(1200,1200); ?>" class = "cloud-zoom" id="ma-zoom1" style="position: relative; display: block;" rel="adjustX:10, adjustY:-2, zoomWidth:<?php echo $_zoom_w; ?>, zoomHeight:<?php echo $_zoom_h; ?>">
+		<?php echo $_helper->productAttribute($_product, $_img, 'image'); ?>
+	</a>
+</p>
+<?php if (count($this->getGalleryImages()) > 0): ?>
+<div class="more-views pz-more-img">
+    <h2><?php echo $this->__('More Views') ?></h2>
+    <ul>
+		<?php foreach ($this->getGalleryImages() as $_image): ?>
+			<li>
+				<a href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile())->resize(1200,1200); ?>" class="cloud-zoom-gallery" title="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile())->resize($_lightbox_w, $_lightbox_h); ?>"
+									rel="useZoom: 'ma-zoom1', smallImage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile())->resize(265); ?>'">
+				<img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(56); ?>" width="56" height="56" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" /></a>
+			</li>
+		<?php endforeach; ?>
+    </ul>
+	<ul class="mt-thumb-light" style="display:none;">
+		<?php foreach ($this->getGalleryImages() as $_image): ?>
+			<li>
+				<a href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile())->resize($_lightbox_w, $_lightbox_h); ?>" rel="lightbox[rotation]" title="<?php echo $_product->getName();?>"></a>
+			</li>
+		<?php endforeach; ?>                                                                
+	</ul>
+</div>
+<?php endif; ?>
+<script type="text/javascript">
+	//<![CDATA[
+		$jz(document).ready(function(){
+			$jz('head').append('<style type="text/css"> .cloud-zoom-big { border:<?php echo $_border_w ?>px solid <?php echo $_border_color ?> }</style>');
+		});
+	//]]>
+</script>

@@ -1,0 +1,34 @@
+<?php $postData = $this->getPostData(); ?>
+<div class="page-title">
+    <h1><?php echo $postData->getPostTitle();?></h1>
+</div>
+<div class="post post-content">
+    <div class="post-metadata">
+        <div class="post-date"><?php echo Mage::helper('core')->formatDate($postData->getPostPublishDate(), 'medium', false); ?></div>
+        <div class="post-author"><?php echo $this->__('By '); ?><a href="<?php echo $this->getAuthorUrl($postData->getPostAuthor()); ?>"><?php echo $this->getAuthorName($postData->getPostAuthor()); ?></a></div>
+    </div>
+    <div class="post-image">
+        <figure><?php echo $this->getImage($postData->getPostId());?></figure>
+    </div>
+    <div class="blog-description">
+        <?php echo Mage::helper('cms')->getBlockTemplateProcessor()->filter($postData->getPostDescription());?>
+    </div>
+    <div class="post-info">
+        <?php echo $this->__('Posted in: '); ?>
+        <ul class="post-categories">
+            <?php echo $this->getPostCategoryList($postData->getPostCategories()); ?>
+        </ul>
+        <?php $tagList = $this->getPostTagList($postData->getPostTags());
+        if($tagList): ?>
+        <?php echo $this->__('Tagged: '); ?>
+        <ul class="post-tags">
+            <?php echo $tagList; ?>
+        </ul>
+        <?php endif; ?>
+    </div>
+    <div class="social-icon">
+		<?php echo $this->socialSharing($postData->getPostId()); ?>
+    </div>
+    <?php echo $this->getAuthor($postData->getPostAuthor()); ?>
+</div>
+<?php echo $this->getComments($postData->getPostId()); ?>

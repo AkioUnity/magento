@@ -1,0 +1,74 @@
+<?php $post_id = $this->getPostId();
+$name='';
+$email='';
+if (Mage::getSingleton('customer/session')->isLoggedIn())
+{
+	$customer = Mage::getSingleton('customer/session')->getCustomer();
+	$name = $customer->getName(); // Full Name
+	$email = $customer->getEmail();
+}?>
+<div class="post-comments flexibleblog-post-comments" id="post-comments">
+    <h3><?php echo $this->__('Leave a Reply');?></h3>
+    <?php echo $this->__('Your email address will not be published. Required fields are marked *');
+
+    if(!Mage::helper('flexibleblog')->loginOnlyComment()): //To check enable comment for logged in user or not ?>
+    <form name="commentForm" id="commentForm" method="post"  action="<?php echo $this->getCommentAction(); ?>">
+        <div class="fieldset">
+            <ul class="form-list">
+                <li class="fields">
+                    <div class="field">
+                        <label class="required" for="comment_name">
+                            <em>*</em>
+                            <?php echo $this->__('Name');?>
+                        </label>
+                        <div class="input-box">
+                            <input id="comment_name" class="input-text required-entry" type="text" value="<?php echo $name;?>" title="Name" name="comment_name">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="required" for="comment_email">
+                            <em>*</em>
+                            <?php echo $this->__('Email');?>
+                        </label>
+                        <div class="input-box">
+                            <input id="comment_email" class="input-text required-entry validate-email" type="text" value="<?php echo $email;?>" title="Email" name="comment_email">
+                        </div>
+                    </div>
+                </li>
+                <li class="fields">
+                    <div class="field">
+                        <label for="comment_website">
+                            <?php echo $this->__('Website');?>
+                        </label>
+                        <div class="input-box">
+                            <input id="comment_website" class="input-text validate-url" type="text" value="" title="Website" name="comment_website">
+                        </div>
+                    </div>
+                </li>
+                <li class="wide">
+                    <label class="required" for="comment">
+                        <em>*</em>
+                        <?php echo $this->__('Comment');?>
+                    </label>
+                    <div class="input-box">
+                        <textarea id="comment_description" class="required-entry input-text" rows="3" cols="5" title="Comment" name="comment_description"></textarea>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="buttons-set">
+            <input id="post_id" type="hidden" value="<?php echo $post_id;?>" name="post_id">
+            <input id="comment_parent_id" type="hidden" value="0" name="comment_parent_id">
+            <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+            <button class="button" title="Submit" type="submit"><span><span><?php echo $this->__('Submit');?></span></span></button>
+        </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var commentForm = new VarienForm('commentForm', false);
+    //]]>
+    </script>
+    <?php else: ?>
+        <div class="login-comment-info"><h2><?php echo $this->__('Login to post comment');?></h2></div>
+    <?php endif; ?>
+</div>

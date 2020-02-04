@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magently_SearchFix>
+            <active>false</active>
+            <codePool>local</codePool>
+        </Magently_SearchFix>
+    </modules>
+
+    <global>
+        <blocks>
+            <catalogsearch>
+                <rewrite>
+                    <result>Magently_SearchFix_Block_Result</result>
+                </rewrite>
+            </catalogsearch>
+        </blocks>
+    </global>
+</config>

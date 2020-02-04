@@ -1,0 +1,21 @@
+<script type="text/javascript">  
+jQuery('head').append('<link rel="stylesheet" href="<?php echo $this->getSkinUrl('css/magebird_popup/widget/register/global.css?v=1.5.4') ?>" type="text/css" />');
+jQuery('head').append('<link rel="stylesheet" href="<?php echo $this->getSkinUrl('css/magebird_popup/widget/register/1.css?v=1.5.4') ?>" type="text/css" />');
+if (typeof rgSuccessMsg === "undefined"){
+  var rgSuccessMsg = {},
+      rgSuccessAction = {},
+      rgSuccessUrl = {},
+      rgActionDelay = {},      
+      workingText = '<?php echo $this->__('Working')?>...';
+}
+if(window.location.hash) {
+    var hash = window.location.hash.substring(1); 
+    if(hash=='login'){
+      jQuery("#login-form").show();
+      jQuery("#signup-form").hide();
+    }else{
+      jQuery("#signup-form").show();
+      jQuery("#login-form").hide();
+    }
+}
+</script> 

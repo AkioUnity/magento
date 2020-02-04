@@ -1,0 +1,95 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<?php
+    $params = array(
+        'html' => $this->getCustomBlocksHTML(),
+        'url' => array(
+            'new_value' => Mage::helper("adminhtml")->getUrl("adminhtml/amfeed_filter/newvalue"),
+            'new_condition' => Mage::helper("adminhtml")->getUrl("adminhtml/amfeed_filter/newcondition", array('mode' => 'field')),
+        )
+        
+    );
+?>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+    	<h4 class="icon-head head-edit-form fieldset-legend"><?php 
+            print $this->__("Advanced Mapping")
+        ?></h4>
+    </div>
+    <div class="fieldset ">
+        <div class="grid amfeed-filter-grid">
+            <table id="data-table" class="amfeed-field-advanced" cellspacing="0" cellpadding="0" class="data">
+                <thead>
+                    <tr class="headings">
+                        <th><?php print $this->__("Condition")?></th>
+                        <th><?php print $this->__("Output Value")?></th>
+                        <th><?php print $this->__("Modification")?></th>
+                        <th><?php print $this->__("Action")?></th>
+                    </tr>
+                </thead>
+                <tbody id="conditions_table_body">
+                    <tr class="tpl-row" id="tpl_row">
+                        <td class="condition-col">
+                            <div >
+                                <div id="condition">
+                                    
+                                </div>
+                                <div id="new_condition" class="new-condition">
+                                    
+                                </div>
+                            </div>
+                        </td>
+                        <td class="output-col" id="output_value">
+
+                        </td>
+                        <td class="modification-col" id="modification">
+
+                        </td>
+                        <td class="actions-col" id="actions">
+
+                        </td>
+                    </tr>
+                    <tr class="tpl-row condition-tpl-row" id="condition_tpl_row">
+                        <td colspan="4">
+                            <?php
+                                print $this->__("AND");
+                            ?>
+                        </td>
+                    </tr>
+                    <tr class="tpl-row value-tpl-row" id="value_tpl_row">
+                        <td colspan="4">
+                            <?php
+                                print $this->__("OR");
+                            ?>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <?php
+                                print $this->getChildHtml('new_value')
+                            ?>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    
+    var am_feed_filter = new amFeedFilter(<?php 
+        print Mage::helper('core')->jsonEncode($params)
+    ?>, <?php
+        print $this->getModel()->getId() == null ? 'null' : 
+        Mage::helper('core')->jsonEncode($this->getModel()->getCondition())
+    ?>);
+    
+</script>

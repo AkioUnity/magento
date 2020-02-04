@@ -1,0 +1,47 @@
+<?php
+/**
+ * Xcentia_Event extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Xcentia
+ * @package        Xcentia_Event
+ * @copyright      Copyright (c) 2016
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+/**
+ * Event comments list template
+ *
+ * @category    Xcentia
+ * @package     Xcentia_Event
+ * @author      Ultimate Module Creator
+ */
+?>
+<?php $_event = $this->getEvent()?>
+<?php if ($_event->getAllowComments()) : ?>
+    <?php $_comments = $this->getComments(); ?>
+    <?php if (count($_comments)) : ?>
+        <div class="box-collateral box-reviews" id="event-reviews">
+            <h2><?php echo $this->__('Comments for: %s', $_event->getLocation()) ?></h2>
+            <?php echo $this->getPagerHtml() ?>
+            <dl>
+                <?php foreach ($_comments as $_comment):?>
+                <dt>
+                    <div class="author"><?php echo $this->__('On %s %s wrote:', $this->formatDate($_comment->getCreatedAt(), 'long'), $this->escapeHtml($_comment->getName()))?></div>
+                    <strong><?php echo $this->escapeHtml($_comment->getTitle()) ?></strong>
+                </dt>
+                <dd>
+                    <?php echo nl2br($this->escapeHtml($_comment->getComment())) ?>
+                </dd>
+                <?php endforeach; ?>
+            </dl>
+            <?php echo $this->getPagerHtml() ?>
+        </div>
+    <?php endif;?>
+    <?php echo $this->getChildHtml('comment_form') ?>
+<?php endif;?>

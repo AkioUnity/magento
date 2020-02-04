@@ -1,0 +1,23 @@
+<?php $archives = $this->getArchives() ?>
+<?php if (count($archives) > 0): ?>
+<?php if (is_array($archives) || is_object($archives)): ?>
+    <div class="block block-blog block-blog-archives">
+        <div class="block-title">
+            <strong><span><?php echo $this->__('Archives') ?></span></strong>
+        </div>
+        <div class="block-content">
+            <ul class="archive-list" id="archive-list">
+                <?php foreach($archives as $archive): ?>
+                <?php //print_r($archive['date']); ?>
+                    <li class="item">
+                        <a href="<?php echo $this->getArchive($archive['date'])->getDateUrl(); ?>" title="<?php echo $this->getArchive($archive['date'])->getTitle(); ?>">
+                            <?php echo $this->getArchive($archive['date'])->getTitle(); ?>
+                        </a><?php if ($archive['count']): ?> (<?php echo $archive['count'] ?>)<?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <script type="text/javascript">decorateList('archive-list')</script>
+        </div>
+    </div>
+<?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,31 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<?php
+    $attributes = $this->getProductAttributes();
+    $other = $this->getCompoundAttributes(TRUE);
+?>
+<select id="new_condition">
+    <option value="">
+        <?php print $this->__('--Add Condition--');?>
+    </option>
+    <optgroup label="<?php print $this->__('Product Attributes');?>">
+    <?php foreach($attributes as $code => $label){ ?>
+        <option data-type="<?php print Amasty_Feed_Model_Filter::$_TYPE_ATTRIBUTE;?>"  value="<?php print $code?>"><?php 
+        print $this->htmlEscape($label);
+    ?></option>
+    <?php }?>
+    </optgroup>
+    
+    <optgroup label="<?php print $this->__('Other Attributes');?>">
+        <?php foreach($other as $code => $label){ ?>
+        <option data-type="<?php print Amasty_Feed_Model_Filter::$_TYPE_OTHER;?>" value="<?php print $code?>"><?php 
+            print $this->htmlEscape($label);
+        ?></option>
+        <?php }?>
+    </optgroup>
+</select>

@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Xcentia_Event extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Xcentia
+ * @package        Xcentia_Event
+ * @copyright      Copyright (c) 2016
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<layout>
+    
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="xcentia_event"><name>event_comments</name><path>xcentia_event/event_customer_comment</path><label>Events Comments</label></action>
+            <action method="addLink" translate="label" module="xcentia_event"><name>attendee_comments</name><path>xcentia_event/attendee_customer_comment</path><label>Attendees Comments</label></action>
+        </reference>
+    </customer_account>
+    <xcentia_event_event_index translate="label" module="xcentia_event">
+        <label>Events list</label>
+        <update handle="page_one_column" />
+        <reference name="content">
+            <block type="xcentia_event/event_list" name="event_list" template="xcentia_event/event/list.phtml" />
+        </reference>
+    </xcentia_event_event_index>
+    <xcentia_event_attendee_index translate="label" module="xcentia_event">
+        <label>Attendees list</label>
+        <update handle="page_one_column" />
+        <reference name="content">
+            <block type="xcentia_event/attendee_list" name="attendee_list" template="xcentia_event/attendee/list.phtml" />
+        </reference>
+    </xcentia_event_attendee_index>
+    <xcentia_event_event_view translate="label" module="xcentia_event">
+        <label>Event view page</label>
+        <update handle="page_one_column" />
+        <reference name="content">
+            <block type="xcentia_event/event_view" name="event_view" template="xcentia_event/event/view.phtml" />
+            <block type="xcentia_event/event_attendee_list" name="event.attendee_list" as="event_events" template="xcentia_event/event/attendee/list.phtml" />
+            <block type="xcentia_event/event_comment_list" name="event.comments_list" as="event_comment_list" template="xcentia_event/event/comment/list.phtml">
+                <block type="xcentia_event/event_comment_form" name="comment_form" as="comment_form" template="xcentia_event/event/comment/form.phtml" />
+            </block>
+        </reference>
+    </xcentia_event_event_view>
+    <xcentia_event_attendee_view translate="label" module="xcentia_event">
+        <label>Attendee view page</label>
+        <update handle="page_one_column" />
+        <reference name="content">
+            <block type="xcentia_event/attendee_view" name="attendee_view" template="xcentia_event/attendee/view.phtml" />
+            <block type="xcentia_event/attendee_comment_list" name="attendee.comments_list" as="attendee_comment_list" template="xcentia_event/attendee/comment/list.phtml">
+                <block type="xcentia_event/attendee_comment_form" name="comment_form" as="comment_form" template="xcentia_event/attendee/comment/form.phtml" />
+            </block>
+        </reference>
+    </xcentia_event_attendee_view>
+    <xcentia_event_event_customer_comment_index translate="label" module="xcentia_event">
+        <label>My Events comments</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="xcentia_event/event_customer_comment_list" name="customer_event_comments" template="xcentia_event/event/customer/comment/list.phtml"/>
+        </reference>
+    </xcentia_event_event_customer_comment_index>
+    <xcentia_event_event_customer_comment_view translate="label" module="xcentia_event">
+        <label>My Events comment view</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="xcentia_event/event_customer_comment_view" name="customer_event_comment" template="xcentia_event/event/customer/comment/view.phtml"/>
+        </reference>
+    </xcentia_event_event_customer_comment_view>
+    <xcentia_event_attendee_customer_comment_index translate="label" module="xcentia_event">
+        <label>My Attendees comments</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="xcentia_event/attendee_customer_comment_list" name="customer_attendee_comments" template="xcentia_event/attendee/customer/comment/list.phtml"/>
+        </reference>
+    </xcentia_event_attendee_customer_comment_index>
+    <xcentia_event_attendee_customer_comment_view translate="label" module="xcentia_event">
+        <label>My Attendees comment view</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="xcentia_event/attendee_customer_comment_view" name="customer_attendee_comment" template="xcentia_event/attendee/customer/comment/view.phtml"/>
+        </reference>
+    </xcentia_event_attendee_customer_comment_view>
+</layout>

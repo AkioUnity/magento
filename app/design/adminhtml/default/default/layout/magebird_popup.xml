@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<layout>      
+  <default>
+  		<reference name="head">         
+  			<action method="addItem"><type>skin_css</type><name>magebird_popup/styles_v2.css</name></action>
+        <action method="addItem"><type>skin_js</type><name>magebird_popup/jquery.js</name></action>
+        <action method="addItem"><type>skin_js</type><name>magebird_popup/script.js</name></action>
+  		</reference>  
+       <reference name="content">
+           <block type="magebird_popup/adminhtml_notification" name="popup_notification" before="all" as="popup_notification" template="magebird/popup/notification.phtml" />
+       </reference>            
+  </default>
+  <adminhtml_system_config_edit>
+		<reference name="head">    
+			<action method="addItem"><type>skin_css</type><name>magebird_popup/styles.css</name></action>
+      <action method="addItem"><type>skin_js</type><name>magebird_popup/jquery.js</name></action>
+      <action method="addItem"><type>skin_js</type><name>magebird_popup/script.js</name></action>
+		</reference>
+  </adminhtml_system_config_edit>  
+	<adminhtml_mousetracking_index> 
+		<!--
+    <reference name="head">    
+			<action method="addItem"><type>skin_css</type><name>popup/styles.css</name></action>
+      <action method="addItem"><type>skin_js</type><name>popup/jquery.js</name></action>
+      <action method="addItem"><type>skin_js</type><name>popup/script.js</name></action>
+		</reference>
+    -->   
+    <reference name="content">   
+        <block  type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+             <action method="setUseConfirm"><params>0</params></action>
+        </block>
+    </reference>    
+	</adminhtml_mousetracking_index>  
+	<adminhtml_popup_mousetracking>
+    <!--
+    <reference name="content">    
+        <block type="core/template" template="magebird/popup/example.phtml" name="popup.example" />
+    </reference>
+    --> 
+	</adminhtml_popup_mousetracking>  
+	<adminhtml_magebird_popup_index>  
+    <reference name="content">     
+        <!--<block type="adminhtml/template" template="magebird/popup/head.phtml" name="popup_headd" />-->
+        <block type="adminhtml/store_switcher" name="store_switcher" as="store_switcher">
+             <action method="setUseConfirm"><params>0</params></action>
+        </block>  
+        <!--<block type="core/template" template="magebird/popup/example.phtml" name="popup.example" />-->        
+    </reference>  
+	</adminhtml_magebird_popup_index>  
+	<adminhtml_magebird_popup_template>
+		<reference name="head">    
+			<action method="addItem"><type>skin_css</type><name>magebird_popup/styles.css</name></action>
+		</reference>
+	</adminhtml_magebird_popup_template>    
+  <adminhtml_magebird_popup_edit>
+	    <update handle="editor"/>
+    	<reference name="head">  
+        <action method="addItem"><type>skin_js</type><name>magebird_popup/jquery.js</name></action>
+    		<action method="addItem"><type>skin_js</type><name>magebird_popup/script.js</name></action>
+        <action method="addItem"><type>skin_js</type><name>magebird_popup/tinymce_setup.js</name></action>
+    	</reference>
+      <reference name="js">
+          <block type="core/template" template="catalog/wysiwyg/js.phtml" name="catalog.wysiwyg.js" />
+      </reference>      
+  </adminhtml_magebird_popup_edit>
+  <adminhtml_magebird_popup_duplicate>
+	    <update handle="editor"/>
+    	<reference name="head">
+        <action method="addItem"><type>skin_js</type><name>magebird_popup/jquery.js</name></action>    		                                                      
+    		<action method="addItem"><type>skin_js</type><name>magebird_popup/script.js</name></action>
+    	</reference>
+      <reference name="js">
+          <block type="core/template" template="catalog/wysiwyg/js.phtml" name="catalog.wysiwyg.js" />
+      </reference>      
+  </adminhtml_magebird_popup_duplicate> 
+  <adminhtml_magebird_popup_copy>
+	    <update handle="editor"/>
+    	<reference name="head">
+        <action method="addItem"><type>skin_js</type><name>magebird_popup/jquery.js</name></action>    		                                                      
+    		<action method="addItem"><type>skin_js</type><name>magebird_popup/script.js</name></action>
+        <action method="addItem"><type>skin_js</type><name>magebird_popup/tinymce_setup.js</name></action>
+    	</reference>
+      <reference name="js">
+          <block type="core/template" template="catalog/wysiwyg/js.phtml" name="catalog.wysiwyg.js" />
+      </reference>      
+  </adminhtml_magebird_popup_copy>      
+</layout>

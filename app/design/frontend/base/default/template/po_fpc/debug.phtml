@@ -1,0 +1,35 @@
+<?php /* @var $this Potato_FullPageCache_Block_Debug */ ?>
+<?php if ($this->canShow()): ?>
+<div id="po-fpc-debug" style="display:none;">
+    <h1 class="po-fpc-debug__title"><?php echo $this->__('Full Page Cache by PotatoCommerce'); ?></h1>
+    <div class="po-fpc-debug__content">
+        <div id="cache_hit_message" style="display:none;"><?php echo $this->__('Cache Hit') ?></div>
+        <?php if (Potato_FullPageCache_Helper_Data::canCache()):?>
+        <div id="cache_miss_message"><?php echo $this->__('Cache Miss') ?></div>
+        <?php else:?>
+            <div id="cache_miss_message"><?php echo $this->__('Cache Miss (Denied by configuration)') ?></div>
+        <?php endif;?>
+        <strong><?php echo $this->__('Time to first byte: '); ?></strong><span id="po-fpc-ttfb-value"></span>
+    </div>
+</div>
+<script type="text/javascript">
+    (function(){
+        window.poFpcStartTime = (new Date()).getTime();
+        Event.observe(window, 'load', function(e) {
+            var counterContainer = $('po-fpc-debug');
+            var ttfbContainer = $('po-fpc-ttfb-value');
+            if (!counterContainer || !ttfbContainer) {
+                return;
+            }
+
+            if (typeof window.performance === "undefined") {
+                var ttfbValue = ((new Date()).getTime() - window.poFpcStartTime) / 1000;
+            } else {
+                var ttfbValue = (window.performance.timing.responseStart - window.performance.timing.requestStart) / 1000;
+            }
+            ttfbContainer.update(ttfbValue.toFixed(3) + " sec");
+            counterContainer.show();
+        });
+    })();
+</script>
+<?php endif; ?>

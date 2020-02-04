@@ -1,0 +1,23 @@
+<?php
+if (Mage::app()->getStore()->isCurrentlySecure()) {
+    $ajaxUrl = Mage::getUrl('magebird_popup/newsletter/subscribe', array('_forced_secure' => true, '_store' => Mage::app()->getStore()->getStoreId()));
+} else {
+    $ajaxUrl = Mage::getUrl('magebird_popup/newsletter/subscribe', array('_store' => Mage::app()->getStore()->getStoreId()));
+}
+if (strpos($ajaxUrl, "www") !== false && strpos($_SERVER["HTTP_HOST"], "www") === false) {
+    //$ajaxUrl = str_replace("www.", "", $ajaxUrl);
+}
+?>                                      
+<script type="text/javascript">
+    if (typeof newslPopup === "undefined") {
+        jQuery('head').append('<link rel="stylesheet" href="<?php echo $this->getSkinUrl('css/magebird_popup/widget/newsletter/global.css?v=1.5.4') ?>" type="text/css" />');
+        var newslPopup = {};
+        newslPopup.ajaxUrl = '<?php echo $ajaxUrl ?>';
+        newslPopup.workingText = '<?php echo $this->__('Working') ?>...';
+        var newslScriptUrl = mb_popup.correctHttps("<?php echo $this->getSkinUrl('js/magebird_popup/newsletter.js') ?>");
+        jQuery.getScript(newslScriptUrl);
+    }
+</script>
+<!--DONT REMOVE! jQuery use it to check if css is loaded-->
+<div class="cssLoadedChecker moctod-dribegam"></div>
+<div class="cssLoadedChecker2 moctod-dribegam"></div>

@@ -1,0 +1,16 @@
+<config>
+    <menu>
+       <srdt translate="title">
+           <title>SRDT</title>
+               <sort_order>100</sort_order>
+               <children>
+               <sub_menu1 translate="title" >
+                    <title>Manage Banners</title>
+                    <sort_order>100</sort_order>
+                    <action>srdtslideradmin/adminhtml_index/index/</action>
+               </sub_menu1>
+
+               </children>
+       </srdt>
+   </menu>
+</config>

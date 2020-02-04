@@ -1,0 +1,5 @@
+<?php
+class Biztech_Fedex_Block_Adminhtml_Pickup_Edit_Renderer_Countries extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
+{
+  
+}

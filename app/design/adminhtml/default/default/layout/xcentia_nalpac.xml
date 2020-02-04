@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Xcentia_Nalpac extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Xcentia
+ * @package        Xcentia_Nalpac
+ * @copyright      Copyright (c) 2016
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+--> 
+<layout>
+    <adminhtml_nalpac_import_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_nalpac/import</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_nalpac/adminhtml_import" name="import" />
+
+        </reference>
+    </adminhtml_nalpac_import_index>
+    <adminhtml_nalpac_import_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="xcentia_nalpac/adminhtml_import_grid" name="import_grid"/>
+        </block>
+    </adminhtml_nalpac_import_grid>
+    <!-- Import add/edit action -->
+    <adminhtml_nalpac_import_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_nalpac/import</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_nalpac/adminhtml_import_edit" name="import_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="xcentia_nalpac/adminhtml_import_edit_tabs" name="import_tabs"></block>
+        </reference>
+    </adminhtml_nalpac_import_edit>
+
+    <adminhtml_nalpac_product_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_nalpac/product</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_nalpac/adminhtml_product" name="product" />
+
+        </reference>
+    </adminhtml_nalpac_product_index>
+    <adminhtml_nalpac_product_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="xcentia_nalpac/adminhtml_product_grid" name="product_grid"/>
+        </block>
+    </adminhtml_nalpac_product_grid>
+    <!-- Product add/edit action -->
+    <adminhtml_nalpac_product_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_nalpac/product</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_nalpac/adminhtml_product_edit" name="product_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="xcentia_nalpac/adminhtml_product_edit_tabs" name="product_tabs"></block>
+        </reference>
+    </adminhtml_nalpac_product_edit>
+
+</layout>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <name>acimacredit/acimacheckout/acima-credit.js</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>acimacredit/acimacheckout/checkout.js</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>acimacredit/acimacheckout/pre-approval.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>acimacredit/acimacheckout/acima-credit.css</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>acimacredit/acimacheckout/pre-approval.css</name>
+            </action>
+        </reference>
+    </default>
+</layout>

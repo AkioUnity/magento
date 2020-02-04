@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>                                                                                                                                                                                                                                              <!--dpqzsjhiu nbhfcjse epu dpn-->
+<config>
+    <modules>
+        <Magebird_Popup>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Cms />
+            </depends>            
+        </Magebird_Popup>
+    </modules>
+</config>  

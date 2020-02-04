@@ -1,0 +1,41 @@
+   
+<?php  $productlist = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*')->setPageSize(8)->addAttributeToSort('entity_id', 'DESC');
+
+//$productlist = Mage::getModel('catalog/product')->load(15);
+
+ ?>			   				
+<!-- FirstImgGall secton end and ApplicationSection Starts -->
+<section class="Appliances">
+  <div class="container">
+ <!-- Second ImgGallSlider start -->
+ <div class="AppliancesContent">
+     <h1>Appliances</h1>
+     <!--  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis</p> -->
+</div><!-- AppliancesContent end --> 
+<div class="Slider">                               
+        <div id="owl-slider2" class="owl-carousel">
+		 <?php foreach($productlist as $product) {   ?>		
+					
+        <div class="slide-item">
+             <div class="ImgGallSecond">
+            <a href="<?php echo $product->getProductUrl() ?>">  <img src="<?php echo $this->helper('catalog/image')->init($product, 'small_image')->resize(180,134); ?>" alt=""></a>
+              <div class="content2">
+            <h1><a href="<?php echo $product->getProductUrl() ?>"><?php echo $product->getName();?></a> </h1>
+            <p><?php echo $product->getShortDescription();?> </p>
+             <h2> 
+			 <?php $formattedPrice = Mage::helper('core')->currency($product->getPrice(), true, false); ?>
+			<?php echo $formattedPrice; ?>
+			 </h2>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+          </div><!-- content end -->
+         </div><!-- ImgGall -->
+        </div><!--slide-item-->
+		 <?php } ?>
+       </div><!--owl-carousel-->
+ </div><!--Slider-->
+    </div><!-- container end -->   
+      </section><!-- Appliances end -->	

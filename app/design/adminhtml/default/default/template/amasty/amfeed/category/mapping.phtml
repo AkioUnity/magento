@@ -1,0 +1,81 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<?php $_value       = $this->getElement()->getValue()?>
+<?php $_htmlId      = $this->getElement()->getHtmlId() ?>
+<?php $_htmlClass   = $this->getElement()->getClass() ?>
+<?php $_htmlName    = $this->getElement()->getName() ?>
+<?php $_htmlNote    = $this->getElement()->getNote() ?>
+<?php $_readonly    = $this->getElement()->getReadonly() ?>
+<?php if ($_htmlNote): ?>
+<tr>
+    <td colspan="2">
+        <p><?php echo $_htmlNote; ?></p>
+    </td>
+</tr>
+<?php endif;?>
+<tr>
+    <?php if (!$this->getHideLabel()) :?>
+    <td class="label">
+        <label class="label"><span><?php echo $this->getElement()->getLabel(); ?></span></label>
+    </td>
+    <?php endif;?>
+    <td class="value">
+        <ul style="list-style-type: none;">
+            <?php foreach($this->getCategoriesList() as $category){
+            ?>
+                <li style="padding:3px 0px 3px <?php echo ($category['level'] * 30)?>px;">
+
+                    <?php
+                     if (isset($_value[$category['id']])){
+                         $variable = $_value[$category['id']]['name'];
+                     ?>
+                         <span>
+                             <a href="#"onclick="mappingControl.modify(<?php echo $category['id']?>, '<?php echo $this->jsQuoteEscape($this->escapeHtml($variable))?>', '<?php echo $this->jsQuoteEscape($this->escapeHtml($category['name']))?>', this); return false;"><?php echo $this->escapeHtml($variable);?></a>
+                         </span>
+                         <span>(<?php echo $this->escapeHtml($category['name'])?>)</span>
+                     <?php
+                    } else {
+                    ?>
+                         <span>
+                            <a href="#" onclick="mappingControl.modify(<?php echo $category['id']?>, '', '<?php echo $this->jsQuoteEscape($this->escapeHtml($category['name']))?>', this); return false;"><?php echo $this->escapeHtml($category['name']);?></a>
+                         </span>
+                    <?php
+                    }
+                    ?>
+                </li>
+            <?php
+            }?>
+        </ul>
+    </td>
+</tr>
+<script type="text/javascript">
+// <![CDATA[
+    var mappingControl = {
+        template: new Template('<input class="input-text" type="text" '
+                  + 'name="<?php echo $_htmlName; ?>[{{id}}][name]" '
+                  + 'value="{{value}}" '
+                  + 'placeholder="{{placeholder}}"'
+                  + '/>', /(^|.|\r|\n)({{(\w+)}})/),
+        modify: function(id, value, placeholder, link){
+          var data = {
+              id: id,
+              value: value,
+              placeholder: placeholder
+          };
+
+          $(link).hide();
+
+          var span = Element.insert($(link).up('span'), {
+              bottom : this.template.evaluate(data)
+          });
+          span.down('input').focus()
+          
+      }
+    }
+//]]>
+</script>

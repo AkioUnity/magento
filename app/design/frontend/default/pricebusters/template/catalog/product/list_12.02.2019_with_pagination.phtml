@@ -1,0 +1,266 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+<?php
+    $_productCollection=$this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+?>
+<?php if(!$_productCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+    <?php //echo $this->getToolbarHtml() ?>
+    <?php // List mode ?>
+    <?php if($this->getMode()!='grid'): ?>
+    <?php $_iterator = 0; ?>
+    <ol class="products-list" id="products-list">
+    <?php foreach ($_productCollection as $_product): ?>
+        <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+            <?php // Product Image ?>
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" width="135" height="135" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+            <?php // Product description ?>
+            <div class="product-shop">
+                <div class="f-fix">
+                    <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
+                    <?php if($_product->getRatingSummary()): ?>
+                    <?php echo $this->getReviewsSummaryHtml($_product) ?>
+                    <?php endif; ?>
+                    <?php echo $this->getPriceHtml($_product, true) ?>
+                    <?php if($_product->isSaleable()): ?>
+                        <p><button type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
+                    <?php else: ?>
+                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                    <?php endif; ?>
+                    <div class="desc std">
+                        <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
+                    </div>
+                    <ul class="add-to-links">
+                        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                            <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                        <?php endif; ?>
+                        <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                            <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    <?php endforeach; ?>
+    </ol>
+    <script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
+
+    <?php else: ?>
+
+    <?php // Grid Mode ?>
+    <div class="grideviewtool clearfix"> 
+    <?php
+    $item_per_page = 24;
+    $current_page = ($_GET['p'])?$_GET['p']:'1';
+    $total_records = $_productCollection->getSize();
+    $total_pages =  ceil($total_records / $item_per_page);
+    $currentUrl = Mage::helper('core/url')->getCurrentUrl();
+    $url = Mage::getSingleton('core/url')->parseUrl($currentUrl);
+    $current_page_url = $url->getScheme() . '://' . $url->getHost() . $url->getPath();
+    parse_str($url->getQuery(), $query);
+    unset($query['p']);
+    $clean_query_string = http_build_query($query);
+    if($clean_query_string != '' && count($query) > 1) {
+        $paginate_base_url = $current_page_url . '?' . http_build_query($query) . '&';
+    } else {
+        $paginate_base_url = $current_page_url. '?';
+    }
+    if($total_pages > 0 && $total_pages != 1 && $current_page <= $total_pages){        
+    ?>
+    <div class="pager" style="float:left;">
+        <div class="pages" style="margin: 0 40px;">
+            <strong>Page:</strong>
+            <ol>
+                <?php 
+                $pagination = '';
+                $right_links    = $current_page + 1; 
+                $previous       = $current_page - 1; //previous link 
+                $next           = $current_page + 1; //next link
+                $first_link     = true; //boolean var to decide our first link
+                if($current_page > 1){
+                    $previous_link = ($previous==0)?1:$previous;
+                    
+                    $pagination .= '<li class="first"><a href="'.$paginate_base_url.'p=1" title="First"><<</a></li>'; //first link
+                    $pagination .= '<li><a href="'.$paginate_base_url.'p='.$previous_link.'" title="Previous"><</a></li>'; //previous link
+                        for($i = ($current_page-2); $i < $current_page; $i++){ //Create left-hand side links
+                            if($i > 0){
+                                $pagination .= '<li><a href="'.$paginate_base_url.'p='.$i.'">'.$i.'</a></li>';
+                            }
+                        }   
+                    $first_link = false; //set first link to false
+                }
+                
+                if($first_link){ //if current active page is first link
+                    $pagination .= '<li class="first active">'.$current_page.'</li>';
+                }elseif($current_page == $total_pages){ //if it's the last active link
+                    $pagination .= '<li class="last active">'.$current_page.'</li>';
+                }else{ //regular current link
+                    $pagination .= '<li class="active">'.$current_page.'</li>';
+                }
+                        
+                for($i = $current_page+1; $i < 5 ; $i++){ //create right-hand side links
+                    if($i<=$total_pages){
+                        $pagination .= '<li><a href="'.$paginate_base_url.'p='.$i.'">'.$i.'</a></li>';
+                    }
+                }
+                if($current_page < $total_pages){ 
+                    $next_page = $current_page + 1;
+                    $next_link = ($next_page > $total_pages)? $total_pages : $next_page;
+                    $pagination .= '<li><a href="'.$paginate_base_url.'p='.$next_link.'" >></a></li>'; //next link
+                    $pagination .= '<li class="last"><a href="'.$paginate_base_url.'p='.$total_pages.'" title="Last">>></a></li>'; //last link
+                }
+                echo $pagination;                
+                ?>
+                <?php /* ?>
+                <li><a class="previous i-previous" href="https://pricebusters.furniture/categories/living-room.htmlcat/20/?dir=asc&amp;p=2" title="Previous">
+                <img src="https://pricebusters.furniture/skin/frontend/default/default/images/pager_arrow_left.gif" alt="Previous" class="v-middle">
+                </a></li>
+                <li class="current">1</li>
+                <li><a href="https://pricebusters.furniture/categories/living-room.htmlcat/20/?dir=asc&amp;p=2">2</a></li>
+                <li><a href="https://pricebusters.furniture/categories/living-room.htmlcat/20/?dir=asc&amp;p=3">3</a></li>
+                <li><a href="https://pricebusters.furniture/categories/living-room.htmlcat/20/?dir=asc&amp;p=4">4</a></li>
+                <li><a href="https://pricebusters.furniture/categories/living-room.htmlcat/20/?dir=asc&amp;p=5">5</a></li>
+                <li><a class="next i-next" href="https://pricebusters.furniture/categories/living-room.htmlcat/20/?dir=asc&amp;p=2" title="Next">
+                <img src="https://pricebusters.furniture/skin/frontend/default/default/images/pager_arrow_right.gif" alt="Next" class="v-middle">
+                </a></li>
+                <?php */ ?>
+            </ol>
+        </div>
+    </div> 
+    <?php } ?>
+    <script>
+        function sortby() {
+            if (this.selectedIndex !== 0) {
+                window.location.href = this.value;
+            }
+            setLocation(document.getElementById("sortby").value)
+        };
+    </script>
+    <div class="sort-by">
+        <label>Sort By</label>
+        <?php 
+        parse_str($url->getQuery(), $sort_query);
+        if(!empty($sort_query)) {
+            $sort_by_base_url = $currentUrl . '&';
+        } else {
+            $sort_by_base_url = $currentUrl. '?';
+        }
+        ?>
+        <select id="sortby" onchange="sortby()">
+            <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=position">
+            Position</option>
+            <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=name">
+            Name</option>
+            <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=price" selected="selected">
+            Price</option>
+            <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=is_coaster">
+            Is a Coaster Product</option>
+        </select>
+        <?php   
+        if(isset($sort_query['dir']) && $sort_query['dir'] != '') {
+            $dir = $sort_query['dir'];
+            unset($sort_query['dir']);
+            $clean_sort_query_string = http_build_query($sort_query);
+            if($clean_sort_query_string != '' && count($sort_query) > 1) {
+                $sort_by_base_url = $current_page_url . '?' . http_build_query($clean_sort_query_string) . '&';
+            } else {
+                $sort_by_base_url = $current_page_url. '?';
+            }
+            if($dir == 'asc') {
+                echo '<a href="'.$sort_by_base_url.'dir=desc" title="Set Descending Direction"><img src="'. $this->getSkinUrl('images/i_asc_arrow.gif') .'" alt="Set Descending Direction" class="v-middle"></a>';
+            } else {
+                echo '<a href="'.$sort_by_base_url.'dir=asc" title="Set Descending Direction"><img src="'. $this->getSkinUrl('images/i_desc_arrow.gif') .'" alt="Set Ascending Direction" class="v-middle"></a>';
+            }
+        } else {
+            echo '<a href="'.$sort_by_base_url.'dir=asc" title="Set Descending Direction"><img src="'. $this->getSkinUrl('images/i_desc_arrow.gif') .'" alt="Set Ascending Direction" class="v-middle"></a>';
+        }
+        /*if(in_array('dir' , $query) { 
+            
+        ?>
+        <a href="<?php echo $sort_by_base_url; ?>dir=desc&amp;order=price" title="Set Descending Direction"><img src="<?php echo $this->getSkinUrl('images/i_asc_arrow.gif'); ?>" alt="Set Descending Direction" class="v-middle"></a>
+        <?php } else { ?>
+        <a href="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=price" title="Set Ascending Direction"><img src="<?php echo $this->getSkinUrl('images/i_desc_arrow.gif'); ?>" alt="Set Ascending Direction" class="v-middle"></a>
+        <?php } */?>
+    </div>
+    <?php //echo $this->getToolbarHtml() ?>    
+    </div>
+
+
+    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php $_columnCount = $this->getColumnCount(); ?>
+    <?php 
+        foreach ($_productCollection as $_product): 
+            // echo 'aa';
+            // print_r($_product);
+            ?>
+             
+          <div class=" col-sm-6 col-sm-4  galll">
+        <div class="ImgGallSecond1">
+            
+            <a href="<?php echo $_product->getProductUrl() ?>" class="imgdiv" > <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image'); ?>" alt=""> </a>
+            <div class="content2">
+              <a href="<?php echo $_product->getProductUrl() ?>" ><h1><?php echo $_product->getName() ?></h1></a>
+              
+              <p><?php 
+          $dirtyString =  Mage::helper('core/string')->truncate($_product->getShortDescription(), 50);
+              echo filter_var($dirtyString, FILTER_SANITIZE_STRING);?>...</p>
+                <h2>
+				<?php $formattedPrice = Mage::helper('core')->currency($_product->getPrice(), true, false); ?>
+					<?php echo $formattedPrice; ?>
+				</h2>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+
+            </div><!-- content end -->
+        </div><!-- ImgGall -->
+</div><!--col-sm-3 galll -->
+        
+       
+        <?php endforeach ?>
+        <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+    <?php endif; ?>
+	<div class="clearfix"></div>
+    <div class="toolbar-bottom">
+        <?php echo $this->getToolbarHtml() ?>
+    </div>
+
+<?php endif; ?>

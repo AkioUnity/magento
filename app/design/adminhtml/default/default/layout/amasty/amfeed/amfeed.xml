@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+-->
+<layout version="0.1.0">
+    <adminhtml_amfeed_profile_index>
+    	<reference name="head">
+            <action method="addItem">
+                    <type>skin_css</type> 
+                    <name>amasty/amfeed/main.css</name> 
+            </action>
+            <action method="addItem">
+                <type>skin_css</type> 
+                <name>amasty/amfeed/filter.css</name> 
+            </action>
+            <action method="addJs">
+                    <name>amasty/amfeed/amfeed.js</name> 
+            </action>
+        <action method="addJs">
+                <name>amasty/amfeed/filter.js</name> 
+            </action>
+        </reference>    
+        <reference name="content">            
+            <block type="amfeed/adminhtml_popup" template="amasty/amfeed/feed/popup.phtml" name="amfeed_overlay" />
+        </reference>
+    </adminhtml_amfeed_profile_index>
+    <adminhtml_amfeed_profile_new>
+        <update handle="amfeed_code_mirror" /> 
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type> 
+                <name>amasty/amfeed/main.css</name> 
+            </action>
+            <action method="addItem">
+                <type>skin_css</type> 
+                <name>amasty/amfeed/filter.css</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/amfeed.js</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/filter.js</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/xmledit.js</name>
+            </action>
+        </reference>    
+        <reference name="content">            
+            <block type="amfeed/adminhtml_popup" template="amasty/amfeed/feed/popup.phtml" name="amfeed_overlay" />
+        </reference>
+    </adminhtml_amfeed_profile_new>
+    <adminhtml_amfeed_profile_edit>
+        <update handle="amfeed_code_mirror" /> 
+        
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type> 
+                <name>amasty/amfeed/main.css</name> 
+            </action>
+            <action method="addItem">
+                <type>skin_css</type> 
+                <name>amasty/amfeed/filter.css</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/amfeed.js</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/filter.js</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/xmledit.js</name>
+            </action>
+        </reference>    
+        <reference name="content">            
+            <block type="amfeed/adminhtml_popup" template="amasty/amfeed/feed/popup.phtml" name="amfeed_overlay" />
+        </reference>
+    </adminhtml_amfeed_profile_edit>
+    <adminhtml_amfeed_field_new>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type> 
+                <name>amasty/amfeed/filter.css</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/filter.js</name> 
+            </action>
+        </reference>
+    </adminhtml_amfeed_field_new>
+    <adminhtml_amfeed_field_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type> 
+                <name>amasty/amfeed/filter.css</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/filter.js</name> 
+            </action>
+        </reference>
+    </adminhtml_amfeed_field_edit>
+    
+    
+    <amfeed_code_mirror>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type> 
+                <name>amasty/amfeed/code_mirror/lib/codemirror.css</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/code_mirror/lib/codemirror.js</name> 
+            </action>
+            <action method="addJs">
+                <name>amasty/amfeed/code_mirror/addon/mode/simple.js</name> 
+            </action>
+        </reference>
+    </amfeed_code_mirror>
+
+    <adminhtml_amfeed_google_index>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>amasty/amfeed/google.css</name>
+            </action>
+        </reference>
+    </adminhtml_amfeed_google_index>
+    
+    
+</layout>

@@ -1,0 +1,8 @@
+<div class="page-title category-title">
+    <h1><?php echo $this->__($this->getListTitle()); ?></h1>
+</div>
+<?php if($description = $this->getListDescription()): ?>
+    <div class="category-description">
+        <?php echo $this->__($description); ?>
+    </div>
+<?php endif; ?>

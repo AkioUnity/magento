@@ -1,0 +1,41 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<div class="am_feed_overlay" id="am_feed_overlay" style="display: none;">
+&nbsp;
+</div>
+<div class="am_feed_popup" id="am_feed_popup" style="display: none;">
+	<h1><?php echo Mage::helper('amfeed')->__('Progress')?></h1>
+	<span class="close"><a href="#" onclick="am_feed_object.close('<?php
+		echo $this->getCloseUrl();
+	?>');"><?php echo Mage::helper('amfeed')->__('Close')?></a></span>
+	<div class="am_feed_popup_log">
+		<ul id="am_feed_popup_log">
+		</ul>
+	</div>
+	<div class="am_feed_popup_progress_container">
+		<div class="am_feed_popup_progress" id="am_feed_popup_progress">
+			&nbsp;
+		</div>				
+	</div>
+	<div class="am_feed_popup_result">
+		<?php echo Mage::helper('amfeed')->__('Download the file:')?><span id="am_feed_popup_result"></span>		
+	</div>
+</div>
+<script type="text/javascript">
+var am_feed_object = new am_feed();
+var url = '<?php echo Mage::getModel('adminhtml/url')->getUrl('*/amfeed_profile/generate'); ?>';
+var stopUrl = '<?php echo Mage::getModel('adminhtml/url')->getUrl('*/amfeed_profile/stop'); ?>';
+am_feed_object.url = url;
+am_feed_object.stopUrl = stopUrl;
+
+
+var amFeedImportObject = new amFeedImport({
+    url: '<?php echo Mage::getModel('adminhtml/url')->getUrl('*/amfeed_profile/import'); ?>'
+});
+
+</script>

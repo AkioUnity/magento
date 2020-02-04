@@ -1,0 +1,3 @@
+<?php
+class AcimaCredit_AcimaCheckout_IndexController extends Mage_Core_Controller_Front_Action
+{ }

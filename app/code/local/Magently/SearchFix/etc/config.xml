@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Magently_SearchFix>
+            <version>1.0.0</version>
+        </Magently_SearchFix>
+    </modules>
+    <global>
+        <blocks>
+            <magently_searchfix>
+                <class>Magently_SearchFix_Block</class>
+            </magently_searchfix>
+        </blocks>
+    </global>
+</config>

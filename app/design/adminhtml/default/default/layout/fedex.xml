@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>fedex/css/fedex.css</name></action>
+            <action method="addJs"><script>biztech/fedex/fedex.js</script></action>
+        </reference>
+    </default>
+
+	<adminhtml_sales_order_view>
+        <reference name="sales_order_tabs">
+            <action method="addTab"><name>fedex_shipment</name><block>fedex/adminhtml_sales_order_view_tab_fedexShipment</block></action>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_shipment_view>
+        <reference name="head">
+            <action method="removeItem"><type>js</type><name>mage/adminhtml/sales/packaging.js</name></action>
+            <action method="addJs"><file>biztech/fedex/sales/packaging.js</file></action>
+        </reference>
+        <reference name="shipment_packaging">
+            <action method="setTemplate"><template>fedex/sales/order/shipment/packaging/popup.phtml</template></action>
+        </reference>
+        <reference name="order_info">
+            <action method="setTemplate"><template>fedex/sales/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_shipment_view>
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="order_info">
+            <action method="setTemplate"><template>fedex/sales/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="order_info">
+            <action method="setTemplate"><template>fedex/sales/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+    <adminhtml_sales_order_view>
+        <reference name="order_info">
+            <action method="setTemplate"><template>fedex/sales/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_view>
+    <adminhtml_sales_order_invoice_new>
+        <reference name="order_info">
+            <action method="setTemplate"><template>fedex/sales/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+    <adminhtml_sales_order_invoice_view>
+        <reference name="order_info">
+            <action method="setTemplate"><template>fedex/sales/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+    <adminhtml_sales_order_shipment_new>
+        <reference name="order_info">
+            <action method="setTemplate"><template>fedex/sales/order/view/info.phtml</template></action>
+        </reference>
+    </adminhtml_sales_order_shipment_new>
+    
+
+    
+
+    <adminhtml_pickup_index>
+        <reference name="content">
+            <block type="fedex/adminhtml_pickup" name="pickup" />
+        </reference>
+    </adminhtml_pickup_index>
+
+    <adminhtml_etdtype_index>
+        <reference name="content">
+            <block type="fedex/adminhtml_etdtype" name="etdtype" />
+        </reference>
+    </adminhtml_etdtype_index>
+
+    <adminhtml_pickup_new>
+        <reference name="head">
+            <action method="addJs"><script>biztech/fedex/jquery.js</script></action>  
+            <action method="addJs"><script>biztech/fedex/jquery-ui.js</script></action>  
+            <action method="addJs"><script>biztech/fedex/jquery.datetimepicker.full.js</script></action>
+            <action method="addJs"><script>biztech/fedex/fedex.js</script></action>
+            <action method="addJs"><script>biztech/fedex/state.js</script></action>
+            <action method="addItem"><type>skin_css</type><name>fedex/css/jquery.datetimepicker.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>fedex/css/jquery-ui.css</name></action>
+        </reference>
+    </adminhtml_pickup_new>
+
+
+    <adminhtml_pickup_edit>
+        <reference name="head">
+            <action method="addJs"><script>biztech/fedex/jquery.js</script></action> 
+            <action method="addJs"><script>biztech/fedex/jquery-ui.js</script></action>   
+            <action method="addJs"><script>biztech/fedex/jquery.datetimepicker.full.js</script></action>
+            <action method="addJs"><script>biztech/fedex/fedex.js</script></action>
+            <action method="addJs"><script>biztech/fedex/state.js</script></action>
+            <action method="addItem"><type>skin_css</type><name>fedex/css/jquery.datetimepicker.
+            css</name></action>
+            <action method="addItem"><type>skin_css</type><name>fedex/css/jquery-ui.css</name></action>
+
+
+
+        </reference>
+    </adminhtml_pickup_edit>
+
+
+
+
+</layout>

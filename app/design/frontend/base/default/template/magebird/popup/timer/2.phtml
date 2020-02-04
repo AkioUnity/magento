@@ -1,0 +1,20 @@
+<div class="countdown white cfix" id="countdown<?php echo $this->getWidgetId()?>2">
+  <?php if($this->getData('timer')>86400):?>
+  <div>
+    <span class="days number"></span>
+    <span class="label"><?php echo $this->__('days');?></span>
+  </div>
+  <?php endif;?>
+  <div>
+    <span class="hours number"></span>
+    <span class="label"><?php echo $this->__('hrs');?></span>
+  </div>
+  <div>
+    <span class="minutes number"></span>
+    <span class="label"><?php echo $this->__('mins');?></span>
+  </div>
+  <div>
+    <span class="seconds number"></span>
+    <span class="label"><?php echo $this->__('secs');?></span>
+  </div>
+</div>

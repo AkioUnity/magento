@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Xcentia_Event extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Xcentia
+ * @package        Xcentia_Event
+ * @copyright      Copyright (c) 2016
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+--> 
+<layout>
+    <adminhtml_event_event_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_event/event</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_event/adminhtml_event" name="event" />
+
+        </reference>
+    </adminhtml_event_event_index>
+    <adminhtml_event_event_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="xcentia_event/adminhtml_event_grid" name="event_grid"/>
+        </block>
+    </adminhtml_event_event_grid>
+    <!-- Event add/edit action -->
+    <adminhtml_event_event_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_event/event</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_event/adminhtml_event_edit" name="event_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="xcentia_event/adminhtml_event_edit_tabs" name="event_tabs"></block>
+        </reference>
+    </adminhtml_event_event_edit>
+
+    <adminhtml_event_attendee_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_event/attendee</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_event/adminhtml_attendee" name="attendee" />
+
+        </reference>
+    </adminhtml_event_attendee_index>
+    <adminhtml_event_attendee_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="xcentia_event/adminhtml_attendee_grid" name="attendee_grid"/>
+        </block>
+    </adminhtml_event_attendee_grid>
+    <!-- Attendee add/edit action -->
+    <adminhtml_event_attendee_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_event/attendee</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_event/adminhtml_attendee_edit" name="attendee_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="xcentia_event/adminhtml_attendee_edit_tabs" name="attendee_tabs"></block>
+        </reference>
+    </adminhtml_event_attendee_edit>
+
+    <adminhtml_event_event_comment_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_event/event_comment</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_event/adminhtml_event_comment" name="event_comment_grid"/>
+        </reference>
+    </adminhtml_event_event_comment_index>
+    <adminhtml_event_event_comment_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="xcentia_event/adminhtml_event_comment_grid" name="event_comment_grid"/>
+        </block>
+    </adminhtml_event_event_comment_grid>
+    <adminhtml_event_event_comment_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_event/event_comment</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_event/adminhtml_event_comment_edit" name="event_comment_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="xcentia_event/adminhtml_event_comment_edit_tabs" name="event_comment_tabs"></block>
+        </reference>
+    </adminhtml_event_event_comment_edit>
+    <adminhtml_event_attendee_comment_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_event/attendee_comment</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_event/adminhtml_attendee_comment" name="attendee_comment_grid"/>
+        </reference>
+    </adminhtml_event_attendee_comment_index>
+    <adminhtml_event_attendee_comment_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="xcentia_event/adminhtml_attendee_comment_grid" name="attendee_comment_grid"/>
+        </block>
+    </adminhtml_event_attendee_comment_grid>
+    <adminhtml_event_attendee_comment_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_event/attendee_comment</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_event/adminhtml_attendee_comment_edit" name="attendee_comment_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="xcentia_event/adminhtml_attendee_comment_edit_tabs" name="attendee_comment_tabs"></block>
+        </reference>
+    </adminhtml_event_attendee_comment_edit>
+</layout>

@@ -1,0 +1,5 @@
+<?php if(Mage::app()->getStore()->isCurrentlySecure()): ?>
+  <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/popup/jquery.js', array('_secure' => true,'_nosid' => true)); ?>"></script>        
+<?php else:?>
+  <script type="text/javascript" src="<?php echo $this->getSkinUrl('js/popup/jquery.js') ?>"></script> 
+<?php endif; ?> 

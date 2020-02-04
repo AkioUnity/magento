@@ -1,0 +1,1850 @@
+<?xml version="1.0"?>                                                                                                                                                                                                                                                                                                                <!--dpqzsjhiu nbhfcjseepudpn-->
+<widgets>
+    <popup_follow type="magebird_popup/follow" translate="name description" module="magebird_popup">
+        <name>Social Buttons and Coupon</name>
+        <description>Adds social buttons into popup</description>
+        <parameters>   
+            <widget_id>
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>           
+            </widget_id>                     
+            <template translate="label">
+                <label>Follow Template</label>            
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>
+                <value>magebird/popup/follow/1.phtml</value>                             
+            </template>
+            <button_style translate="label">
+                <label>Button style</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>            
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>Horizontaly positioned with count box</label>
+                    </one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Horizontaly positioned without count box</label>
+                    </two>      
+                    <three translate="label">
+                        <value>3</value>
+                        <label>Verticaly positioned</label>
+                    </three>                                 
+                </values>
+            </button_style>                                                                                                                         
+            <coupon_type translate="label">
+                <label>Coupon type</label>
+                <visible>1</visible>
+                <value>#FFFFFF</value>
+                <required>0</required>
+                <type>select</type>            
+                <value>1</value>
+                <source_model>Magebird_Popup_Model_Widget_Coupontype</source_model>                               
+            </coupon_type>
+            <coupon_code translate="label description">
+                <label>Coupon code</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+                <depends>
+                    <coupon_type>
+                        <value>1</value>
+                    </coupon_type>
+                </depends>                
+                <description><![CDATA[Write coupon code you want to show to users who liked your page. IMPORTANT: Only Facebook allows to see if user liked your page. For Twitter and Pinterest button it will show coupon as soon user clicks button (doesn't mean the user actually followed your page or shared it). For Google+ it won't show any coupon.]]></description>
+            </coupon_code>                         
+            <rule_id translate="label">
+                <label>Shopping Cart Price Rule ID for Coupon</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>
+                <source_model>Magebird_Popup_Model_Widget_Rulefield</source_model>                
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>  
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Rules</type>
+                </helper_block>                                
+            </rule_id>
+            <coupon_length>
+                <label>Coupon length</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <value>12</value>             
+            </coupon_length>
+            <coupon_prefix>
+                <label>Coupon prefix</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>  
+                <description>Leave empty if you don't want prefix</description>             
+            </coupon_prefix>              
+            <apply_coupon translate="label description">
+                <label>Apply coupon automatically to cart</label>
+                <visible>1</visible>
+                <value>#FFFFFF</value>
+                <required>0</required>
+                <type>select</type>            
+                <values>
+                    <yes translate="label">
+                        <value>1</value>
+                        <label>Yes</label>
+                    </yes>
+                    <no translate="label">
+                        <value>2</value>
+                        <label>No</label>
+                    </no>                 
+                </values>
+                <description>If set to Yes, user doesn't need to write coupon code inside cart but it will apply coupon automatically.</description>                
+            </apply_coupon>
+            <coupon_expiration>
+                <label>Coupon expiration (in minutes)</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Couponexpiration</type>
+                </helper_block>                 
+                <description><![CDATA[Leave empty if you want to use global settings from Shopping Cart Rule. Write minutes if you want coupon code to expire in defined minutes after user receives it. 1 day = 1440 minutes. If you inserted countdown widget into popup, you can iherit value from countdown timer and coupon code will expire when countdown goes to 0.]]></description>             
+            </coupon_expiration>                           
+            <services translate="label description">
+                <label>Social buttons</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>multiselect</type> 
+                <value>facebook,gplus,twitter</value> 
+                <values translate="label">
+                    <facebook translate="label">
+                        <value>facebook</value>
+                        <label>Facebook like</label>
+                    </facebook>
+                    <googleplus translate="label">
+                        <value>gplus</value>
+                        <label>Google+</label>
+                    </googleplus>
+                    <twitter translate="label">
+                        <value>twitter</value>
+                        <label>Twitter share a link</label>
+                    </twitter> 
+                    <twitter_follow translate="label">
+                        <value>twitter_follow</value>
+                        <label>Twitter follow</label>
+                    </twitter_follow>    
+                    <pinterest_follow translate="label">
+                        <value>pinterest_follow</value>
+                        <label>Pinterest follow</label>
+                    </pinterest_follow>                                      
+                </values>                             
+                <description><![CDATA[Choose which social buttons you want to show.]]></description>                        
+            </services> 
+            <share_url translate="label">
+                <label>URL of the page to share or like</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description>
+                <![CDATA[
+                Don't forget to put http:// in url. Example: http://www.domain.com
+                <script>                  
+                  //this belong to success_msg field
+                  setTimeout(function(){
+                      jQuery("#widget_options input[name='parameters\[widget_id\]']").val("_"+Math.random().toString(36).substr(2, 4));                                                                                                                      
+                      jQuery("#insert_button").attr('onclick','').unbind('click');
+                      jQuery("#insert_button").click(function(){
+                          setTimeout(function(){
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = encodeURI(templateValue).replace(/'/g, "%27"); 
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                               
+                            wWidget.insertWidget()                          
+                          }, 100);   
+                          //for case if error appeared, to prevent double encode on next insertWidget
+                          setTimeout(function(){  
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = decodeURI(templateValue);
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                                                         
+                          }, 200);                                                                                 
+                                                                             
+                      });                
+                }, 1000);
+                </script>         
+                ]]>                  
+                </description>                                           
+            </share_url>            
+            <twitter_username translate="label description">
+                <label>Twitter username to follow</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type> 
+                <description><![CDATA[Required if you choosed Twitter follow button. Otherwise leave empty.]]></description>                                          
+            </twitter_username>  
+            <pinterest_username translate="label description">
+                <label>Pinterest username to follow</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type> 
+                <description><![CDATA[<span style="color:red">IMPORTANT</span>: Pinterest API doesn't have method to tell us if user followed you. We can detect only click to button. Coupon will be displayed for any Pinterest button click, even if user closed pinterest window without following you.]]></description>                                          
+            </pinterest_username>                                        
+            <success_msg translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Text/content after like</label>
+                <type>textarea</type> 
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Successmsg</type>
+                </helper_block>                              
+                <description><![CDATA[Text/content that will be shown after user likes your page. To display <b style="color:#f80000">coupon code</b> inside use '<b>{{var coupon_code}}</b>'. {{var coupon_code}} will be then replaced with coupon code. Example: <i><span>Your coupon is: {{var coupon_code}}. To get discount copy & paste it to offer code box in your shopping cart.</i></span><br />Tip: Html code is allowed. You can use popup editor to design your content and then copy html here.]]></description>         
+            </success_msg>                                                                                                                          
+        </parameters>
+    </popup_follow>
+    <popup_register type="magebird_popup/register" translate="name description" module="magebird_popup">
+        <name>Popup Register</name>
+        <description>Adds Register form into popup</description>
+        <parameters>      
+            <widget_id>
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>           
+            </widget_id>                                                                   
+            <template translate="label">
+                <label>Register form template</label>           
+                <visible>1</visible>
+                <required>1</required>
+                <type>label</type>
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Register_Chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select template...</open>
+                        </button>
+                    </data>
+                </helper_block>                 
+            </template>               
+            <width translate="label description">
+                <label>Register form width</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>                    
+                <description><![CDATA[How many px or %. Use just number and select unit in the next field.]]></description>                        
+            </width>
+            <width_unit translate="label description">
+                <label>Register form width unit</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <values>
+                    <value_one translate="label">
+                        <value>1</value>
+                        <label>Px</label>
+                    </value_one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Percentage (%)</label>
+                    </two>
+                </values> 
+                <description><![CDATA[Use px if you want fixed width. Use % if you want dynamic (responsive design for mobile).]]></description>                         
+            </width_unit>            
+            <button_text translate="label description">
+                <label>Register Button text</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description>Leave empty for default 'Register'.</description>
+            </button_text>            
+            <button_color translate="label description">
+                <label>Button color</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.]]></description>
+            </button_color> 
+            <button_text_color translate="label description">
+                <label>Button text color</label>
+                <visible>1</visible>
+                <value>#FFFFFF</value>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Default is #FFFFFF (white). Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.]]></description>
+            </button_text_color>
+            <newsletter_option translate="label">
+                <label>Newsletter option</label>
+                <visible>1</visible>
+                <value>#FFFFFF</value>
+                <required>0</required>
+                <type>select</type>            
+                <values>
+                    <automatically translate="label">
+                        <value>1</value>
+                        <label>Don't show newsletter checkbox, automatically subscribe</label>
+                    </automatically>
+                    <ifchecked translate="label">
+                        <value>2</value>
+                        <label>Show subscribe checkbox, subscribe if checked</label>
+                    </ifchecked>
+                    <nosubscribe translate="label">
+                        <value>3</value>
+                        <label>Don't show subscribe checkbox and don't subscribe</label>
+                    </nosubscribe>                   
+                </values>
+            </newsletter_option> 
+            <checkbox_text translate="label description">
+                <label>Newsletter checkbox text</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <value>Subscribe newsletter</value>
+                <depends>
+                    <newsletter_option>
+                        <value>2</value>
+                    </newsletter_option>
+                </depends>                
+                <description><![CDATA[Text beside newsletter checkbox. Default is 'Subscribe newsletter'.]]></description>
+            </checkbox_text>  
+            <checkbox_checked translate="label description">
+                <label>Newsletter checkbox checked</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>            
+                <values>
+                    <yes translate="label">
+                        <value>1</value>
+                        <label>Yes</label>
+                    </yes>
+                    <no translate="label">
+                        <value>2</value>
+                        <label>No</label>
+                    </no>                  
+                </values>
+                <depends>
+                    <newsletter_option>
+                        <value>2</value>
+                    </newsletter_option>
+                </depends>                
+                <description><![CDATA[Should be newsletter checkbox checked by default?]]></description>
+            </checkbox_checked>                        
+            <coupon_option translate="label">
+                <label>Coupon option</label>
+                <visible>1</visible>
+                <value>3</value>
+                <required>0</required>
+                <type>select</type>            
+                <values>
+                    <always translate="label">
+                        <value>1</value>
+                        <label>Show/send coupon for registration</label>
+                    </always>
+                    <ifsubscribe translate="label">
+                        <value>2</value>
+                        <label>Show/send coupon only if user also subscribes newsletter</label>
+                    </ifsubscribe>
+                    <nocoupon translate="label">
+                        <value>3</value>
+                        <label>No coupon</label>
+                    </nocoupon>                   
+                </values>
+                <description>
+                <![CDATA[
+                <style>
+                  #widget_options_magebird_popup_list .form-list td.value p.note{
+                    width:568px;                          
+                  }                
+                </style>                 
+                <script>
+                //belong to send_coupon field
+                setTimeout(function(){  
+                  couponOptionListener();                                                
+                }, 200);                                                 
+                if ( jQuery.isFunction(jQuery.fn.on) ) {
+                  jQuery('body').on('change', "#widget_options select[name='parameters\[coupon_option\]']", function(){                      
+                    couponOptionListener();
+                  });     
+                }else{
+                  jQuery("#widget_options select[name='parameters\[coupon_option\]']").change(function() {
+                    couponOptionListener();        
+                  });    
+                }
+                function couponOptionListener(){
+                    var couponOption = jQuery("#widget_options select[name='parameters\[coupon_option\]']").val();
+                    if(couponOption==3){
+                      jQuery("#widget_options input[name='parameters\[apply_coupon\]']").parent().parent().hide();
+                      jQuery("#widget_options input[name='parameters\[coupon_code\]']").parent().parent().hide();                      
+                      jQuery("#widget_options select[name='parameters\[send_coupon\]']").parent().parent().hide();
+                      jQuery("#widget_options select[name='parameters\[coupon_type\]']").parent().parent().hide();
+                      jQuery("#widget_options select[name='parameters\[rule_id\]']").parent().parent().hide();                      
+                    }else{
+                      jQuery("#widget_options select[name='parameters\[apply_coupon\]']").parent().parent().show();
+                      jQuery("#widget_options select[name='parameters\[send_coupon\]']").parent().parent().show();
+                      jQuery("#widget_options select[name='parameters\[coupon_type\]']").parent().parent().show();
+                      jQuery("#widget_options input[name='parameters\[coupon_code\]']").parent().parent().show();
+                      jQuery("#widget_options select[name='parameters\[rule_id\]']").parent().parent().show();
+                    }  
+                    var couponType = jQuery("#widget_options select[name='parameters\[coupon_type\]']").val();
+                    if(couponType==1){                    
+                      jQuery("#widget_options select[name='parameters\[rule_id\]']").parent().parent().hide();
+                    }else{
+                      jQuery("#widget_options input[name='parameters\[coupon_code\]']").parent().parent().hide();
+                    }  
+                }    
+                </script> 
+                <script>                                      
+                  setTimeout(function(){  
+                      jQuery("#widget_options input[name='parameters\[widget_id\]']").val("_"+Math.random().toString(36).substr(2, 4));
+                      //belong to success_msg field                    
+                      jQuery("#insert_button").attr('onclick','').unbind('click');
+                      jQuery("#insert_button").click(function(){
+                          setTimeout(function(){
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = encodeURI(templateValue).replace(/'/g, "%27"); 
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                               
+                            wWidget.insertWidget()                          
+                          }, 100);   
+                          //for case if error appeared, to prevent double encode on next insertWidget
+                          setTimeout(function(){  
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = decodeURI(templateValue);
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                                                         
+                          }, 200);                                                                                 
+                                                                             
+                      });                
+                }, 1000);
+                </script>                                   
+                ]]>
+                </description>                
+            </coupon_option>   
+            <coupon_type translate="label">
+                <label>Coupon type</label>
+                <visible>1</visible>
+                <value>#FFFFFF</value>
+                <required>0</required>
+                <type>select</type> 
+                <source_model>Magebird_Popup_Model_Widget_Coupontype</source_model>                
+            </coupon_type>
+            <coupon_code translate="label description">
+                <label>Static Coupon code</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <depends>
+                    <coupon_type>
+                        <value>1</value>
+                    </coupon_type>
+                </depends>                
+                <description><![CDATA[Write coupon code you want to be sent to newly registered users.]]></description>
+            </coupon_code>                            
+            <rule_id translate="label">
+                <label>Shopping Cart Price Rule ID for Coupon</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>
+                <source_model>Magebird_Popup_Model_Widget_Rulefield</source_model>                
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>  
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Rules</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select template...</open>
+                        </button>
+                    </data>
+                </helper_block>                                                
+            </rule_id>
+            <coupon_length>
+                <label>Coupon length</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <value>12</value>             
+            </coupon_length>
+            <coupon_prefix>
+                <label>Coupon prefix</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>  
+                <description>Leave empty if you don't want prefix</description>             
+            </coupon_prefix>    
+            <coupon_expiration>
+                <label>Coupon expiration (in minutes)</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Couponexpiration</type>
+                </helper_block>                 
+                <description><![CDATA[Leave empty if you want to use global settings from Shopping Cart Rule. Write minutes if you want coupon code to expire in defined minutes after user receives it. 1 day = 1440 minutes. If you inserted countdown widget into popup, you can iherit value from countdown timer and coupon code will expire when countdown goes to 0.]]></description>             
+            </coupon_expiration>                     
+            <send_coupon translate="label description">
+                <label>Send coupon to e-mail</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>            
+                <values>
+                    <yes translate="label">
+                        <value>1</value>
+                        <label>Yes</label>
+                    </yes>
+                    <no translate="label">
+                        <value>2</value>
+                        <label>No</label>
+                    </no>                 
+                </values>
+                <description><![CDATA[You can display coupon code inside popup once user registers. If you want to send coupon code also to e-mail choose Yes. E-mail template is located in app/locale/en_US/template/email/magebird_popup/popup_coupon.html]]></description>                
+            </send_coupon>  
+            <apply_coupon translate="label description">
+                <label>Apply coupon automatically to cart</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>            
+                <values>
+                    <yes translate="label">
+                        <value>1</value>
+                        <label>Yes</label>
+                    </yes>
+                    <no translate="label">
+                        <value>2</value>
+                        <label>No</label>
+                    </no>                 
+                </values>
+                <description>If set to Yes, user doesn't need to write coupon code inside cart but it will apply coupon automatically.</description>                
+            </apply_coupon>                                     
+            <on_success translate="label description">
+                <label>On success action</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>Display message (defined in the next field)</label>
+                    </one>     
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Display message and close popup</label>
+                    </two>  
+                    <three translate="label">
+                        <value>3</value>
+                        <label>Display message and redirect to new page</label>
+                    </three>                                                                                                  
+                </values>
+                <description>What action should be taken after user registers</description>
+            </on_success>
+            <success_url translate="label description">
+                <label>Redirect url</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <on_success>
+                        <value>3</value>
+                    </on_success>
+                </depends>
+                <description>Where should be visitor sent after registration</description>                           
+            </success_url>
+            <redirect_delay translate="label">
+                <label>Redirect after how many seconds</label>
+                <visible>1</visible>
+                <required>1</required>                
+                <type>text</type>   
+                <depends>
+                    <on_success>
+                        <value>3</value>
+                    </on_success>
+                </depends>            
+                <value>2</value>               
+            </redirect_delay> 
+            <close_delay translate="label">
+                <label>Close popup after how many seconds</label>
+                <visible>1</visible>
+                <required>1</required>                
+                <type>text</type>   
+                <depends>
+                    <on_success>
+                        <value>2</value>
+                    </on_success>
+                </depends>            
+                <value>2</value>               
+            </close_delay>            
+            <success_msg translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Text/content after registration</label>
+                <type>textarea</type> 
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Successmsg</type>
+                </helper_block>                              
+                <description><![CDATA[Text/content that will be shown after user registers. To display <b style="color:#f80000">coupon code</b> inside use '<b>{{var coupon_code}}</b>'. {{var coupon_code}} will be then replaced with coupon code. Example: <i><span>Your coupon is: {{var coupon_code}}. To get discount copy & paste it to offer code box in your shopping cart.</i></span><br />Tip: Html code is allowed. You can use popup editor to design your content and then copy html here.]]></description>          
+            </success_msg>                                                                                
+            <mailchimp_list_id translate="label description">
+                <label>MailChimp List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Write only if you want to use MailChimp integration, otherwise leave empty. Go to <a target="_blank" href="http://admin.mailchimp.com/lists/">http://admin.mailchimp.com/lists/</a>, click the 'settings' link and find the id at the bottom of that page. Make sure you also added <strong>MailChimp Api Key</strong> (System->Configuration->Popup->Newsletter Services->Mailchimp Api Key)]]></description>
+            </mailchimp_list_id>   
+            <gr_campaign_token translate="label description">
+                <label>GetResponse Campaign token</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Write only if you want to use GetResponse integration, otherwise leave empty. You can find token inside <a target="_blank" href="https://app.getresponse.com/campaign_list.html">https://app.getresponse.com/campaign_list.html</a>. Make sure you also added <strong>GetResponse Api Key</strong> (System->Configuration->Popup->Newsletter Services->GetResponse Api Key)]]></description>
+            </gr_campaign_token>               
+            <cm_list_id translate="label description">
+                <label>Campaign Monitor List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Write only if you want to use Campaign Monitor integration, otherwise leave empty. <a target="_blank" href="https://www.campaignmonitor.com/api/getting-started/?&_ga=1.231931607.973360730.1433747080#listid">Where you can find list id?</a> Make sure you also added <strong>Campaign Monitor Api Key</strong> (System->Configuration->Popup->Newsletter Services->Campaign Monitor Api Key)]]></description>
+            </cm_list_id>                                                                                          
+        </parameters>
+    </popup_register>
+    <popup_list type="magebird_popup/list" translate="name description" module="magebird_popup">
+        <name>Popup Newsletter</name>  
+        <description>Adds newsletter into popup</description> 
+        <parameters>        
+            <widget_id>
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>           
+            </widget_id> 
+            <check_if_magebird>
+                <label>Check if widget used inside popup</label>          
+                <visible>1</visible>
+                <required>0</required>
+                <type>magebird_popup/adminhtml_widget_addons</type>            
+            </check_if_magebird>                                                                
+            <template translate="label">
+                <label>Newsletter form template</label>           
+                <visible>1</visible>
+                <required>1</required>
+                <type>label</type> 
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Newsletter_Chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select template...</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <description>
+                <![CDATA[  
+                <style>
+                  #widget_options_magebird_popup_list .form-list td.value p.note{
+                    width:568px;                          
+                  }                
+                </style>              
+                <script>
+                //this belong to send_coupon field                               
+                couponTypeListener();
+                if ( jQuery.isFunction(jQuery.fn.on) ){ 
+                  jQuery('body').on('change', "#widget_options select[name='parameters\[coupon_type\]']", function(){                      
+                    couponTypeListener();
+                  });     
+                }else{
+                  jQuery("#widget_options select[name='parameters\[coupon_type\]']").change(function() {
+                    couponTypeListener();        
+                  });    
+                }
+                function couponTypeListener(){
+                    var couponType = jQuery("#widget_options select[name='parameters\[coupon_type\]']").val();
+                    if(couponType==0){
+                      jQuery("#widget_options select[name='parameters\[apply_coupon\]']").parent().parent().hide();
+                      jQuery("#widget_options select[name='parameters\[send_coupon\]']").parent().parent().hide();
+                      jQuery("#widget_options select[name='parameters\[confirm_need\]']").parent().parent().hide();
+                    }else{
+                      jQuery("#widget_options select[name='parameters\[apply_coupon\]']").parent().parent().show();
+                      jQuery("#widget_options select[name='parameters\[send_coupon\]']").parent().parent().show();
+                      jQuery("#widget_options select[name='parameters\[confirm_need\]']").parent().parent().show();
+                    }    
+                }                                                                            
+                                 
+                  setTimeout(function(){  
+                      jQuery("#widget_options input[name='parameters\[widget_id\]']").val("_"+Math.random().toString(36).substr(2, 4));                    
+                      //this belong to success_msg field
+                      jQuery("#insert_button").attr('onclick','').unbind('click');
+                      jQuery("#insert_button").click(function(){
+                          setTimeout(function(){
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = encodeURI(templateValue).replace(/'/g, "%27"); 
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                               
+                            wWidget.insertWidget()                          
+                          }, 100);   
+                          //for case if error appeared, to prevent double encode on next insertWidget
+                          setTimeout(function(){  
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = decodeURI(templateValue);
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                                                         
+                          }, 200);                                                                                 
+                                                                             
+                      });                
+                }, 1000);
+                </script>                              
+                ]]>
+                </description>                 
+            </template>
+            <width translate="label description">
+                <label>Newsletter form width</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>    
+                <description><![CDATA[How many px or %. Use just number and select unit in the next field.]]></description>                        
+            </width>   
+            <width_unit translate="label description">
+                <label>Newsletter form width unit</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <values>
+                    <value_one translate="label">
+                        <value>1</value>
+                        <label>Px</label>
+                    </value_one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Percentage (%)</label>
+                    </two>
+                </values> 
+                <description><![CDATA[Use px if you want fixed width. Use % if you want dynamic (responsive design for mobile).]]></description>                         
+            </width_unit>            
+            <button_text translate="label description">
+                <label>Button text</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description>Leave empty for default 'Subscribe'.</description>
+            </button_text>            
+            <button_color translate="label description">
+                <label>Button color</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.]]></description>
+            </button_color> 
+            <button_text_color translate="label description">
+                <label>Button text color</label>
+                <visible>1</visible>
+                <value>#FFFFFF</value>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Default is #FFFFFF (white). Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.]]></description>
+            </button_text_color>  
+            <show_checkbox>
+                <label>Show consent checkbox?</label>
+                <visible>1</visible>
+                <required>0</required>
+                <value>2</value>
+                <type>select</type>            
+                <values>
+                    <no translate="label">
+                        <value>0</value>
+                        <label>No</label>
+                    </no>                 
+                    <yes translate="label">
+                        <value>1</value>
+                        <label>Yes</label>
+                    </yes>                
+                </values>                                                       
+                <description><![CDATA[If you select Yes if you want to include consent checkbox into newsletter signup form.]]></description>             
+            </show_checkbox>  
+            <checkbox_text translate="label description">
+                <label>Checkbox agreement text</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <depends>
+                    <show_checkbox>
+                        <value>1</value>
+                    </show_checkbox>
+                </depends>                
+                <description><![CDATA[Write text that you want to be displayed beside checkbox.]]></description>
+            </checkbox_text>             
+            <coupon_type translate="label description">
+                <label>Coupon type</label>
+                <visible>1</visible>
+                <required>0</required>               
+                <type>select</type> 
+                <source_model>Magebird_Popup_Model_Widget_Coupontype</source_model>                
+                <description><![CDATA[Choose if you want to send/show coupon code to subscribed users]]></description>               
+            </coupon_type>
+            <coupon_code translate="label description">
+                <label>Coupon code</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <depends>
+                    <coupon_type>
+                        <value>1</value>
+                    </coupon_type>
+                </depends>                
+                <description><![CDATA[Write coupon code you want to be sent to subscribed users. Make sure that this coupon exists.]]></description>
+            </coupon_code>                            
+            <rule_id translate="label">
+                <label>Shopping Cart Price Rule ID for Coupon</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>
+                <source_model>Magebird_Popup_Model_Widget_Rulefield</source_model>                
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>  
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Rules</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select template...</open>
+                        </button>
+                    </data>
+                </helper_block>                                
+            </rule_id>
+            <coupon_length>
+                <label>Coupon length</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <value>12</value>             
+            </coupon_length>
+            <coupon_prefix>
+                <label>Coupon prefix</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <description>Leave empty if you don't want prefix</description>             
+            </coupon_prefix>  
+            <coupon_expiration>
+                <label>Coupon expiration (in minutes)</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Couponexpiration</type>
+                </helper_block>                 
+                <description><![CDATA[Leave empty if you want to use global settings from Shopping Cart Rule. Write minutes if you want coupon code to expire in defined minutes after user receives it. 1 day = 1440 minutes. If you inserted countdown widget into popup, you can iherit value from countdown timer and coupon code will expire when countdown goes to 0.]]></description>             
+            </coupon_expiration> 
+            <coupon_limit_ip>
+                <label>Use IP checker for coupon/popup?</label>
+                <visible>1</visible>
+                <required>0</required>
+                <value>2</value>
+                <type>select</type>            
+                <values>
+                    <no translate="label">
+                        <value>2</value>
+                        <label>No</label>
+                    </no>                 
+                    <yes translate="label">
+                        <value>1</value>
+                        <label>Yes</label>
+                    </yes>                
+                </values>  
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>                                                       
+                <description><![CDATA[If you select Yes, visitor won't see this popup or any other popup with the same Cookie/popup id if he or somebody with the same IP address already received coupon from this popup, even if he deleted browser cookies. Please note that IP checker is not GDPR compliment because IP is personal identifiable information.]]></description>             
+            </coupon_limit_ip>                                      
+            <confirm_need translate="label">
+                <label>Subscription confirmation required for coupon?</label>
+                <visible>1</visible>
+                <value>0</value>
+                <required>0</required>
+                <type>select</type>
+                <values>
+                    <no translate="label">
+                        <value>0</value>
+                        <label>No</label>
+                    </no>                  
+                    <yes translate="label">
+                        <value>1</value>
+                        <label>Yes</label>
+                    </yes>               
+                </values>
+                <description><![CDATA[For advanced use. Read instructions first <a href="http://www.magebird.com/magento-extensions/popup.html?tab=faq#emailConfirmation" target="_blank">here</a> before you change this!]]></description>                
+                <!--<source_model>popup/widget_newsletter_confirmneedfield</source_model>-->                
+                <!--
+                <helper_block>
+                    <type>popup/adminhtml_widget_newsletter_confirmneed</type>
+                </helper_block>
+                -->                                
+            </confirm_need>            
+            <send_coupon translate="label description">
+                <label>Send coupon to e-mail</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>            
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <description><![CDATA[You can display coupon code inside popup once user subscribes. If you want to send coupon code also to e-mail choose Yes. E-mail template is located in app/locale/en_US/template/email/magebird_popup/popup_coupon_newsletter.html]]></description>                
+            </send_coupon> 
+            <apply_coupon  translate="label description">
+                <label>Apply coupon automatically to cart</label>
+                <visible>1</visible>
+                <value>#FFFFFF</value>
+                <required>0</required>
+                <type>select</type>            
+                <values>
+                    <yes translate="label">
+                        <value>1</value>
+                        <label>Yes</label>
+                    </yes>
+                    <no translate="label">
+                        <value>2</value>
+                        <label>No</label>
+                    </no>                 
+                </values>
+                <description>If set to Yes, user doesn't need to write coupon code inside cart but it will apply coupon automatically.</description>                
+            </apply_coupon>                                      
+            <on_success translate="label description">
+                <label>On success action</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>Display message (defined in the next field)</label>
+                    </one>     
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Display message and close popup</label>
+                    </two>  
+                    <three translate="label">
+                        <value>3</value>
+                        <label>Display message and redirect to new page</label>
+                    </three>                                                                                              
+                </values>
+                <description>What action should be taken after user subscribes</description>
+            </on_success>
+            <success_url translate="label description">
+                <label>Redirect url</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <on_success>
+                        <value>3</value>
+                    </on_success>
+                </depends>
+                <description>Where should be visitor sent after subscribes. Leave empty if you want to just refresh the page.</description>                           
+            </success_url>
+            <redirect_delay translate="label">
+                <label>Redirect after how many seconds</label>
+                <visible>1</visible>
+                <required>1</required>                
+                <type>text</type>   
+                <depends>
+                    <on_success>
+                        <value>3</value>
+                    </on_success>
+                </depends>            
+                <value>2</value>               
+            </redirect_delay> 
+            <close_delay translate="label">
+                <label>Close popup after how many seconds</label>
+                <visible>1</visible>
+                <required>1</required>                
+                <type>text</type>   
+                <depends>
+                    <on_success>
+                        <value>2</value>
+                    </on_success>
+                </depends>            
+                <value>2</value>               
+            </close_delay>                        
+            <success_msg translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Text/content after subscribe</label>
+                <type>textarea</type> 
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Successmsg</type>
+                </helper_block> 
+                <value>Thank you for your subscription!</value>                             
+                <description><![CDATA[Text/content that will be shown after user subscribes newsletter. To display <b style="color:#f80000">coupon code</b> inside use '<b>{{var coupon_code}}</b>'. {{var coupon_code}} will be then replaced with coupon code. Example: <i><span>Your coupon is: {{var coupon_code}}. To get discount copy & paste it to offer code box in your shopping cart.</i></span><br />Tip: Html code is allowed. You can use popup editor to design your content and then copy html here.]]></description>          
+            </success_msg>                               
+            <mailchimp_list_id translate="label description">
+                <label>MailChimp List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Write only if you want to use MailChimp integration, otherwise leave empty. Go to <a target="_blank" href="http://admin.mailchimp.com/lists/">http://admin.mailchimp.com/lists/</a>, click the 'settings' link and find the id at the bottom of that page. Make sure you also added <strong>MailChimp Api Key</strong> (System->Configuration->Popup->Newsletter Services->Mailchimp Api Key)]]></description>
+            </mailchimp_list_id>  
+            <gr_campaign_token translate="label description">
+                <label>GetResponse Campaign Token</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Write only if you want to use GetResponse integration, otherwise leave empty. You can find token inside <a target="_blank" href="https://app.getresponse.com/campaign_list.html">https://app.getresponse.com/campaign_list.html</a>.]]></description>
+            </gr_campaign_token>  
+            <cm_list_id translate="label description">
+                <label>Campaign Monitor List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Write only if you want to use Campaign Monitor integration, otherwise leave empty. <a target="_blank" href="https://www.campaignmonitor.com/api/getting-started/?&_ga=1.231931607.973360730.1433747080#listid">Where you can find list id?</a>]]></description>
+            </cm_list_id>             
+            <sendy_list_id translate="label description">
+                <label>Sendy List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Write only if you want to use Sendy integration, otherwise leave empty.]]></description>
+            </sendy_list_id>  
+            <ac_list_id translate="label description">
+                <label>ActiveCampaign List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Write only if you want to use ActiveCampaign integration, otherwise leave empty. To find list id go to ActiveCampaign, click to the list and you will see id in browser url.]]></description>
+            </ac_list_id>                           
+            <phplist_list_id>
+                <label>phpList List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>      
+                <description><![CDATA[Write only if you want to use phpList integration, otherwise leave empty. Make sure you also enabled phpList inside System->Configuration->Popup->Newsletter Services)]]></description>            
+            </phplist_list_id>   
+            <klaviyo_list_id>
+                <label>Klaviyo List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>      
+                <description><![CDATA[Write only if you want to use Klaviyo integration, otherwise leave empty. Make sure you also enabled Klaviyo inside System->Configuration->Popup->Newsletter Services)]]></description>            
+            </klaviyo_list_id> 
+            <mailjet_list_id>
+                <label>Mailjet List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>                  
+            </mailjet_list_id>  
+            <emma_group_ids>
+                <label>Emma group ids</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>      
+                <description><![CDATA[Write only if you want to use Emma integration, otherwise leave empty. Separate groups with comma if you want to insert more ids.]]></description>            
+            </emma_group_ids>  
+            <dotmailer_list_id>
+                <label>Dotmailer address list id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>      
+                <description><![CDATA[Write only if you want to use Dotmailer integration, otherwise leave empty.]]></description>            
+            </dotmailer_list_id>  
+            <!--                                             
+            <an_segment_code>
+                <label>Advanced Newsletter Segment Code</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type> 
+                <description><![CDATA[Write only if you want to use Advanced Newsletter integration, otherwise leave empty.)]]></description>           
+            </an_segment_code>
+            -->    
+            <iconneqt_list_id>
+                <label>iConneqt List Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>                  
+            </iconneqt_list_id>   
+            <nuevomailer_list_ids>
+                <label>Nuevomailer List Ids</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type> 
+                <description><![CDATA[Seperate list ids with comma if you want to add subscriber into multiple lists (e.g.:1,2,15)]]></description>                 
+            </nuevomailer_list_ids>  
+            <nuevomailer_newsletter>
+                <label>Nuevomailer trigger newsletter</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type> 
+                <description><![CDATA[Optional. Enter the newsletter ID as you see it in your newsletters table]]></description>                 
+            </nuevomailer_newsletter> 
+            <cc_list_id translate="label description">
+                <label>Constant ContactList Id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <description><![CDATA[Read instructions <a href='https://community.constantcontact.com/t5/Developer-Support-ask-questions/Obtaining-a-List-ID-manually-still-possible/td-p/121785' target='_blank'>here</a>]]></description>
+            </cc_list_id>                             
+            <email_services>
+                <label>Email services</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>magebird_popup/adminhtml_widget_emailservices</type>                           
+            </email_services>      
+            
+             <mailerlite_list_id translate="label description">
+                <label>MailerLite list id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>      
+                <description><![CDATA[Write only if you want to use MailerLite integration, otherwise leave empty.]]></description>            
+            </mailerlite_list_id>    
+             <aweber_list_id translate="label description">
+                <label>AWeber list id</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>      
+                <description><![CDATA[Write only if you want to use AWeber integration, otherwise leave empty.<br />To get Lists IDS click <a href='/magebird_popup/index/aweberLists' target='_blank'>here</a>.]]></description>           
+            </aweber_list_id>                                                                                                                                    
+        </parameters>
+    </popup_list>
+    <popup_button type="magebird_popup/buttons" translate="name description" module="magebird_popup">
+        <name>Popup Buttons</name>
+        <description>Adds a button into popup</description>
+        <parameters> 
+            <widget_id>
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>           
+            </widget_id>
+            <button_color translate="label">
+                <label>Button color</label> 
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+                <value>#ea7d00</value>
+                <description>
+                <![CDATA[Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.]]> 
+                </description>                  
+            </button_color>                                                                                           
+            <template translate="label">
+                <label>Button design</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>label</type>
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Button_Chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Button...</open>
+                        </button>
+                    </data>
+                </helper_block>                
+            </template>
+            <button_text translate="label">
+                <label>Button text</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+            </button_text>  
+            <buttontext_color translate="label description">
+                <label>Button text color</label>
+                <visible>1</visible>
+                <required>1</required>
+                <value>#FFFFFF</value>
+                <type>text</type>
+                <description><![CDATA[Leave #FFFFFF for white. Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.]]></description>                
+            </buttontext_color>  
+            <button_size translate="label">
+                <label>Button size</label> 
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <value>4</value>
+                <description>Leave empty for default value.</description>
+                <type>select</type>
+                <source_model>Magebird_Popup_Model_Widget_Buttonsize</source_model>
+            </button_size>                      
+            <on_click translate="label description">
+                <label>On click action</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>Display message and/or coupon code</label>
+                    </one>                         
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Redirect to url</label>
+                    </two>     
+                    <three translate="label">
+                        <value>3</value>
+                        <label>Close popup</label>
+                    </three>                                                                                                                  
+                </values>
+                <description>What action should be taken after user clicks the button.</description>
+            </on_click>    
+            <coupon_type translate="label description">
+                <label>Coupon type</label>
+                <visible>1</visible>
+                <required>0</required>               
+                <type>select</type> 
+                <depends>
+                    <on_click>
+                        <value>1</value>
+                    </on_click>
+                </depends>                 
+                <source_model>Magebird_Popup_Model_Widget_Coupontype</source_model>                
+                <description><![CDATA[Choose if you want to send/show coupon code after user clicks button]]></description>               
+            </coupon_type>
+            <coupon_code translate="label description">
+                <label>Coupon code</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <depends>
+                    <coupon_type>
+                        <value>1</value>
+                    </coupon_type>
+                </depends>                
+                <description><![CDATA[Write coupon code you want to be sent to subscribed users]]></description>
+            </coupon_code>                            
+            <rule_id translate="label">
+                <label>Shopping Cart Price Rule ID for Coupon</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>
+                <source_model>Magebird_Popup_Model_Widget_Rulefield</source_model>                
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>  
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Rules</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select template...</open>
+                        </button>
+                    </data>
+                </helper_block>                                
+            </rule_id>
+            <coupon_length>
+                <label>Coupon length</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <value>12</value>             
+            </coupon_length>
+            <coupon_prefix>
+                <label>Coupon prefix</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <description>Leave empty if you don't want prefix</description>             
+            </coupon_prefix>  
+            <coupon_expiration>
+                <label>Coupon expiration (in minutes)</label>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>   
+                <depends>
+                    <coupon_type>
+                        <value>2</value>
+                    </coupon_type>
+                </depends>
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Couponexpiration</type>
+                </helper_block>                 
+                <description><![CDATA[Leave empty if you want to use global settings from Shopping Cart Rule. Write minutes if you want coupon code to expire in defined minutes after user receives it. 1 day = 1440 minutes. If you inserted countdown widget into popup, you can iherit value from countdown timer and coupon code will expire when countdown goes to 0.]]></description>             
+            </coupon_expiration>    
+                        
+            <apply_coupon translate="label description">
+                <label>Apply coupon automatically to cart</label>
+                <visible>1</visible>
+                <value>#FFFFFF</value>
+                <required>0</required>
+                <depends>
+                    <on_click>
+                        <value>1</value>
+                    </on_click>                
+                </depends>                
+                <type>select</type>            
+                <values>
+                    <yes translate="label">
+                        <value>1</value>
+                        <label>Yes</label>
+                    </yes>
+                    <no translate="label">
+                        <value>2</value>
+                        <label>No</label>
+                    </no>                 
+                </values>
+                <description>If set to Yes, user doesn't need to write coupon code inside cart but it will apply coupon automatically.</description>                
+            </apply_coupon>               
+            <success_msg translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <depends>
+                    <on_click>
+                        <value>1</value>
+                    </on_click>                
+                </depends>
+                <label>Text/content after user click</label>
+                <type>textarea</type> 
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Successmsg</type>
+                </helper_block>                              
+                <description>
+                <![CDATA[
+                <style>
+                  #widget_options_magebird_popup_buttons .form-list td.value p.note{
+                    width:568px;                          
+                  }                
+                </style>                 
+                <script>                  
+                  //this belong to success_msg field
+                  setTimeout(function(){
+                      jQuery("#widget_options input[name='parameters\[widget_id\]']").val("_"+Math.random().toString(36).substr(2, 4));                                                                                                                      
+                      jQuery("#insert_button").attr('onclick','').unbind('click');
+                      jQuery("#insert_button").click(function(){
+                          setTimeout(function(){
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = encodeURI(templateValue).replace(/'/g, "%27"); 
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                               
+                            wWidget.insertWidget()                          
+                          }, 100);   
+                          //for case if error appeared, to prevent double encode on next insertWidget
+                          setTimeout(function(){  
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = decodeURI(templateValue);
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                                                         
+                          }, 200);                                                                                                                                    
+                      });                
+                }, 1000);
+                </script>                     
+                Text/content that will be shown after user clicks button. To display <b style="color:#f80000">coupon code</b> inside use '<b>{{var coupon_code}}</b>'. {{var coupon_code}} will be then replaced with coupon code. Example: <i><span>Your coupon is: {{var coupon_code}}.</i></span><br />Tip: Html code is allowed. You can use popup editor to design your content and then copy html here.
+                ]]>
+                </description>          
+            </success_msg>                                                  
+            <button_href translate="label description">
+                <label>Button href (link)</label>
+                <visible>1</visible>
+                <required>1</required>
+                <depends>
+                    <on_click>
+                        <value>2</value>
+                    </on_click>
+                </depends>                  
+                <type>text</type>
+                <description>Url of page to where the button should link.</description>
+            </button_href>  
+            <link_target translate="label">
+                <label>Open link in</label>
+                <visible>1</visible>
+                <required>1</required>
+                <depends>
+                    <on_click>
+                        <value>2</value>
+                    </on_click>
+                </depends>                  
+                <type>select</type>
+                <values>
+                    <value_one translate="label">
+                        <value>1</value>
+                        <label>Current window</label>
+                    </value_one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>New window</label>
+                    </two>
+                </values>                
+            </link_target>                                  
+        </parameters>
+    </popup_button>
+    <!--
+    <popup_review type="magebird_popup/review" translate="name description" module="magebird_popup">
+        <name>Popup Product Review</name>
+        <description>Adds a product review form into popup</description>
+        <parameters> 
+            <widget_id>
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>           
+            </widget_id>        
+            <button_color translate="label">
+                <label>Button color</label> 
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+                <value>#ea7d00</value>
+                <description><![CDATA[Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.]]></description>
+            </button_color>                                                                    
+            <template translate="label">
+                <label>Button shape and size</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>label</type>
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Review_Chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Form Template...</open>
+                        </button>
+                    </data>
+                </helper_block>                
+            </template>
+            <button_text translate="label">
+                <label>Button text</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+            </button_text>  
+            <buttontext_color translate="label description">
+                <label>Button text color</label>
+                <visible>1</visible>
+                <required>1</required>
+                <value>#FFFFFF</value>
+                <type>text</type>
+                <description><![CDATA[Leave #FFFFFF for white. Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.]]></description>                
+            </buttontext_color>
+            <width translate="label description">
+                <label>Review form width</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>                    
+                <description><![CDATA[How many px or %. Use just number and select unit in the next field.]]></description>                        
+            </width>
+            <width_unit translate="label description">
+                <label>Review form width unit</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <values>
+                    <value_one translate="label">
+                        <value>1</value>
+                        <label>Px</label>
+                    </value_one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Percentage (%)</label>
+                    </two>
+                </values> 
+                <description><![CDATA[Use px if you want fixed width. Use % if you want dynamic (responsive design for mobile).]]></description>                         
+            </width_unit>                                                                        
+        </parameters>
+    </popup_review> 
+    -->    
+    <popup_contact type="magebird_popup/contact" translate="name description" module="magebird_popup">
+        <name>Popup Contact Form</name>
+        <description>Adds a contact form form into popup</description>
+        <parameters> 
+            <widget_id>
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>           
+            </widget_id>          
+            <template translate="label">
+                <label>Follow Template</label>            
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>
+                <value>magebird/popup/contact/1.phtml</value>                             
+            </template>   
+            
+<coupon_option translate="label">
+    <label>Coupon option</label>
+    <visible>1</visible>
+    <value>3</value>
+    <required>0</required>
+    <type>select</type>            
+    <source_model>Magebird_Popup_Model_Widget_CoupontypeContact</source_model>
+    <description>
+    <![CDATA[
+    You can offer coupon code to those who contact you. Choose static coupon if you will use the same coupon for all users. Choose dynamic if you want to generate different coupon for each customer.
+    <style>
+      #widget_options_magebird_popup_list .form-list td.value p.note{
+        width:568px;                          
+      }                
+    </style>                 
+    <script>                                      
+      setTimeout(function(){  
+          jQuery("#widget_options input[name='parameters\[widget_id\]']").val("_"+Math.random().toString(36).substr(2, 4));
+          //belong to success_msg field                    
+          jQuery("#insert_button").attr('onclick','').unbind('click');
+          jQuery("#insert_button").click(function(){
+              setTimeout(function(){
+                var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                templateValue = encodeURI(templateValue).replace(/'/g, "%27"); 
+                jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                               
+                wWidget.insertWidget()                          
+              }, 100);   
+              //for case if error appeared, to prevent double encode on next insertWidget
+              setTimeout(function(){  
+                var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                templateValue = decodeURI(templateValue);
+                jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                                                         
+              }, 200);                                                                                 
+                                                                 
+          });                
+    }, 1000);
+    </script>                                   
+    ]]>
+    </description>                
+</coupon_option>   
+<coupon_code translate="label description">
+    <label>Static Coupon code</label>
+    <visible>1</visible>
+    <required>0</required>
+    <type>text</type>
+    <depends>
+        <coupon_option>
+            <value>1</value>
+        </coupon_option>
+    </depends>                
+    <description><![CDATA[Write coupon code you want to be shown after user submit contact form.]]></description>
+</coupon_code>                            
+<rule_id translate="label">
+    <label>Shopping Cart Price Rule ID for Coupon</label>
+    <visible>1</visible>
+    <required>0</required>
+    <type>select</type>
+    <source_model>Magebird_Popup_Model_Widget_Rulefield</source_model>                
+    <depends>
+        <coupon_option>
+            <value>2</value>
+        </coupon_option>
+    </depends>  
+    <helper_block>
+        <type>Magebird_Popup_Block_Adminhtml_Widget_Rules</type>
+        <data>
+            <button translate="open">
+                <open>Select template...</open>
+            </button>
+        </data>
+    </helper_block>                                                
+</rule_id>
+<coupon_length>
+    <label>Coupon length</label>
+    <visible>1</visible>
+    <required>0</required>
+    <type>text</type>   
+    <depends>
+        <coupon_option>
+            <value>2</value>
+        </coupon_option>
+    </depends>
+    <value>12</value>             
+</coupon_length>
+<coupon_prefix>
+    <label>Coupon prefix</label>
+    <visible>1</visible>
+    <required>0</required>
+    <type>text</type>   
+    <depends>
+        <coupon_option>
+            <value>2</value>
+        </coupon_option>
+    </depends>  
+    <description>Leave empty if you don't want prefix</description>             
+</coupon_prefix>    
+<coupon_expiration>
+    <label>Coupon expiration (in minutes)</label>
+    <visible>1</visible>
+    <required>0</required>
+    <type>text</type>   
+    <depends>
+        <coupon_option>
+            <value>2</value>
+        </coupon_option>
+    </depends>                
+    <description><![CDATA[Leave empty if you want to use global settings from Shopping Cart Rule.]]></description>             
+</coupon_expiration>                                                                            
+            <button_color translate="label">
+                <label>Submit Button color</label> 
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+                <value>#ea7d00</value>
+                <description>
+                <![CDATA[Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.]]></description>
+            </button_color>
+            <button_text translate="label">
+                <label>Button text</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+            </button_text>  
+            <button_text_color translate="label description">
+                <label>Button text color</label>
+                <visible>1</visible>
+                <required>1</required>
+                <value>#FFFFFF</value>
+                <type>text</type>
+                <description>
+                <![CDATA[                 
+                <script>
+                setTimeout(function(){  
+                  jQuery("#widget_options input[name='parameters\[widget_id\]']").val("_"+Math.random().toString(36).substr(2, 4));                                                                                      
+                }, 300);                 
+                </script>                  
+                Leave #FFFFFF for white. Use Hex value. You can use <a target="_blank" href="http://www.colorpicker.com/">Colorpicker.com</a> to pick color.
+                ]]>
+                </description>                
+            </button_text_color>                                                                                           
+            <width translate="label description">
+                <label>Contact form width</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>                    
+                <description><![CDATA[How many px or %. Use just number and select unit in the next field.]]></description>                        
+            </width>
+            <width_unit translate="label description">
+                <label>Contact form width unit</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <values>
+                    <value_one translate="label">
+                        <value>1</value>
+                        <label>Px</label>
+                    </value_one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Percentage (%)</label>
+                    </two>
+                </values> 
+                <description><![CDATA[Use px if you want fixed width. Use % if you want dynamic (responsive design for mobile).]]></description>                         
+            </width_unit>  
+            <success_msg translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Text/content after like</label>
+                <type>textarea</type> 
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Successmsg</type>
+                </helper_block>                              
+                <description><![CDATA[Text/content that will be shown after user send message. To display <b style="color:#f80000">coupon code</b> inside use '<b>{{var coupon_code}}</b>'. {{var coupon_code}} will be then replaced with coupon code. Example: <i><span>Your coupon is: {{var coupon_code}}. To get discount copy & paste it to offer code box in your shopping cart.</i></span><br />Tip: Html code is allowed. You can use popup editor to design your content and then copy html here.]]></description>         
+            </success_msg>                                                                                  
+        </parameters>
+    </popup_contact>   
+   
+    <popup_timer type="magebird_popup/timer" translate="name description" module="magebird_popup">
+        <name>Popup Countdown Timer</name>
+        <description>Adds Countdown Timer into popup</description>
+        <parameters> 
+            <widget_id>
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>           
+            </widget_id>   
+            <timeout_type translate="label description">
+                <label>Countdown to</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>select</type>
+                <values>
+                    <value_one translate="label">
+                        <value>1</value>
+                        <label>Set number of minutes</label>
+                    </value_one>
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Specific date</label>
+                    </two>
+                    <three translate="label">
+                        <value>3</value>
+                        <label>Inherit from other popup timer</label>
+                    </three>                    
+                </values> 
+                <description><![CDATA[Choose 'Set number of minutes' if you want timer to stop dynamically for each visitors at different time (for example if you want to offer discount if visitor complete an order in next 5 minutes). Choose 'Specific date' if timer should start and stop for all visitors at the same time (for example if you have time limited offer that will run 3 days)]]></description>                         
+            </timeout_type>
+            <to_date>
+                <label>Finish Date</label>
+                <visible>1</visible>
+                <required>1</required>  
+                <type>text</type>   
+                <depends>
+                    <timeout_type>
+                        <value>2</value>
+                    </timeout_type>
+                </depends>                         
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Date</type>
+                </helper_block>              
+              <description>Time will be based on store timezone settings (System->Configuration->General->Locale Options->Timezone)</description>
+            </to_date>                              
+            <minutes translate="label">
+                <label>Countdown minutes</label> 
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+                <depends>
+                    <timeout_type>
+                        <value>1</value>
+                    </timeout_type>
+                </depends>                 
+                <description>
+                <![CDATA[               
+                <script>
+                setTimeout(function(){  
+                  jQuery("#widget_options input[name='parameters\[widget_id\]']").val("_"+Math.random().toString(36).substr(2, 4));                                                                                      
+                }, 300);                 
+                </script>                  
+                Total time in minutes starting to countdown when popup shows up. 1 day = 1440 minutes.
+                ]]>
+                </description>                 
+            </minutes>   
+            <popup_inherit_id translate="label">
+                <label>Inherited popup id</label> 
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>
+                <depends>
+                    <timeout_type>
+                        <value>3</value>
+                    </timeout_type>
+                </depends>                 
+                <description>
+                <![CDATA[                                
+                If you want minutes to inherit from time of other popup write id of popup from which you want to inherit the timer.
+                ]]>
+                </description>                 
+            </popup_inherit_id>             
+            <on_timeout translate="label description">
+                <label>On countdown action</label> 
+                <visible>1</visible>
+                <required>0</required>
+                <type>select</type>
+                <values>
+                    <one translate="label">
+                        <value>1</value>
+                        <label>No action</label>
+                    </one>     
+                    <two translate="label">
+                        <value>2</value>
+                        <label>Close popup</label>
+                    </two>  
+                    <three translate="label">
+                        <value>3</value>
+                        <label>Display message</label>
+                    </three>                                                                                                                      
+                </values> 
+            </on_timeout>                                                      
+            <style translate="label">
+                <label>Countdown Template</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>label</type>
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Timer_Chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Countdown Template...</open>
+                        </button>
+                    </data>
+                </helper_block>                
+            </style> 
+            <template translate="label">
+                <label>Template</label>            
+                <visible>0</visible>
+                <required>1</required>
+                <type>text</type>
+                <value>magebird/popup/timer/main.phtml</value>                             
+            </template>        
+            <timer_size translate="label">
+                <label>Timer Text Size (in px)</label>            
+                <visible>1</visible>
+                <required>1</required>
+                <type>text</type>            
+                <value>14</value>                               
+            </timer_size>                  
+            <success_msg translate="label description">
+                <required>1</required>
+                <visible>1</visible>
+                <label>Text/content after countdown timer ends</label>
+                <type>textarea</type> 
+                <helper_block>
+                    <type>Magebird_Popup_Block_Adminhtml_Widget_Successmsg</type>
+                </helper_block>  
+                <depends>
+                    <on_timeout>
+                        <value>3</value>
+                    </on_timeout>
+                </depends>                                             
+                <description>
+                <![CDATA[
+                <script>                  
+                  //this belong to success_msg field
+                  setTimeout(function(){                                                                                                                      
+                      jQuery("#insert_button").attr('onclick','').unbind('click');
+                      jQuery("#insert_button").click(function(){
+                          setTimeout(function(){
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = encodeURI(templateValue).replace(/'/g, "%27"); 
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                               
+                            wWidget.insertWidget()                          
+                          }, 100);   
+                          //for case if error appeared, to prevent double encode on next insertWidget
+                          setTimeout(function(){  
+                            var templateValue = jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val();
+                            templateValue = decodeURI(templateValue);
+                            jQuery("#widget_options textarea[name='parameters\[success_msg\]']").val(templateValue);                                                                                         
+                          }, 200);                                                                                                                                                              
+                      });                
+                }, 1000);
+                </script>                                          
+                Text/content that will be shown after countdown timer goes to 0.</i></span><br />Tip: Html code is allowed. You can use popup editor to design your content and then copy html here.
+                ]]>
+                </description>         
+            </success_msg>                                                                                    
+        </parameters>
+    </popup_timer>         
+</widgets>

@@ -1,0 +1,66 @@
+<?php
+$order = new Mage_Sales_Model_Order();
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+$order->loadByIncrementId($orderId);
+$orderData = $order->getData();
+$products = $order->getAllVisibleItems();
+$customerInfo = $order->getBillingAddress()->getData();
+echo '<!-- ';
+print_r($customerInfo);
+echo ' -->';
+$region = Mage::getModel('directory/region')->load($customerInfo['region_id']);
+echo '<!-- ';
+print_r($region);
+echo ' -->';
+$address = preg_split('/\r|\n/', $customerInfo['street']);
+?>
+
+<div class="acima-credit-iframe-container">
+    <div class="acima-credit-iframe-inner">
+        <iframe id="acima-credit-iframe-checkout" src="<?php echo Mage::getStoreConfig('payment/acimacheckout/apiurl'); ?>" width="100%" height="100%" frameborder="none"></iframe>
+    </div>
+</div>
+
+<form name="acimacheckout" id="form_acimacheckout" method="post" action="<?php echo Mage::helper('acimacheckout')->getPaymentGatewayUrl(); ?>">
+  <input type="hidden" id="failure_page" value="<?php echo Mage::getUrl('acimacheckout/payment/failure', array('_secure' => false, '_query' => array('orderId' => $orderId) )); ?>">
+  <input type="hidden" id="orderId" name="orderId" value="<?php echo $orderId; ?>">
+  <input type="hidden" name="acimacredit_lease_id" id="acimacredit_lease_id" value="">
+  <input type="hidden" name="acimacredit_checkout_token" id="acimacredit_checkout_token" value="">
+</form>
+
+<script type="text/javascript">
+acima_credit_settings = {
+    merchant_id: "<?php echo Mage::getStoreConfig('payment/acimacheckout/merchantid'); ?>",
+    customer: {
+        firstName: "<?php echo preg_replace( "/\r|\n/", "", $customerInfo['firstname']); ?>",
+        middleName: "<?php echo preg_replace( "/\r|\n/", "", $customerInfo['middlename']); ?>",
+        lastName: "<?php echo preg_replace( "/\r|\n/", "", $customerInfo['lastname']); ?>",
+        phone: "<?php echo preg_replace( "/\r|\n/", "", $customerInfo['telephone']); ?>",
+        address: {
+            street1: "<?php echo $address[0]; ?>",
+            street2: "<?php echo $address[1]; ?>",
+            city: "<?php echo preg_replace( "/\r|\n/", "", $customerInfo['city']); ?>",
+            state: "<?php echo $region->getCode(); ?>",
+            zipCode: "<?php echo preg_replace( "/\r|\n/", "", $customerInfo['postcode']); ?>"
+        },
+        email: "<?php echo preg_replace( "/\r|\n/", "", $customerInfo['email']); ?>"
+    },
+    transaction: {
+        id: "<?php echo $orderId; ?>",
+        lineItems: [],
+        shipping: <?php echo (int) ($orderData['base_shipping_amount'] * 100); ?>,
+        discounts: <?php echo (int) ($orderData['base_discount_amount'] * 100); ?>,
+        salesTax: <?php echo (int) ($orderData['base_tax_amount'] * 100); ?>
+    }
+};
+</script>
+<?php foreach ($products as $product): ?>
+    <script type="text/javascript">
+        acima_credit_settings.transaction.lineItems.push({
+            productId: "<?php echo $product->getId(); ?>",
+            productName: "<?php echo preg_replace( "/\r|\n/", "", $product->getName()); ?>",
+            quantity: <?php echo (int) $product->getData('qty_ordered'); ?>,
+            unitPrice: <?php echo (int) ($product->getPrice() * 100); ?>
+        });
+    </script>
+<?php endforeach; ?>

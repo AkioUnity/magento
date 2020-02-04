@@ -1,0 +1,15 @@
+<?php $tags = $this->getTags(); ?>
+<?php if($tagCount = count($tags) > 0): ?>
+    <div class="block block-blog block-blog-tag-cloud">
+        <div class="block-title">
+            <strong><span><?php echo $this->__('Tag Cloud') ?></span></strong>
+        </div>
+        <div class="block-content">
+            <ul id="tags-list" class="tags-list">
+                <?php foreach ($tags as $tag): ?>
+                    <li<?php if (--$tagCount < 1): ?> class="last"<?php endif; ?>><a href="<?php echo $this->getTagUrl($tag->getTagUrlKey()); ?>" style="font-size:<?php echo $this->getTagCount($tag->getTagId()); ?>px;"><?php echo $this->htmlEscape($tag->getTagName()) ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,16 @@
+<div class="pre-approval-button-acima-credit-container">
+    <a href="javascript:void(0);">
+        <img src="https://pricebusters.furniture/acima_home.png" alt="Acima Credit Pre Aproval Button" onclick="AcimaCreditPreApproval.start();">
+    </a>
+</div>
+<div class="acima-credit-iframe-container closed">
+    <div class="acima-credit-iframe-inner">
+        <iframe id="acima-credit-iframe-pre-approval" data-src="<?php echo Mage::getStoreConfig('payment/acimacheckout/apiurl'); ?>" width="100%" height="100%" frameborder="none"></iframe>
+    </div>
+</div>
+
+<script type="text/javascript">
+acima_credit_settings = {
+    merchant_id: "<?php echo Mage::getStoreConfig('payment/acimacheckout/merchantid'); ?>"
+};
+</script>

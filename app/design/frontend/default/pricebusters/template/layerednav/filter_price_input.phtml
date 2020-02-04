@@ -1,0 +1,34 @@
+<?php 
+    $items = $this->getItems(); 
+    list($from, $to) = explode(',', $items[0]->getValueString());
+   
+    if ($from < 0.01) {
+        $from = $this->__('Min');
+    } else  {
+        $from = round($from);    
+    }
+       
+    if ($to < 0.01) {
+        $to = $this->__('Max');
+    } else {
+        $to = round($to);    
+    }
+    
+?>
+<div class="priceDetails">
+  <div class="form-group">
+		<input class="form-control min" type="text" maxlength="12" size="4" id="price_range_from---<?php echo $this->_filter->getRequestVar()?>" value=""
+onclick="if(this.value==this.name) this.value='';" placeholder="Min"  name="<?php echo $this->__('From')?>"/> 
+  </div>
+  <div class="form-group">
+  <input class="form-control min" type="text" maxlength="12" size="4" id="price_range_to---<?php echo $this->_filter->getRequestVar()?>" value=""
+onclick="if(this.value==this.name) this.value='';" placeholder="Max" name="<?php echo $this->__('To')?>"/>
+  </div>
+
+<div class="batn">
+<button type="button" id="price_button_go---<?php echo $this->_filter->getRequestVar()?>" class="btn btn-default update rig"><?php echo $this->__('Update')?></button>
+<button type="button" class="btn btn-default update left">Clear</button>
+</div><!-- batn end -->
+</div>
+		 
+<input type="hidden" value="<?php echo $this->_filter->getRequestVar()?>" class="price-input">

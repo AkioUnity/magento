@@ -1,0 +1,648 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+/**
+ * @var $this Amasty_Feed_Block_Adminhtml_Widget_Edit_Tab_Dynamic
+ */
+?>
+<?php $code = 'Column'; ?>
+<script type="text/javascript">
+
+    
+function addDynamic(tpl){
+    Element.insert($( tpl + "_container"), {
+        bottom: $( tpl + "_template").innerHTML
+    });
+}
+
+function removeDynamic(button){
+    Element.remove(button.up(".field-row"));
+}
+
+function addDynamicCondition(){
+    addDynamic('Condition');
+}
+    
+function addDynamicColumn() {
+    addDynamic('Column');
+}
+
+function removeDynamicColumn(button){
+    removeDynamic(button);
+}
+
+function removeDynamicCondition(button){
+    removeDynamic(button);
+}
+
+function amfeed_toggleContentType() {
+    if (($('type').value == 0) || ($('type').value == 2)) {
+        $('csv_options').show();
+        $('xml_options').hide();
+    } else {
+        $('csv_options').hide();
+        $('xml_options').show();
+    }
+}
+
+function amfeed_changeType(el){
+    $(el).up('tr').down('td#attribute_values').select('select').each(function(select){
+        select.hide();
+    }); 
+    
+    $(el).up('tr').down('td#attribute_values').select('input').each(function(select){
+        select.hide();
+    });
+    
+    $(el).up('tr').down('#insert_attr_' + $(el).value).show();
+    
+    var tr = $(el).up('tr');
+    
+    switch(el.value){
+        case "images":
+            tr.down('#insert_image_format').show();
+            tr.down('#insert_format').hide();
+            break;
+        default:
+            tr.down('#insert_image_format').hide();
+            tr.down('#insert_format').show();
+            break;
+    }
+}
+
+function amfeed_isUpload(el){
+    if (1 == $(el).value) {
+        $('upload_label').show();
+        $('upload_value').show();
+    } else {
+        $('upload_label').hide();
+        $('upload_value').hide();
+    }
+}
+
+//]]>
+</script>
+
+<style>
+    .grid table.am_constructor{
+        width: 900px;
+        margin-top: 20px;
+    }
+    
+    .grid table.am_constructor input.input-text{
+/*        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;*/
+    }
+    
+    .grid table.am_constructor td{
+        padding-right: 10px;
+    }
+   
+    .grid table.am_constructor input.input-text,
+    .grid table.am_constructor select
+    {
+        width: 100%;
+    }
+    
+    .am_constructor .am_tag,
+    .am_constructor .am_type,
+    .am_constructor .am_value,
+    .am_constructor .am_format
+    {
+        width: 120px;
+    }
+    
+    .am_constructor .am_parent,
+    .am_constructor .am_optional,
+    .am_constructor .am_max_len
+    {
+        width: 60px;
+    }
+    
+    .grid table.am_constructor td.am_checkbox{
+        text-align: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .grid table.am_constructor td.am_checkbox input[type="checkbox"]{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    
+    .xml_header .CodeMirror {
+
+    height: 100px; 
+   }
+
+   .cm-s-default .cm-amtag{
+       color: #708;
+   }
+
+   .cm-s-default .cm-amcdata{
+       color: #219;
+   }
+</style>
+<div id="csv_options" <?php if ($this->getValueHtml('type') == 1) echo 'style="display:none"'?>>
+<div class="entry-edit" >
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Options') ?></h4>
+    </div>
+    <div class="fieldset" id="amfeed_csv">
+        <div class="hor-scroll">
+        <table class="form-list" cellspacing="0">
+        <tbody>
+        <tr>
+            <td class="label"><label for="csv_header"><?php echo $this->__('Column Names') ?></label></td>
+            <td class="value">
+                <select id="csv_header" name="csv_header" class="select">
+                    <option value="0"><?php echo $this->__('No')?></option>
+                    <option value="1" <?php echo $this->getSelectedHtml('csv_header',1)?> ><?php echo $this->__('Yes')?></option>
+                </select>            
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="csv_header_static"><?php echo $this->__('Header') ?></label></td>
+            <td class="value">
+                <textarea id="csv_header_static" name="csv_header_static" style="width:670px;height:50px"><?php echo $this->getValueHtml('csv_header_static')?></textarea>           
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="csv_enclosure"><?php echo $this->__('Fields enclosed by') ?></label></td>
+            <td class="value">
+                <select id="csv_enclosure" name="csv_enclosure" class="select">
+                <?php foreach ($this->getEnclosures() as $k=>$v) { ?>
+                    <option value="<?php echo $k?>" <?php echo $this->getSelectedHtml('csv_enclosure',$k)?>><?php echo $this->__($v)?></option>
+                <?php } ?>
+                </select>            
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="csv_delimiter"><?php echo $this->__('Fields separated by') ?></label></td>
+            <td class="value">
+                <select id="csv_delimiter" name="csv_delimiter" class="select">
+                <?php foreach ($this->getDelimiters() as $k=>$v) { ?>
+                    <option value="<?php echo $k?>" <?php echo $this->getSelectedHtml('csv_delimiter',$k)?>><?php echo $this->__($v)?></option>
+                <?php } ?>
+                </select>            
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Fields') ?></h4>
+    </div>
+    <fieldset>
+        <legend><?php echo $this->__('Fields') ?></legend>
+                <div class="grid">
+                <table class="data" style="width:100%" cellpadding="0" cellspacing="0">
+                <thead>
+                <tr class="headings">
+                    <th style="width:110px"><?php echo $this->__('Header')?></th>
+                    <th style="width:60px"><?php echo $this->__('Before')?></th>
+                    <th style="width:95px"><?php echo $this->__('Type')?></th>
+                    <th style="width:200px"><?php echo $this->__('Value')?></th>
+                    <th style="width:60px"><?php echo $this->__('After')?></th>
+                    <th style="width:100px"><?php echo $this->__('Format')?></th>
+                    <th style="width:60px"><?php echo $this->__('Max Length')?></th>
+                    <th style="width:60px"><?php echo $this->__('Parent')?></th>
+                    <th><?php echo $this->__('Action') ?></th>
+                </tr>
+                </thead> 
+                </table>  
+                <div id="<?php echo $code?>_container">
+                    <?php foreach ($this->getDynamicValue('csv') as $i=>$row): ?>
+                    <span class="field-row">
+                    <table class="data" style="width: 100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:111px"><input class="input-text" name="csv[name][]"  value="<?php echo $this->getValueHtml('csv/name/'.$i)?>"/></td>
+                        <td style="width:61px"><input class="input-text" name="csv[before][]" value="<?php echo $this->getValueHtml('csv/before/'.$i)?>" /></td>
+                        <td style="width:96px"><select style="width: 96px" name="csv[type][]" onchange="amfeed_changeType(this)">
+                                <?php foreach ($this->getFieldTypes() as $_value => $_label): ?>
+                                    <option <?php echo $this->getSelectedHtml('csv/type/' . $i, $_value)?> value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                <?php endforeach ?>
+                                </select></td>
+                        <td style="width:201px" id="attribute_values">
+                            <select id="insert_attr_attribute" name="csv[attr][]" style="width:200px; <?php echo $this->getHideHtml('csv/type/' . $i, 'attribute')?>">
+                             
+                            <?php foreach ($this->getAttributes() as $_type => $_config) { ?>
+                                <?php $label = $_config['label'];?>
+                                
+                                <optgroup label="<?php echo $label;?>">
+                            
+                                <?php foreach($_config['options'] as $_value => $_label) {?>
+                                <option <?php echo $this->getSelectedHtml('csv/attr/' . $i, $_value)?> value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                <?php }?>
+                                </optgroup>
+                            <?php } ?>
+                            </select>
+                            <select id="insert_attr_custom_field" name="csv[custom][]" style="width:200px;<?php echo $this->getHideHtml('csv/type/' . $i, 'custom_field')?>">
+                            <?php foreach ($this->getCustomFields() as $_value => $_label): ?>
+                                <option <?php echo $this->getSelectedHtml('csv/custom/' . $i, $_value)?> value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                            <select id="insert_attr_category" name="csv[category][]" style="width:200px;<?php echo $this->getHideHtml('csv/type/' . $i, 'category')?>">
+                            <?php foreach ($this->getCategories() as $_value => $_label): ?>
+                                <option <?php echo $this->getSelectedHtml('csv/category/' . $i, $_value)?> value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                            <input id="insert_attr_text" class="input-text" name="csv[txt][]" style="width:195px;<?php echo $this->getHideHtml('csv/type/' . $i, 'text')?>" value="<?php echo $this->getValueHtml('csv/txt/'.$i)?>" />
+                            <select id="insert_attr_meta_tags" name="csv[meta_tags][]" style="width:200px;<?php echo $this->getHideHtml('csv/type/' . $i, 'meta_tags')?>">
+                           <?php foreach ($this->getMetaTags() as $_value => $_label): ?>
+                               <option <?php echo $this->getSelectedHtml('csv/meta_tags/' . $i, $_value)?> value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                           <?php endforeach ?>
+                           </select>
+                            <select id="insert_attr_images" name="csv[images][]" style="width:200px;<?php echo $this->getHideHtml('csv/type/' . $i, 'images')?>">
+                           <?php foreach ($this->getImagesFields() as $_value => $_label): ?>
+                               <option <?php echo $this->getSelectedHtml('csv/images/' . $i, $_value)?> value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                           <?php endforeach ?>
+                           </select>
+                        </td>
+                        <td style="width: 61px"><input class="input-text" name="csv[after][]" value="<?php echo $this->getValueHtml('csv/after/'.$i)?>" /></td>
+                        <td style="width: 101px">
+                            
+                                <select id="insert_format" name="csv[format][]" style="<?php echo $this->getHideHtml('csv/type/' . $i, array('attribute', 'custom_field', 'text', 'meta_tags', 'category'))?>">
+                                    <?php foreach ($this->getFormats() as $_value => $_label): ?>
+                                        <option <?php echo $this->getSelectedHtml('csv/format/' . $i, $_value)?> value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                                <select id="insert_image_format" name="csv[image_format][]" style="<?php echo $this->getHideHtml('csv/type/' . $i, 'images')?>" >
+                                    <?php foreach ($this->getProductImageFormats() as $_value => $_label): ?>
+                                        <option <?php echo $this->getSelectedHtml('csv/image_format/' . $i, $_value)?> value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                        </td>
+                        <td style="width: 61px"><input class="input-text" name="csv[length][]" value="<?php echo $this->getValueHtml('csv/length/'.$i)?>" /></td>
+                        <td style="width: 61px">
+                            <select name="csv[parent][]">
+                                <option value="no"><?php echo $this->__('No')?></option>
+                                <option <?php echo ($this->getValueHtml('csv/parent/'.$i) == 'yes' ? 'selected' : '')?> value="yes"><?php echo $this->__('Yes')?></option>
+                            </select>
+                            <!--<input class="input-checkbox" value="1" type="checkbox"  <?php echo ($this->getValueHtml('csv/parent/'.$i) == 1 ? 'checked' : '')?> />-->
+                        </td>
+                        <td><?php echo $this->getRemoveDynamicButtonHtml($code) ?></td>
+                    </tr>
+                    </table>                     
+                    </span>
+                    <?php endforeach ?>
+                </div>
+                <div id="<?php echo $code?>_template" style="display:none">
+                    <span class="field-row">
+                    <table class="data" style="width: 100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td style="width:111px"><input class="input-text" name="csv[name][]"  /></td>
+                        <td style="width:61px"><input class="input-text" name="csv[before][]"  /></td>
+                        <td style="width:96px"><select style="width: 96px" name="csv[type][]" onchange="amfeed_changeType(this)">
+                                <?php foreach ($this->getFieldTypes() as $_value => $_label): ?>
+                                    <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                <?php endforeach ?>
+                                </select></td>
+                        <td style="width:201px" id="attribute_values">
+                            
+                            <select id="insert_attr_attribute" name="csv[attr][]" style="width:200px">
+                            <?php 
+                                foreach ($this->getAttributes() as $_type => $_config) {
+                                    $label = $_config['label'];
+                            ?>
+                                <optgroup label="<?php echo $label;?>">
+                            <?php
+                                    foreach($_config['options'] as $_value => $_label) {
+                            ?>
+                                <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php
+                                    }
+                            ?>
+                                </optgroup>
+                            <?php
+                                }
+                            ?>
+                            </select>
+                            <select id="insert_attr_custom_field" name="csv[custom][]" style="width:200px; display:none">
+                            <?php foreach ($this->getCustomFields() as $_value => $_label): ?>
+                                <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                            <select id="insert_attr_category" name="csv[category][]" style="width:200px; display:none">
+                            <?php foreach ($this->getCategories() as $_value => $_label): ?>
+                                <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                            <input id="insert_attr_text" class="input-text" name="csv[txt][]" style="width:195px; display:none"/>
+                            <select id="insert_attr_meta_tags" name="csv[meta_tags][]" style="width:200px; display:none">
+                            <?php foreach ($this->getMetaTags() as $_value => $_label): ?>
+                                <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                            <select id="insert_attr_images" name="csv[images][]" style="width:200px; display:none;">
+                            <?php foreach ($this->getImagesFields() as $_value => $_label): ?>
+                                <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                            <?php endforeach ?>
+                            </select>
+                        </td>
+                        <td style="width: 61px"><input class="input-text" name="csv[after][]" /></td>
+                        
+                        <td style="width: 101px">
+                            <select id="insert_format" name="csv[format][]" >
+                                <?php foreach ($this->getFormats() as $_value => $_label): ?>
+                                    <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                <?php endforeach ?>
+                            </select>
+                            <select id="insert_image_format" style="display:none" name="csv[image_format][]" >
+                                <?php foreach ($this->getProductImageFormats() as $_value => $_label): ?>
+                                    <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </td>
+                        <td style="width: 61px"><input class="input-text" name="csv[length][]" /></td>
+                        <td style="width: 61px">
+                            <select name="csv[parent][]">
+                                <option value="no"><?php echo $this->__('No')?></option>
+                                <option value="yes"><?php echo $this->__('Yes')?></option>
+                            </select>
+                        </td>
+                        <td><?php echo $this->getRemoveDynamicButtonHtml($code) ?></td>
+                    </tr>
+                    </table>                    
+                    </span>
+                </div>  
+                </div> <!-- div grid -->              
+        <?php echo $this->getAddDynamicButtonHtml($code) ?>
+    </fieldset>
+</div>
+</div>
+
+<div class="entry-edit" id="xml_options" <?php if ($this->getValueHtml('type') != 1) echo 'style="display:none"'?>>
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('XML Template') ?></h4>
+    </div>
+    <div class="fieldset" id="amfeed_xml">
+        <div class="hor-scroll">
+        <table class="form-list" cellspacing="0">
+        <tbody>
+        <tr>
+            <td class="label"><label for="xml_header"><?php echo $this->__('Header') ?></label></td>
+            <td class="value xml_header" >
+                <textarea id="xml_header" name="xml_header" style="width:670px;height:50px"><?php echo $this->getValueHtml('xml_header')?></textarea>           
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="xml_header"><?php echo $this->__('Item') ?></label></td>
+            <td class="value">
+                <input id="xml_item" name="xml_item" value="<?php echo $this->getValueHtml('xml_item')?>" class="input-text" type="text" />
+                <p class="note"><span><?php echo $this->__('XML Tag for Item (example for Google - item).')?></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="xml_body"><?php echo $this->__('Attributes') ?></label></td>
+            <td class="value">
+                <?php
+                    $xmlBody = htmlentities(Mage::registry('amfeed_profile')->getData('xml_body'), null, 'utf-8');
+                    
+                ?>
+                <textarea id="xml_body" name="xml_body" style="width:670px;height:150px"><?php echo $xmlBody?></textarea>
+                <div class="grid">
+                    <div id="xml_control_container">
+                        <span class="field-row">
+                        <table class="data am_constructor" cellpadding="0" cellspacing="0">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="am_tag"><?php echo $this->__('XML Tag')?></th>
+                                    <th class="am_type"><?php echo $this->__('Type')?></th>
+                                    <th class="am_value"><?php echo $this->__('Value')?></th>
+                                    <th class="am_format"><?php echo $this->__('Format')?></th>
+                                    <th class="am_max_len"><?php echo $this->__('Max Length')?></th>
+                                    <th class="am_optional"><?php echo $this->__('Optional')?></th>
+                                    <th class="am_parent"><?php echo $this->__('Parent')?></th>
+                                    <th class="am_action"><?php echo $this->__('Action')?></th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td id="xml_tag_col">
+                                    <input id="xml_tag" class="input-text"/>
+                                </td>
+                                
+                                <td id="xml_insert_type">
+                                    <select id="insert_type" onchange="amfeed_changeType(this)">
+                                    <?php foreach ($this->getFieldTypes() as $_value => $_label): ?>
+                                        <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                    <?php endforeach ?>
+                                    </select>
+                                </td>
+                                <td id="attribute_values">                
+                                    <select id="insert_attr_attribute">
+                                    <?php
+                                        foreach ($this->getAttributes() as $_type => $_config) { 
+                                            $label = $_config['label'];
+                                    ?>
+                                        <optgroup label="<?php echo $label;?>">
+                                    <?php
+                                            foreach($_config['options'] as $_value => $_label) {
+                                    ?>
+                                        
+                                        <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                    <?php 
+                                        }
+                                    ?>
+                                        </optgroup>
+                                    <?php
+                                    } ?>
+                                    </select>
+                                    <select id="insert_attr_custom_field" style="display:none">
+                                    <?php foreach ($this->getCustomFields() as $_value => $_label): ?>
+                                        <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                    <?php endforeach ?>
+                                    </select>
+                                    <select id="insert_attr_category" style="display:none">
+                                    <?php foreach ($this->getCategories() as $_value => $_label): ?>
+                                        <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                    <?php endforeach ?>
+                                    </select>
+                                    <input id="insert_attr_text" class="input-text" style="display:none"/>
+                                    <select id="insert_attr_meta_tags" style="display:none">
+                                    <?php foreach ($this->getMetaTags() as $_value => $_label): ?>
+                                        <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                    <?php endforeach ?>
+                                    </select>
+                                    <select id="insert_attr_images" style="display:none">
+                                    <?php foreach ($this->getImagesFields() as $_value => $_label): ?>
+                                        <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                    <?php endforeach ?>
+                                    </select>
+                                </td>
+                                
+                                <td id="xml_image_format">                
+                                    <select id="insert_format">
+                                    <?php foreach ($this->getFormats() as $_value => $_label): ?>
+                                        <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                    <?php endforeach ?>
+                                    </select>
+                                    
+                                    <select id="insert_image_format" style=" display: none;" >
+                                        <?php foreach ($this->getProductImageFormats() as $_value => $_label): ?>
+                                            <option value="<?php echo $_value ?>"><?php echo $this->htmlEscape($_label) ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                 </td>
+                                 <td id="xml_insert_length">
+                                    <input id="insert_length" class="input-text" style=""/>
+                                 </td>
+                                 <td id="xml_insert_optional">
+                                    <select id="insert_optional" style="">
+                                        <option value="no"><?php echo $this->__('No')?></option>
+                                        <option value="yes"><?php echo $this->__('Yes')?></option>
+                                    </select>
+                                 </td>
+                                 <td id="xml_use_parent" >
+                                      <select id="use_parent">
+                                        <option value="no"><?php echo $this->__('No')?></option>
+                                        <option value="yes"><?php echo $this->__('Yes')?></option>
+                                    </select>
+                                 </td>
+                                 <td style="width: 80px; text-align: center;">
+                                     <button  id="xml_insert_btn" title="<?php echo $this->__('Insert')?>" type="button" class="scalable add" style="display: none;"><span><span><span><?php echo $this->__('Insert')?></span></span></span></button>
+                                     <button id="xml_update_btn" title="<?php echo $this->__('Update')?>" type="button" class="scalable save" style="display: none;"><span><span><span><?php echo $this->__('Update')?></span></span></span></button>
+                                 </td>
+                            </tr>   
+                        </table>
+                        </span>
+                    </div>
+                </div>
+            </td>
+        </tr>                
+        <tr>
+            <td class="label"><label for="xml_footer"><?php echo $this->__('Footer') ?></label></td>
+            <td class="value">
+                <textarea id="xml_footer" name="xml_footer" style="width:670px;height:50px"><?php echo $this->getValueHtml('xml_footer')?></textarea>           
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Formats') ?></h4>
+    </div>
+    <div class="fieldset">
+        <div class="hor-scroll">
+        <table class="form-list" cellspacing="0">
+        <tbody>
+        <tr>
+            <td class="label"><label for="frm_date"><?php echo $this->__('Date Format') ?></label></td>
+            <td class="value">
+                <input id="frm_date" name="frm_date" value="<?php echo $this->getValueHtml('frm_date')?>" class="input-text" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="currency"><?php echo $this->__('Price Currency') ?></label></td>
+            <td class="value">
+                <select name="currency">
+                    <?php foreach($this->getCurrencyList() as $code){?>
+                        <option <?php echo $this->getSelectedHtml('currency', $code)?> value="<?php echo $code?>"><?php echo $code;?></option>
+                    <?php }?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="frm_price"><?php echo $this->__('Price Decimals') ?></label></td>
+            <td class="value">
+                <input id="frm_price" name="frm_price" value="<?php echo $this->getValueHtml('frm_price', 0)?>" class="input-text" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="frm_price_dec_point"><?php echo $this->__('Price Decimal Point') ?></label></td>
+            <td class="value">
+                <input id="frm_price_dec_point" name="frm_price_dec_point" value="<?php echo $this->getValueHtml('frm_price_dec_point', '.', TRUE)?>" class="input-text" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="frm_price_thousands_sep"><?php echo $this->__('Price Thousands Separator') ?></label></td>
+            <td class="value">
+                <input id="frm_price_thousands_sep" name="frm_price_thousands_sep" value="<?php echo $this->getValueHtml('frm_price_thousands_sep', ',', TRUE)?>" class="input-text" type="text" />
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="label"><label for="frm_use_parent"><?php echo $this->__('Use Parent Value if Attribute is Empty') ?></label></td>
+            <td class="value">
+                <select id="frm_use_parent" name="frm_use_parent" class="select">
+                    <option value="0"><?php echo $this->__('No')?></option>
+                    <option value="1" <?php echo $this->getSelectedHtml('frm_use_parent',1)?> ><?php echo $this->__('Yes')?></option>
+                </select>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="label"><label for="frm_dont_use_category_in_url"><?php echo $this->__('Do not use category in URL') ?></label></td>
+            <td class="value">
+                <select id="frm_dont_use_category_in_url" name="frm_dont_use_category_in_url" class="select">
+                    <option value="0"><?php echo $this->__('No')?></option>
+                    <option value="1" <?php echo $this->getSelectedHtml('frm_dont_use_category_in_url', 1)?> ><?php echo $this->__('Yes')?></option>
+                </select>
+            </td>
+        </tr>
+        
+        <?php /*if (Mage::getStoreConfig('amfeed/system/parent_url')): ?>
+            <tr>
+                <td class="label"><label for="frm_url"><?php echo $this->__('Parent URL') ?></label></td>
+                <td class="value">
+                    <select id="frm_url" name="frm_url" class="select">
+                        <option value="0"><?php echo $this->__('No')?></option>
+                        <option value="1" <?php echo $this->getSelectedHtml('frm_url',1)?> ><?php echo $this->__('Yes')?></option>
+                    </select>
+                    <p class="note"><span><?php echo $this->__('Use URL of parent configurable product.')?></span></p>
+                </td>
+            </tr>
+        <?php endif; */?>
+
+            <tr>
+                <td class="label"><label for="frm_image_url"><?php echo $this->__('No Image URL') ?></label></td>
+                <td class="value">
+                    <select id="frm_image_url" name="frm_image_url" class="select" onchange="amfeed_isUpload(this)">
+                    <?php foreach ($this->getImageFormats() as $_value => $_label): ?>
+                        <option value="<?php echo $_value ?>" <?php echo $this->getSelectedHtml('frm_image_url', $_value)?> ><?php echo $this->htmlEscape($_label) ?></option>
+                    <?php endforeach ?>
+                    </select>
+                    <p class="note"><span><?php echo $this->__('If a product has no image.')?></span></p>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    <div id="upload_label" <?php if (!$this->getSelectedHtml('frm_image_url', 1) || !$this->getValueHtml('feed_id')) echo ' style="display:none" '; ?>>
+                        <label for="upload_image"><?php echo $this->__('Default Image') ?></label>
+                    </div>
+                </td>
+                <td class="value">
+                    <div id="upload_value" <?php if (!$this->getSelectedHtml('frm_image_url', 1) || !$this->getValueHtml('feed_id')) echo ' style="display:none" '; ?>>
+                        <input id="upload_image" name="upload_image" class="file" type="file">
+                        <p class="note"><span>JPG, PNG or GIF.</span></p>
+                        <?php if ($this->getValueHtml('default_image')): ?>
+                            <img src="<?php echo $this->getDefaultImageUrl() . $this->getValueHtml('feed_id') . '.jpg'; ?>" id="default_image" title="Default image" alt="Default image" border="0"><br />
+                            <input type="checkbox" id="delete_image" name="delete_image"> <?php echo $this->__('Delete Image')?>
+                        <?php endif; ?>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+xmlEditor.init();
+    
+</script>

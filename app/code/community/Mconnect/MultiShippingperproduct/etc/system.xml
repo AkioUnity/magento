@@ -1,0 +1,418 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @category   Catalog
+* @package    Mconnect_MultiShippingperproduct
+* @author     M-Connect Solutions (http://www.mconnectsolutions.com, http://www.mconnectmedia.com)
+* @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config>
+
+    <tabs>
+        <mconnect>            
+            <label>M-Connect Media Extensions</label>
+            <sort_order>198</sort_order>
+        </mconnect>  
+    </tabs>
+    <sections>
+		<multishippingperproduct translate="label" module="multishippingperproduct">
+            <label>Multi Shipping Per Product</label>
+            <tab>mconnect</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>72</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+				<activation translate="label">
+					<label>Licence Key Activation</label>
+					<sort_order>500</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<key translate="label">
+							<label>Licence Key</label>
+							<frontend_type>text</frontend_type>                            
+							<sort_order>25</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</key>
+					</fields>
+					 <fields>
+						<serial_key translate="label">
+							<label>Serial Key</label>
+							<frontend_type>text</frontend_type>                            
+							<sort_order>55</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</serial_key>
+					</fields>
+				</activation>
+            </groups>
+        </multishippingperproduct>
+        <carriers translate="label" module="shipping">
+            <groups>
+                <multishippingperproduct translate="label" module="multishippingperproduct">
+                    <label>Flat Rate Shipping Per Product</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <model>multishippingperproduct/carrier_multishippingperproduct</model>
+					<fields>
+                    <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+
+                        <name translate="label">
+                            <label>Method Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </name>                        
+                        <methodtype translate="label">
+                            <label>Method Type</label>
+                            <comment><![CDATA[
+                                <b>Per Product</b> - It will calculate the shipping price per product on cart page.<br />
+                                <b>Per Order</b> - it will calculate the shipping based on Max / Min configuration, if you selecte MAX then it will prefer the highest value shipping from the particular product shipping rate:
+                                Example: A, B and C product are added to cart
+                                Shipping for Product A = $10
+                                Shipping for Product B = $40
+                                Shipping for Product C = $30
+                                So in MAX config case the shipping price will be = $40
+                                In MIN config case the shipping price will be = $10 
+                                ]]>
+                            </comment>
+                            <source_model>multishippingperproduct/system_config_source_methodtype</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </methodtype>                        
+                        <max_min translate="label">
+                            <label>Max / Min</label>
+                            <comment></comment>
+                            <source_model>multishippingperproduct/system_config_source_maxmin</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <methodtype>per order</methodtype>
+                            </depends>
+                        </max_min>
+                        <shipping_default_value_enable translate="label">
+                            <label>Display Default Rate</label>
+                            <comment>If set to "Yes", the default rate will be used for all products.</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipping_default_value_enable>
+
+                        <default_shipping_cost translate="label">
+                            <label>Default Product Shipping Cost</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Sets a base shipping cost if no products have shipping price assigned</comment>
+                        </default_shipping_cost>
+                        
+                        <multiply_qty translate="label">
+                            <label>Multiply Qty</label>
+                            <comment>If same product added multiple time.</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>52</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </multiply_qty>
+                        
+                         <allow_free_shipping translate="label">
+                            <label>Allow Free Shipping</label>
+                            <comment>Allow Free Shipping if product shipping cost is set to 0.</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>55</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_free_shipping>
+                        
+                        <free_shipping_over_total translate="label">
+                            <label>Free Shipping Over Total</label>
+                            <comment>ex:100</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>56</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allow_free_shipping>1</allow_free_shipping>
+                            </depends>
+                        </free_shipping_over_total>                                        
+                        
+                        <sallowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>60</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sallowspecific>
+
+                        <specificcountry translate="label">
+                            <label>Ship to Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>70</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificcountry>
+
+                        <showmethod translate="label">
+                            <label>Show Method if not Applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>72</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_class>shipping-skip-hide</frontend_class>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showmethod>
+
+                        <specificerrmsg translate="label">
+                            <label>Displayed Error Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificerrmsg>
+                        
+                        <sort_order translate="label" module="multishippingperproduct">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+
+                    </fields>  
+                </multishippingperproduct>
+                
+                <expediteshippingperproduct translate="label">
+                    <label>Expedite Flat Rate Shipping Per Product</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>201</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <model>multishippingperproduct/carrier_expedite</model>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+
+                        <name translate="label">
+                            <label>Method Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </name>                        
+                        <methodtype translate="label">
+                            <label>Method Type</label>
+                            <comment><![CDATA[
+                                <b>Per Product</b> - It will calculate the shipping price per product on cart page.<br />
+                                <b>Per Order</b> - it will calculate the shipping based on Max / Min configuration, if you selecte MAX then it will prefer the highest value shipping from the particular product shipping rate:
+                                Example: A, B and C product are added to cart
+                                Shipping for Product A = $10
+                                Shipping for Product B = $40
+                                Shipping for Product C = $30
+                                So in MAX config case the shipping price will be = $40
+                                In MIN config case the shipping price will be = $10 
+                                ]]>
+                            </comment>
+                            <source_model>multishippingperproduct/system_config_source_methodtype</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </methodtype>                        
+                        <max_min translate="label">
+                            <label>Max / Min</label>
+                            <comment></comment>
+                            <source_model>multishippingperproduct/system_config_source_maxmin</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <methodtype>per order</methodtype>
+                            </depends>
+                        </max_min>
+                        <shipping_default_value_enable translate="label">
+                            <label>Display Default Rate</label>
+                            <comment>If set to "Yes", the default rate will be used for all products.</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shipping_default_value_enable>
+
+                        <default_shipping_cost translate="label">
+                            <label>Default Product Shipping Cost</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Sets a base shipping cost if no products have shipping price assigned</comment>
+                        </default_shipping_cost>
+                        
+                        <multiply_qty translate="label">
+                            <label>Multiply Qty</label>
+                            <comment>If same product added multiple time.</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>52</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </multiply_qty>
+                        
+                         <allow_free_shipping translate="label">
+                            <label>Allow Free Shipping</label>
+                            <comment>Allow Free Shipping if product shipping cost is set to 0.</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>55</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allow_free_shipping>
+                        
+                        <free_shipping_over_total translate="label">
+                            <label>Free Shipping Over Total</label>
+                            <comment>ex:100</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>56</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allow_free_shipping>1</allow_free_shipping>
+                            </depends>
+                        </free_shipping_over_total>                                        
+                        
+                        <sallowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>60</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sallowspecific>
+
+                        <specificcountry translate="label">
+                            <label>Ship to Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>70</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificcountry>
+
+                        <showmethod translate="label">
+                            <label>Show Method if not Applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>72</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_class>shipping-skip-hide</frontend_class>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </showmethod>
+
+                        <specificerrmsg translate="label">
+                            <label>Displayed Error Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificerrmsg>
+                        
+                        <sort_order translate="label" module="multishippingperproduct">
+                            <label>Sort order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+
+                    </fields> 
+                </expediteshippingperproduct>
+                
+            </groups>
+        </carriers>
+    </sections>
+</config>  

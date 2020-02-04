@@ -1,0 +1,23 @@
+<script type="text/javascript">
+    function initLightbox(){
+        new Lightbox({
+            fileLoadingImage: '<?php echo $this->getSkinUrl('ksv/images/loading.gif') ?>',
+            fileBottomNavCloseImage: '<?php echo $this->getSkinUrl('ksv/images/closelabel.gif') ?>',
+            overlayOpacity: 0.8,
+            animate: true,
+            resizeSpeed: 7,
+            borderSize: 10,
+            labelImage: "Image",
+            labelOf: "of"
+        });
+    }
+    if (Prototype.Browser.IE) {
+        Event.observe(window, 'load', function(){
+            initLightbox();
+        });
+    } else {
+        document.observe("dom:loaded", function(){
+            initLightbox();
+        });
+    }
+</script>

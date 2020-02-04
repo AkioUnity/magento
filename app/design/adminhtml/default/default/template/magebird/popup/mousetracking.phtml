@@ -1,0 +1,4 @@
+<html>
+<?php $window = $this->getWindow();?>
+<iframe src="<?php echo Mage::helper("adminhtml")->getUrl('*/*/iframe',array('id'=>$this->getId()))?>" width="<?php echo $window['width']?>" height="<?php echo $window['height']?>"></iframe>
+</html>

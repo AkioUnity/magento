@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+  ~ SOZO Design
+  ~
+  ~ NOTICE OF LICENSE
+  ~
+  ~ This source file is subject to the Open Software License (OSL 3.0)
+  ~ that is bundled with this package in the file LICENSE.
+  ~ It is also available through the world-wide-web at this URL:
+  ~ http://opensource.org/licenses/osl-3.0.php
+  ~
+  ~ @category    SOZO Design
+  ~ @package     Sozo_Jivochat
+  ~ @copyright   Copyright (c) 2018 SOZO Design (http://www.sozodesign.com)
+  ~ @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  ~
+  -->
+
+<config>
+    <modules>
+        <Sozo_Jivochat>
+            <version>1.0.2</version>
+        </Sozo_Jivochat>
+    </modules>
+    <global>
+        <helpers>
+            <sozo_jivochat>
+                <class>Sozo_Jivochat_Helper</class>
+            </sozo_jivochat>
+        </helpers>
+        <blocks>
+            <sozo_jivochat>
+                <class>Sozo_Jivochat_Block</class>
+            </sozo_jivochat>
+        </blocks>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <sozo_jivochat>
+                    <file>sozo_jivochat.xml</file>
+                </sozo_jivochat>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Sozo_Jivochat>
+                    <files>
+                        <default>Sozo_Jivochat.csv</default>
+                    </files>
+                </Sozo_Jivochat>
+            </modules>
+        </translate>
+    </frontend>
+    <default>
+        <sozo_jivochat>
+            <general>
+                <enabled>0</enabled>
+                <widget_id></widget_id>
+            </general>
+        </sozo_jivochat>
+    </default>
+</config>

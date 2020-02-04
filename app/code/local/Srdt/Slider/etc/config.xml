@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Srdt_Slider>
+            <version>1.0.0</version>
+        </Srdt_Slider>
+    </modules>
+    <!-- start of block -->
+	<global>
+	<models>
+            <slider>
+                <class>Srdt_Slider_Model</class>
+                <resourceModel>slider_resource</resourceModel>
+            </slider>
+            <slider_resource>
+                <class>Srdt_Slider_Model_Resource</class>
+                <entities>
+                    <slider>
+                        <table>slider</table>
+                    </slider>
+                </entities>
+            </slider_resource>
+        </models>
+        <resources>
+            <slider_setup>
+                <setup>
+                    <module>Srdt_Slider</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </slider_setup>
+            <slider_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </slider_read>
+            <slider_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </slider_write>
+        </resources>
+        <!-- start of block -->
+        <blocks>
+            <srdt_slider>
+                <class>Srdt_Slider_Block</class>
+            </srdt_slider>
+        </blocks>
+ 
+        <helpers>
+			<srdt_slider>
+				<class>Srdt_Slider_Helper</class>
+			</srdt_slider>
+		</helpers>
+    </global>
+ 
+    <!-- start of routers-->
+    <frontend>
+        <routers>
+            <slider>
+                <use>standard</use>
+                <args>
+                    <module>Srdt_Slider</module>
+                    <frontName>srdtslider</frontName>
+                </args>
+            </slider>
+        </routers>   
+	</frontend>
+	<admin>
+        <routers>
+            <srdtslideradmin>
+                <use>admin</use>
+                <args>
+                    <module>Srdt_Slider</module>
+                    <frontName>srdtslideradmin</frontName>
+                </args>
+            </srdtslideradmin>
+        </routers>
+    </admin>
+</config>

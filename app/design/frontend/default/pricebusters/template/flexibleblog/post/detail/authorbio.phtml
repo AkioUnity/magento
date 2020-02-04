@@ -1,0 +1,27 @@
+<?php
+$authorId = $this->getAuthorId();
+$authorData = $this->getAuthorData($authorId); ?>
+<div class="author-bio">
+	<div class="author-avatar">
+    	<?php
+        /* 
+         *  getAuthorAvatarImg($authorId, $width, $height)
+         * 
+         * $authorId = $authorId
+         * $width = i.e. 200
+         * $height = i.e. 200
+         */
+        ?>
+        <?php echo $this->getAuthorAvatarImg($authorId);?>
+    </div>
+    <div class="author-description">
+    	<div class="author-name">
+        	<h3>
+            	<a href="<?php echo $this->getAuthorUrl($authorData->getAuthorId()); ?>">
+					<?php echo $authorData->getAuthorName();?>
+            	</a>
+            </h3>
+        </div>
+        <div class="author-detail"><?php echo Mage::helper('cms')->getBlockTemplateProcessor()->filter($authorData->getAuthorBio());?></div>
+    </div>
+</div>

@@ -1,0 +1,227 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+<?php echo $this->getChildHtml('head') ?>
+</head>
+<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<?php echo $this->getChildHtml('after_body_start') ?>
+    <?php echo $this->getChildHtml('global_notices') ?>
+        <?php echo $this->getChildHtml('header') ?>
+		<?php //echo $this->getLayout()->createBlock('bannerslider/default')->setTemplate('bannerslider/bannerslider.phtml')->setBannersliderId('1')->toHtml();  ?>
+
+			<?php //echo $this->getLayout()->createBlock('srdt_slider/banner')->setTemplate('banner/slider.phtml')->setSrdtsliderbannerId('1')->toHtml();  ?>
+
+
+			<div class="conatiner home">
+				
+				
+					<a href="<?php echo Mage::getBaseUrl(); ?>financial-option/">
+					    <img src="https://pricebusters.furniture/skin/frontend/default/pricebusters/images/PriceBustersProofHero_wide.png" alt=""/>
+						<div class="caption-contain">
+						</div>
+					</a>
+				
+					
+			</div>
+
+
+
+
+                <?php //echo $this->getChildHtml('breadcrumbs') ?>               
+                    <?php echo $this->getChildHtml('global_messages') ?>
+                    
+					<!-- slider end and firstImgSection Starts -->
+					
+					
+
+
+					
+					  <section class="FirstImgGall">
+						<div class="container">
+						    <br>
+						    
+						    					 <div class="pre-approval-button-acima-credit-container">
+    <a href="javascript:void(0);">
+        <img src="https://pricebusters.furniture/home_banner_big.png" alt="Acima Credit Pre Aproval Button" onclick="AcimaCreditPreApproval.start();">
+    </a>
+</div>
+<div class="acima-credit-iframe-container closed">
+    <div class="acima-credit-iframe-inner">
+        <iframe id="acima-credit-iframe-pre-approval" data-src="<?php echo Mage::getStoreConfig('payment/acimacheckout/apiurl'); ?>" width="100%" height="100%" frameborder="none"></iframe>
+    </div>
+</div>
+
+<script type="text/javascript">
+acima_credit_settings = {
+    merchant_id: "<?php echo Mage::getStoreConfig('payment/acimacheckout/merchantid'); ?>"
+};
+</script>
+						    
+						    
+						    
+							<div class="row GallRow g1 homepageboximage_wrapper ">                     
+							  <div class="col-sm-4 GallColl">
+								<div class="ImgGall">
+								<?php
+									$Category=Mage::getModel('catalog/category')->load(107);	 
+								?>
+								  <div class="zoomingPourpos">
+								<a href="<?php echo $Category->getUrl() ?>"><img src="<?php echo $Category->getImageUrl() ?>" alt=""></a>
+								 </div><!-- zoomingPourpos -->
+								 <div class="content">
+								   <h1 class="fleft"><a href="<?php echo $Category->getUrl() ?>"><?php echo $Category->getName(); ?></a></h1> <!-- <h1 class="fleft vf"> Room</h1>-->
+								
+								 </div><!-- content end -->
+								</div><!-- ImgGall -->
+							  </div><!-- col-sm-4 end -->
+							  <div class="col-sm-4 GallColl">
+								<div class="ImgGall">
+								<?php
+									 $Category1=Mage::getModel('catalog/category')->load(20);
+									 
+								?>
+								  <div class="zoomingPourpos">
+								<a href="<?php echo $Category1->getUrl() ?>"> <img src="<?php echo $Category1->getImageUrl() ?>" alt=""></a>
+								 </div><!-- zoomingPourpos -->
+								 <div class="content">
+								   <h1 class="fleft"><a href="<?php echo $Category1->getUrl() ?>"><?php echo $Category1->getName(); ?></a></h1> <!-- <h1 class="fleft vf"> Room</h1>-->
+
+								 </div><!-- content end -->
+								</div><!-- ImgGall -->
+							  </div><!-- col-sm-4 end -->
+							  <div class="col-sm-4 GallColl fl">
+							  <?php
+									 $Category2=Mage::getModel('catalog/category')->load(174);	 
+								?>
+								<div class="ImgGall">
+								  <div class="zoomingPourpos">
+								<a href="<?php echo $Category2->getUrl() ?>"><img src="<?php echo $Category2->getImageUrl() ?>" alt=""></a>
+								 </div><!-- zoomingPourpos -->
+								 <div class="content">
+								   <h1 class="fleft"><a href="<?php echo $Category2->getUrl() ?>"><?php echo $Category2->getName(); ?></a></h1> <!-- <h1 class="fleft vf"> Room</h1>-->
+								 
+								 </div><!-- content end -->
+								</div><!-- ImgGall -->
+							  </div><!-- col-sm-4 end -->
+											 
+							  <div class="col-sm-4 GallColl sp sp1">
+								<div class="ImgGall">
+								 <?php
+									 $Category3=Mage::getModel('catalog/category')->load(215);
+									?>
+								 <div class="zoomingPourpos">
+								 <a href="<?php echo $Category3->getUrl() ?>"><img src="<?php echo $Category3->getImageUrl() ?>" alt=""></a>
+								 </div><!-- zoomingPourpos -->
+								 <div class="content">
+								   <h1 class="fleft"><a href="<?php echo $Category3->getUrl() ?>"><?php echo $Category3->getName(); ?></a></h1> <!-- <h1 class="fleft vf"> Room</h1>-->
+							
+								 </div><!-- content end -->
+								</div><!-- ImgGall -->
+							  </div><!-- col-sm-4 end -->
+							  <div class="col-sm-4 GallColl sp">
+								<div class="ImgGall">
+								<?php
+									 $Category4=Mage::getModel('catalog/category')->load(260);
+								?>
+								  <div class="zoomingPourpos">
+								 <a href="<?php echo $Category4->getUrl() ?>"><img src="<?php echo $Category4->getImageUrl() ?>" alt=""></a>
+								 </div><!-- zoomingPourpos -->
+								 <div class="content">
+								   <h1 class="fleft"><a href="<?php echo $Category4->getUrl() ?>"><?php echo $Category4->getName(); ?></a></h1> <!-- <h1 class="fleft vf"> Room</h1>-->
+						
+								 </div><!-- content end -->
+								</div><!-- ImgGall -->
+							  </div><!-- col-sm-4 end -->
+							  <div class="col-sm-4 GallColl sp">
+								<div class="ImgGall">
+								<?php
+									$Category5=Mage::getModel('catalog/category')->load(8);
+								?>
+								<div class="zoomingPourpos">
+								<a href="https://pricebusters.furniture/categories/bedroom.html"> <img src="<?php echo $Category5->getImageUrl() ?>" alt=""></a>
+								 </div><!-- zoomingPourpos -->
+								 <div class="content">
+								   <h1 class="fleft"><a href="<?php echo $Category5->getUrl() ?>"><?php echo $Category5->getName(); ?></a></h1> <!-- <h1 class="fleft vf"> Room</h1>-->
+			
+								 </div><!-- content end -->
+								</div><!-- ImgGall -->
+							  </div><!-- col-sm-4 end -->
+							</div><!-- row end -->
+						   </div><!-- container end -->
+					  </section><!-- FirstImgGall end --> 
+					<?php 
+				  echo $this->getLayout()->createBlock('core/template')->setTemplate('page/newcollection.phtml')->toHtml();
+				?>
+					<?php echo $this->getChildHtml('content') ?>
+<script>var amountScrolled=300;$(window).scroll(function(){if($(window).scrollTop()>amountScrolled){$('a.back-to-top').fadeIn('slow');}else{$('a.back-to-top').fadeOut('slow');}});$('a.back-to-top').click(function(){$('html, body').animate({scrollTop:0},700);return false;});</script>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+
+  var owl1 = $("#owl-slider2"); 
+       owl1.owlCarousel({    
+         autoPlay: 3000,    
+         items : 4, //10 items above 1000px browser width       
+         itemsCustom : false,  
+         itemsDesktop : [1199,4],  
+         itemsDesktopSmall : [980,4],   
+         itemsTablet: [768,3],
+         itemsTabletSmall: false,  
+         itemsMobile : [479,1], 
+         singleItem : false,
+         itemsScaleUp : false, 
+         pagination : false, 
+         navigation : true,
+                 });
+
+$(window).scroll(function(){
+    if ($(window).scrollTop() >= 300) {
+       $('nav').addClass('fixed-header');
+    }
+    else {
+       $('nav').removeClass('fixed-header');
+    }
+});
+
+	
+});
+
+
+</script>					
+        <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('global_cookie_notice') ?>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+     
+<?php //echo $this->getAbsoluteFooter() ?>
+</body>
+</html>

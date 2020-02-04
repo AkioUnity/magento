@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <magebird translate="label" module="magebird_popup">
+            <label>Magebird Extensions</label>
+            <sort_order>195</sort_order>
+        </magebird>
+    </tabs>
+    <sections>
+        <magebird_popup translate="label" module="magebird_popup">
+            <label>Popup</label>
+            <tab>magebird</tab>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>          
+            <groups>
+                <general translate="label" module="magebird_popup">
+                    <label>Extension Licence</label>  
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>                     
+                    <fields>    
+                        <licence_key translate="label comment">
+                            <label>Licence Key</label>
+                            <comment>Write your licence key. The key is inside New Order e-mail.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>    
+                            <backend_model>Magebird_Popup_Model_Config</backend_model>                
+                        </licence_key>                                                                                                                                                                                                                                                                                                        
+                    </fields>
+                </general>                                            
+                <settings translate="label" module="magebird_popup">
+                    <label>Settings</label>  
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>                     
+                    <fields>    
+                        <!--
+                        <useajax translate="label comment">
+                            <label>Load popup with ajax?</label>
+                            <comment><![CDATA[Choose ajax (recommended) if you use full page html caching (e.g Varnish cache). This will prevent popup to be cached.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </useajax>
+                        -->      
+                        <requesttype translate="label comment">
+                            <label>Ajax request type</label>
+                            <comment><![CDATA[Recommended GET. Also leave GET if you don't know what is that.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Magebird_Popup_Model_System_Requesttype</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                            <depends><useajax>1</useajax></depends>                            
+                        </requesttype>                                         
+                        <load_jquery translate="label comment">
+                            <label>Load jQuery?</label>
+                            <comment><![CDATA[Leave 'Yes' if you don't know what is that. ONLY if your site already loads jquery you can disable popup jquery so it won't be loaded again and thus you save 90kb of loading.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </load_jquery>
+                        <asynchronous translate="label comment">
+                            <label>Make JavaScript Asynchronous?</label>
+                            <comment><![CDATA[By default JavaScript blocks page DOM until the script is loaded. To prevent popup JavaScript from blocking the parser we recommend choosing 'Yes'. If you don't want to show page content before popup is loaded, choose 'No'.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </asynchronous>                                                                                                                                                                                                                                                                                                                              
+                    </fields>                    
+                </settings> 
+                          
+                <statistics translate="label">
+                  <label>Statistics settings</label>  
+                  <sort_order>3</sort_order>
+                  <show_in_default>1</show_in_default>
+                  <show_in_website>1</show_in_website>
+                  <show_in_store>1</show_in_store>                 
+                  <fields>
+                        <ajax_async translate="label comment">
+                            <label>Ajax async settings on window exit</label>
+                            <comment><![CDATA[User can leave browser window when popup is still opened without any interaction. This event is tracked in statistics as 'Window closed or page left'. Ajax call is created for this purpose. When 'asynchronously' is selected the browser window will be closed without delay, but some browsers may cancel ajax call and statistics will be less accurance. Selecting 'synchronous' statistics will be more accurance, but this will lock browser window when closing it until ajax call is finished. Usually it is not detectable by user and it takes less than half second, but it can be more if server is slow.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Magebird_Popup_Model_System_Asyncoption</source_model>                             
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </ajax_async>                                                                                                                                                                                                                                                                                                                                                            
+                        <ga_tracking translate="label comment">
+                            <label>Event tracking with Google analytics?</label>
+                            <comment><![CDATA[You must have Google Analytics javascript code already installed on your website for this to work.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </ga_tracking> 
+                        <!--
+                        <mousetracking translate="label comment">
+                            <label>Track user mouse movements?</label>
+                            <comment><![CDATA[Mousetrackings will appear inside CMS->Magebird Popup grid.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </mousetracking>  
+                        
+                        <delete_mousetracking translate="label comment">
+                            <label>Delete old mousetracking data</label>
+                            <comment><![CDATA[Delete old data to prevent database table oversize.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Magebird_Popup_Model_System_Deletemousetracking</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><mousetracking>1</mousetracking></depends>                    
+                        </delete_mousetracking>
+                        -->                                        
+                  </fields>
+                </statistics>
+                     
+                <services translate="label" module="magebird_popup">
+                    <label>Newsletter Services</label>  
+                    <sort_order>4</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>                     
+                    <fields>
+                        <enablemagento translate="label">
+                            <label>Add subscriber's e-mail to Magento Newsletter</label>
+                            <comment><![CDATA[Subscriber's e-mail is added to Magento by default. If you use any external newsletter service from the below list, you can disable this option.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enablemagento>                      
+                        <enablemailchimp translate="label">
+                            <label>Add subscriber's e-mail to Mailchimp</label>
+                            <comment><![CDATA[Choose yes if you want to use Mailchimp integration.]]></comment>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enablemailchimp>                                               
+                        <mailchimp_key translate="label comment">
+                            <label>Mailchimp Api Key</label>
+                            <comment><![CDATA[Write only if you use MailChimp service, otherwise leave empty. Go to <a target="_blank" href="http://admin.mailchimp.com/account/api/">http://admin.mailchimp.com/account/api/</a> to find the key. Make sure you also submited Mailchimp list id inside newsletter widget in popup editor.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enablemailchimp>1</enablemailchimp></depends>                    
+                        </mailchimp_key>   
+                        <mailchimp_double_option translate="label comment">
+                            <label>Mailchimp Double Opt-in</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>      
+                            <comment><![CDATA[If yes, user needs to confirm subscription. Read more about MailChimp The Double Opt-in Process <a target="_blank" href="http://kb.mailchimp.com/lists/signup-forms/the-double-opt-in-process">here</a>.]]></comment>
+                            <depends><enablemailchimp>1</enablemailchimp></depends>                                          
+                        </mailchimp_double_option>    
+                        <enablecampaignmonitor translate="label">
+                            <label>Add subscriber's e-mail to Campaignmonitor</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enablecampaignmonitor>                                               
+                        <campaignmonitor_key translate="label comment">
+                            <label>Campaign Monitor Api Key</label>
+                            <comment><![CDATA[<a target="_blank" href="http://help.campaignmonitor.com/topic.aspx?t=206">Where you can find Campaign Monitor api key?</a> Make sure you also submited list id inside newsletter widget in popup editor.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enablecampaignmonitor>1</enablecampaignmonitor></depends>                    
+                        </campaignmonitor_key>   
+                        <enablegetresponse translate="label">
+                            <label>Add subscriber's e-mail to GetResponse</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enablegetresponse>                                               
+                        <getresponse_key translate="label comment">
+                            <label>GetResponse Api Key</label>
+                            <comment><![CDATA[Write only if you use GetResponse service, otherwise leave empty. Go to <a target="_blank" href="http://admin.mailchimp.com/account/api/">http://admin.mailchimp.com/account/api/</a> to find the key. Make sure you also submited list id inside newsletter widget in popup editor.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enablegetresponse>1</enablegetresponse></depends>                    
+                        </getresponse_key>  
+                        <enableactivecampaign translate="label">
+                            <label>Add subscriber's e-mail to ActiveCampaign</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enableactivecampaign>                                               
+                        <activecampaign_key translate="label comment">
+                            <label>ActiveCampaign Api Key</label>
+                            <comment><![CDATA[Write only if you use ActiveCampaign service, otherwise leave empty. You can find key <a target="_blank" href="https://magebird.activehosted.com/admin/main.php?action=settings#tab_api">here</a>.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enableactivecampaign>1</enableactivecampaign></depends>                    
+                        </activecampaign_key>    
+                        <activecampaign_url translate="label comment">
+                            <label>ActiveCampaign Api Url</label>
+                            <comment><![CDATA[You can find url <a target="_blank" href="https://magebird.activehosted.com/admin/main.php?action=settings#tab_api">here</a>. Make sure you also submited list id inside newsletter widget in popup editor!]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enableactivecampaign>1</enableactivecampaign></depends>                    
+                        </activecampaign_url>                                              
+                        <enablesendy translate="label">
+                            <label>Add subscriber's e-mail to Sendy</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enablesendy>                                               
+                        <sendy_key translate="label comment">
+                            <label>Sendy Api Key</label>
+                            <comment><![CDATA[You can find the Api Key inside Sendy Settings. Make sure you also submited Sendy list id inside newsletter widget in popup editor!]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enablesendy>1</enablesendy></depends>                    
+                        </sendy_key>  
+                        <sendy_url translate="label comment">
+                            <label>Sendy Installation Url</label>
+                            <comment><![CDATA[Url where Sendy is installed (e.g. http://www.example.com).]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enablesendy>1</enablesendy></depends>                    
+                        </sendy_url>    
+                        <enable_phplist translate="label">
+                            <label>Add subscriber's e-mail to phpList</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>13</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_phplist>                                               
+                        <phplist_url translate="label comment">
+                            <label>Phplist url</label>
+                            <comment><![CDATA[Url where phplist is installed. Make sure you also submited list id inside newsletter widget in popup editor!]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>14</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_phplist>1</enable_phplist></depends>                    
+                        </phplist_url>  
+                        <phplist_username translate="label comment">
+                            <label>Phplist admin username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_phplist>1</enable_phplist></depends>                    
+                        </phplist_username>  
+                        <phplist_password translate="label comment">
+                            <label>Phplist admin password</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>16</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_phplist>1</enable_phplist></depends>                    
+                        </phplist_password>        
+                        <phplist_confirmed translate="label comment">
+                            <label>Automatically confirmed?</label>
+                            <comment><![CDATA[If you select No user will receive confirmation e-mail and will be added to list only if he/she confirms subscription.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_phplist>1</enable_phplist></depends>                    
+                        </phplist_confirmed>  
+                        <enable_klaviyo translate="label">
+                            <label>Add subscriber's e-mail to Klaviyo</label>
+                            <comment><![CDATA[Choose yes if you want to use Klaviyo integration.]]></comment>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_klaviyo>                                               
+                        <klaviyo_key translate="label comment">
+                            <label>Klaviyo Api Key</label>                                                        
+                            <frontend_type>text</frontend_type>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Make sure you also submited list id inside newsletter widget in popup editor!]]></comment>
+                            <depends><enable_klaviyo>1</enable_klaviyo></depends>                    
+                        </klaviyo_key>   
+                        <klaviyo_double_option translate="label comment">
+                            <label>Klaviyo Double Opt-in</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>      
+                            <comment><![CDATA[If yes, user needs to confirm subscription.]]></comment>
+                            <depends><enable_klaviyo>1</enable_klaviyo></depends>                                          
+                        </klaviyo_double_option>  
+                        <enable_mailjet translate="label">
+                            <label>Add subscriber's e-mail to Mailjet</label>
+                            <comment><![CDATA[Choose yes if you want to use Mailjet integration.]]></comment>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>21</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_mailjet>                                               
+                        <mailjet_key translate="label comment">
+                            <label>Mailjet Api Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>22</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Make sure you also submited list id inside newsletter widget in popup editor!]]></comment>
+                            <depends><enable_mailjet>1</enable_mailjet></depends>                    
+                        </mailjet_key> 
+                        <mailjet_secret_key translate="label comment">
+                            <label>Mailjet Secret Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>23</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_mailjet>1</enable_mailjet></depends>                    
+                        </mailjet_secret_key>  
+                        <enable_emma translate="label">
+                            <label>Add subscriber's e-mail to Emma</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>24</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_emma>                                               
+                        <emma_public_key translate="label comment">
+                            <label>Emma Public Api Key</label>
+                            <comment><![CDATA[You can find the Key inside Emma <a href="https://app.e2ma.net/app2/billing/settings/">Account Settings</a> Make sure you also submited list id inside newsletter widget in popup editor!]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>   
+                            <depends><enable_emma>1</enable_emma></depends>                    
+                        </emma_public_key>  
+                        <emma_private_key translate="label comment">
+                            <label>Emma Private Api Key</label>
+                            <comment><![CDATA[You can find the Key inside Emma <a href="https://app.e2ma.net/app2/billing/settings/">Account Settings</a>]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>26</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_emma>1</enable_emma></depends>                    
+                        </emma_private_key>     
+                        <emma_account_id translate="label comment">
+                            <label>Emma Account Id</label>
+                            <comment><![CDATA[You can find the Key inside Emma <a href="https://app.e2ma.net/app2/billing/settings/">Account Settings</a>]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>27</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_emma>1</enable_emma></depends>                    
+                        </emma_account_id>     
+                        <emma_send_optin translate="label comment">
+                            <label>Emma Send Optin confirmation</label>
+                            <comment><![CDATA[Do you want to send opt-in e-mail confirmation?]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>28</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store> 
+                            <depends><enable_emma>1</enable_emma></depends>                    
+                        </emma_send_optin>                                                                                                 
+                        <enable_iconneqt translate="label">
+                            <label>Add subscriber's e-mail to iConneqt</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>29</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_iconneqt>
+                        <iconneqt_url translate="label comment">
+                            <label>iConneqt url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_iconneqt>1</enable_iconneqt></depends>                    
+                        </iconneqt_url>                         
+                        <iconneqt_username translate="label comment">
+                            <label>iConneqt API username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>31</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Make sure you also submited list id inside newsletter widget in popup editor!]]></comment>
+                            <depends><enable_iconneqt>1</enable_iconneqt></depends>                    
+                        </iconneqt_username>    
+                        <iconneqt_password translate="label comment">
+                            <label>iConneqt API password</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_iconneqt>1</enable_iconneqt></depends>                    
+                        </iconneqt_password> 
+                        <iconneqt_confirmed translate="label comment">
+                            <label>Subscriber automatically confirmed?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>33</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store> 
+                            <depends><enable_iconneqt>1</enable_iconneqt></depends>                    
+                        </iconneqt_confirmed> 
+                        <enable_nuevomailer translate="label">
+                            <label>Add subscriber's e-mail to Nuevomailer</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>34</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_nuevomailer>
+                        <nuevomailer_url translate="label comment">
+                            <label>Nuevomailer url</label>  
+                            <comment><![CDATA[Specify the url of directory where Nuevomailer is installed (e.g.:http://www.yourdomain.com/mailer_dir/). Make sure you also submited list id inside newsletter widget in popup editor!]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_nuevomailer>1</enable_nuevomailer></depends>                    
+                        </nuevomailer_url>      
+                        <nuevomailer_api_key translate="label comment">
+                            <label>Nuevomailer api key</label>
+                            <comment><![CDATA[Copy it from your admins table]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>36</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_nuevomailer>1</enable_nuevomailer></depends>                    
+                        </nuevomailer_api_key>  
+                        <nuevomailer_optin translate="label comment">
+                            <label>Use double Optin?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>37</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store> 
+                            <depends><enable_nuevomailer>1</enable_nuevomailer></depends>                    
+                        </nuevomailer_optin> 
+                        <enable_dotmailer translate="label">
+                            <label>Add subscriber's e-mail to Dotmailer</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>38</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_dotmailer> 
+                        <dotmailer_email translate="label comment">
+                            <label>Dotmailer api email</label>                            
+                            <frontend_type>text</frontend_type>
+                            <sort_order>39</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_dotmailer>1</enable_dotmailer></depends>                    
+                        </dotmailer_email> 
+                        <dotmailer_password translate="label comment">
+                            <label>Dotmailer password</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store> 
+                            <comment><![CDATA[Make sure you also submited address book id inside newsletter widget in popup editor!]]></comment>                            
+                            <depends><enable_dotmailer>1</enable_dotmailer></depends>                    
+                        </dotmailer_password>  
+                        <enable_cc translate="label comment">
+                            <label>Add contact to Constant Contact</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>41</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_cc>  
+                        <cc_key translate="label comment">
+                            <label>Constant Contact api key</label>
+                            <comment><![CDATA[You can obtain api key <a href='https://constantcontact.mashery.com/' target='_blank'>here</a> Make sure you also submited list id inside newsletter widget in popup editor!]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>42</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_cc>1</enable_cc></depends>                    
+                        </cc_key> 
+                        <cc_token translate="label comment">
+                            <label>Constant Contact token</label>
+                            <comment><![CDATA[You can obtain token <a href='https://constantcontact.mashery.com/' target='_blank'>here</a>]]></comment>                            
+                            <frontend_type>text</frontend_type>
+                            <sort_order>43</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_cc>1</enable_cc></depends>                    
+                        </cc_token>    
+                        <enable_mailerlite translate="label">
+                            <label>Add subscriber's e-mail to MailerLite</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>44</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_mailerlite> 
+                        <mailerlite_apiKey translate="label comment">
+                            <label>MailerLite api key</label>
+                            <comment><![CDATA[API key can be obtained from Integrations page when you are logged into MailerLite application or click <a target="_blank" href="https://app.mailerlite.com/integrations/api/">here</a>. Make sure you also submited list id inside newsletter widget in popup editor!]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>45</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_mailerlite>1</enable_mailerlite></depends>                    
+                        </mailerlite_apiKey>  
+                                             
+						<enable_aweber translate="label">
+                            <label>Add subscriber's e-mail to AWeber</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>46</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_aweber> 
+                        <aweber_consumerKey translate="label comment">
+                            <label>AWeber consumer key</label>
+                            <comment><![CDATA[Create your own APP <a target="_blank" href="https://labs.aweber.com/">here</a> or leave the secret and key setted to magebird AWeber App.<br /><br />After saving secret and key go to this <a href="/magebird_popup/index/aweberApp" target="_blank">link</a> where you connect magebird or your new App to your AWeber account - depending on the saved details. In case of your own app, you should check premission settings -> Request Subsriber Data should be checked, if not the magebird extension can't check if email is already subsribed.]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>47</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_aweber>1</enable_aweber></depends>                    
+                        </aweber_consumerKey>  
+                        <aweber_consumerSecret translate="label comment">
+                            <label>AWeber consumer secret</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>47</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_aweber>1</enable_aweber></depends>                    
+                        </aweber_consumerSecret>  
+                        
+                          <aweber_token_key translate="label">
+                            <label>AWeber access token</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>48</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_aweber>1</enable_aweber></depends>                    
+                        </aweber_token_key>  
+                         <aweber_token_secret translate="label">
+                            <label>AWeber access secret</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>48</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_aweber>1</enable_aweber></depends>                    
+                        </aweber_token_secret> 
+                        <enable_remarkety translate="label">
+                            <label>Add subscriber's e-mail to Remarkety</label>                                                  
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>49</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </enable_remarkety>                           
+                        <remarkety_store_id translate="label comment">
+                            <label>Remarkety Store Id</label>
+                            <comment><![CDATA[The {store_id} parameter is found on your Settings -> API Keys page in Remarkety:]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enable_remarkety>1</enable_remarkety></depends>                    
+                        </remarkety_store_id>                        
+                        <remarkety_send_optin translate="label comment">
+                            <label>Remarkety Send Optin confirmation</label>
+                            <comment><![CDATA[Do you want to send opt-in e-mail confirmation?]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model> 
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store> 
+                            <depends><enable_remarkety>1</enable_remarkety></depends>                    
+                        </remarkety_send_optin>                         
+                                                                               
+                    </fields>
+                </services>                                                                           
+            </groups> 
+        </magebird_popup>
+    </sections>
+</config>

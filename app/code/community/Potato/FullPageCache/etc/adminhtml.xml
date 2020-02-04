@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <po_fpc>
+                                        <title>PotatoCommerce - Full Page Cache</title>
+                                    </po_fpc>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <translate>
+        <modules>
+            <Potato_FullPageCache>
+                <files>
+                    <default>Potato_FullPageCache.csv</default>
+                </files>
+            </Potato_FullPageCache>
+        </modules>
+    </translate>
+</config>

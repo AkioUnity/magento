@@ -1,0 +1,417 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct();
+$stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product);
+ ?>
+ 
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+   
+   jQuery(document).ready(function() {
+        //jQuery('.catalog-product-view .product-image img').addClass('zoom');
+        jQuery('.zoom').magnify({
+        speed: 50
+      });
+    });
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+  <div class="container">
+<section class="slider-content">
+  <div class="row product-slider">
+    <form action="<?php echo $this->getSubmitUrl($_product, array('_secure' => $this->_isSecure())) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <?php echo $this->getBlockHtml('formkey') ?>
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+        </div>
+		<div class="col-sm-6 pro-sli-row">
+            <?php echo $this->getChildHtml('media') ?>
+        </div>
+        <div class="col-sm-6 pro-sli-row">
+		 <section class="SecondColContent">
+      <h1 class="sonsequuntur"><?php echo $_product->getName() ?> </h1>
+       <p class="star">
+	   <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+       <?php /*  <i class="fa fa-star-o star-space" aria-hidden="true"></i>
+        <i class="fa fa-star-o star-space" aria-hidden="true"></i>
+        <i class="fa fa-star-o star-space" aria-hidden="true"></i>
+        <i class="fa fa-star-o star-space" aria-hidden="true"></i>
+        <i class="fa fa-star-o star-space" aria-hidden="true"></i> */ ?>
+      </p>
+   <!--      <p class="reviews">0 reviews</p>  
+        <p class="write"> rite a review</p> -->
+		<?php $formattedPrice = Mage::helper('core')->currency($_product->getPrice(), true, false); 
+		  $specialPrice = Mage::helper('core')->currency($_product->getFinalPrice(), true, false);
+		   ?> 
+<?php /*		<h1 class="RegularPrice">Regular Price:  <strike> <?php echo $formattedPrice; ?> </strike></h1>*/?>   
+<div class="prod_desc">
+  <?php echo $_product->getDescription();?>
+  
+  <p style="font-size:14px;">Product Weight: <?php echo number_format((float)$_product->getWeight(), 2, '.', ''); ?><br>Box Dimensions: Width: <?php echo number_format((float)$_product->getBoxWidth(), 2, '.', ''); ?> x Length: <?php echo number_format((float)$_product->getBoxLength(), 2, '.', ''); ?> x Height: <?php echo number_format((float)$_product->getBoxHeight(), 2, '.', ''); ?></p>
+</details>
+<?php if($_product->getAttributeText('dispplay_in_store')=='Yes')
+{
+    ?>
+<h3 class="SpecialPrice onlyprice ">
+      Display In Stores:Yes	  
+          </h3>
+      <?php
+}
+?>    
+
+		 <h3 class="SpecialPrice onlyprice ">
+      Price: <?php echo $specialPrice; ?>		  
+		  </h3>
+      <?php if($_product->getData("pkg_qty")>1){?>
+<h1 class="SpecialPrice onlyprice "><?php  echo "<span class='pkg_qty'>Package Quantity</span>: " . $_product->getData("pkg_qty"); ?></h1>
+<?php } ?>
+
+	   <h4 class="Availability">
+           <div class="sco"><strong><?php echo $this->getChildHtml('product_type_data') ?></strong></div><br/>
+           <?php
+            /*************************************
+             *  SHIPPING PRICE CALCULATION
+             *  Calculated the shipping price for each product and per product weight 
+             *  Custom shipping logic implemented by SGDEV 
+             *************************************/
+            ?>
+            <strong>Shipping Details:</strong> 
+            <style>
+                .shipable-product-charges { margin-bottom:20px;display: inline-block;}
+                .shipable-product { margin-top:10px; font-Weight:bold;}
+                .can-ship { color: #229912; }
+                .cannot-ship { color: #ff0000; }
+                .shipping-chr-details {margin-top:8px;}
+                .shipping-chr-details p {margin: 4px 0;font-size: 14px;font-weight: normal;}
+                .shipping-chr-details p.ship-dhead {text-align: center;margin-bottom:10px;}
+                .whyship {
+                    position: relative;
+                    display: inline-block;
+                    border-bottom: 1px dotted black;
+                    font-size: 14px;
+                    color: #333;
+                    cursor: pointer;
+                }
+                .whyship .whyshiptext {
+                    visibility: hidden;
+                    width: 280px;
+                    background-color: #333;
+                    color: #fff;
+                    text-align: left;
+                    border-radius: 6px;
+                    padding:10px 12px;
+                    position: absolute;
+                    z-index: 1;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -60px;
+                }
+                .whyship:hover .whyshiptext {
+                    visibility: visible;
+                }
+            </style>
+            <div class="shipable-product-charges">                
+                <div class="shipable-product">
+                    <?php                    
+                    if($_product->getAttributeText('shipable') == 'Yes'){
+                        $productWeight = $_product->getWeight();
+                        if($productWeight < 150) {
+                            $BoxWidth = $_product->getBoxWidth();
+                            $BoxLength = $_product->getBoxLength();
+                            $BoxHeight = $_product->getBoxHeight();
+                            $BoxDimension = $BoxLength + ($BoxWidth * 2) + ($BoxHeight * 2);
+                            if($BoxDimension >= 0 && $BoxDimension <= 130) {
+                                echo "<span class='can-ship'>Free Shipping</span>";
+                            } else if($BoxDimension > 130 && $BoxDimension <= 164) {
+                                echo "<span class='can-ship'>Shipping price is $59.00 OR free in store pickup  plus free assembley</span>";
+                            } else if($BoxDimension > 164) {
+                                echo "<span class='can-ship'>Shipping price is $99.00 OR free in store pickup  plus free assembley</span>";
+                            } else {
+                                echo "<span class='cannot-ship'>"."Free In Store Pickup  Plus Free Assembley"."</span>"; 
+                            }
+                        } else {
+                            echo "<span class='can-ship'>Shipping price is $99.00 OR free in store pickup  plus free assembley</span>";
+                        }
+                    } else {
+                        echo "<span class='cannot-ship'>"."Free In Store Pickup  Plus Free Assembley"."</span>"; 
+                    }
+                    ?>
+                    <?php /* ?>
+                    <div class="whyship">(?)
+                        <div class="whyshiptext shipping-chr-details">
+                            <p class="ship-dhead">Shipping Charges</p>
+                            <p><b>Product weight under 150 :</b><p>
+                            <p>Dimensions is under 130 shipping charge is free<p>
+                            <p>Dimensions is 130 to 164 shipping charge is 59.00<p>
+                            <p>Dimensions is over 164 shipping charge is 99.00<p>
+                            <p><b>Product weight above 150 :</b><p>
+                            <p>Product shipping charge is 99.00<p>
+                        </div>
+                    </div>
+                    <?php */ ?>
+                </div>
+            </div>
+            <?php /* Calculation complete here */ ?>
+            
+            
+
+		   <?php
+               /*if($_product->getAttributeText('shipable') == 'Yes'){
+
+                   if($_product->getMultishipping_rate() && $_product->getMultishipping_rate() != 0){
+                       //echo "<p>"."Flat rate per item: ".Mage::helper('core')->currency($_product->getMultishipping_rate(), true, false)."</p>";
+                       //echo "Flat rate";
+                       echo "<span style='color: #229912'>"."Free Shipping OR Free In Store Pickup  Plus Free Assembley"."</span>";
+                   }
+                   if($_product->getExpedite_shipping_rate() && $_product->getExpedite_shipping_rate() != 0){
+                       //echo "<p>"."Expedite flat rate per item: ".Mage::helper('core')->currency($_product->getExpedite_shipping_rate(), true, false)."</p>";
+                       echo "Expedite rate";
+                   }
+                
+                   if($_product->getMultishipping_rate() == 0 && $_product->getExpedite_shipping_rate() == 0 && $_product->getFinalPrice()>58){
+                    echo "<span style='color: #229912'>"."Free Shipping OR Free In Store Pickup  Plus Free Assembley"."</span>";
+                }
+
+               }else{
+                if($_product->getFinalPrice()>58)
+                {
+                    echo "<span style='color: #ff0000'>"."Free In Store Pickup  Plus Free Assembley"."</span>";
+                }
+                else
+                {
+
+                }
+                  
+               }*/
+		   ?>
+	       <?php
+       /*
+           if($_product->getFinalPrice()>58)
+           {
+               ?>
+          
+               <?php
+
+           }
+           else
+           {
+               ?>
+               <p style="color: #229912"><b>Shipping cart totals under 59.00 = 4.95 shipping or free in store pickup plus free assembly</b></p>
+          
+        <?php
+           }*/
+           ?>
+	  
+            <?php 
+            if($_product->getAttributeText('shipable') == 'Yes'){
+            ?>
+            <h1 class="Quantity">Quantity</h1>
+			<div class="pages">
+             <div class="pages s">
+                <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text form-control input-number qty" />
+            </div><!-- pages end -->
+			</div> 
+            <?php } ?>
+      <div class="sco">
+        
+     <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+
+            <?php echo $this->getTierPriceHtml() ?>
+            <?php echo $this->getChildHtml('extrahint') ?>
+
+      </div>
+        <?php /* ?>
+        <div class="batns">
+            <a href="<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>"><button type="button" class="btn btn-default update s"><i class="fa fa-shopping-cart" aria-hidden="rue"></i>Add To Cart</button></a>
+        </div>
+        <?php */ ?>
+
+        <?php 
+        if($_product->getAttributeText('shipable') == 'Yes'){
+            ?>
+        <div class="batns">
+        <a href="<?php echo Mage::helper('checkout/cart')->getAddUrl($_product); ?>"><button type="button" class="btn btn-default update s"><i class="fa fa-shopping-cart" aria-hidden="rue"></i>Add To Cart</button></a>
+
+        <button type="button" class="btn btn-default update s" onclick="productBuyNowForm.submit(this)"><i class="fa fa-shopping-cart" aria-hidden="rue"></i>Buy Now</button>
+        </div><!-- batn end -->
+        <?php } ?>
+        
+        <p>
+        <div class="pre-approval-button-acima-credit-container">
+    <a href="javascript:void(0);">
+        <img src="https://pricebusters.furniture/acima_button_purchase.png" alt="Acima Credit Pre Aproval Button" onclick="AcimaCreditPreApproval.start();">
+    </a>
+</div>
+<div class="acima-credit-iframe-container closed">
+    <div class="acima-credit-iframe-inner">
+        <iframe id="acima-credit-iframe-pre-approval" data-src="<?php echo Mage::getStoreConfig('payment/acimacheckout/apiurl'); ?>" width="100%" height="100%" frameborder="none"></iframe>
+    </div>
+</div>
+
+<script type="text/javascript">
+acima_credit_settings = {
+    merchant_id: "<?php echo Mage::getStoreConfig('payment/acimacheckout/merchantid'); ?>"
+};
+</script>
+        
+        </p>
+        
+
+
+        
+        </div> 
+    </section><!-- SecondColContent end -->
+	<section class="Description">
+    
+      <div class="bor">
+    <div class="details">
+  <p>Actual product color may vary from what is shown due to computer settings and room lighting. Please use as a reference only.</p>
+</div>
+<h3><span style='color: #229912'>Local white glove delivery available</span></h3>
+      </div><!-- bor end -->
+
+
+	  <div class="product-second-slider">
+         <div class="AppliancesContent">
+          
+   <b> <p><?php echo $_product->getShortDescription() ?></p></b>
+</div><!-- AppliancesContent end -->
+          <?php echo $this->getChildHtml('alert_urls') ?>
+<?php //echo $this->getChildHtml('related'); ?>
+
+<?php //echo $this->getLayout()->createBlock('core/template')->setTemplate('page/other-products.phtml')->toHtml();
+        ?>
+	  </section>
+	  </form>
+	</div> 
+	  </section>
+	</div>
+	
+    <script type="text/javascript">
+    //<![CDATA[
+        var productAddToCartForm = new VarienForm('product_addtocart_form');
+        productAddToCartForm.submit = function(button, url) {
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                   form.action = url;
+                }
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productAddToCartForm);
+
+        productAddToCartForm.submitLight = function(button, url){
+            if(this.validator) {
+                var nv = Validation.methods;
+                delete Validation.methods['required-entry'];
+                delete Validation.methods['validate-one-required'];
+                delete Validation.methods['validate-one-required-by-name'];
+                // Remove custom datetime validators
+                for (var methodName in Validation.methods) {
+                    if (methodName.match(/^validate-datetime-.*/i)) {
+                        delete Validation.methods[methodName];
+                    }
+                }
+
+                if (this.validator.validate()) {
+                    if (url) {
+                        this.form.action = url;
+                    }
+                    this.form.submit();
+                }
+                Object.extend(Validation.methods, nv);
+            }
+        }.bind(productAddToCartForm);
+
+
+        /* ====== Buy Now Form Submit Starts ====== */
+        var productBuyNowForm = new VarienForm('product_addtocart_form');
+        productBuyNowForm.submit = function (button, url) {
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                    form.action = url;
+                }
+
+                /* add return Url */
+                var inputreturn= document.createElement("input");
+                inputreturn.type = "hidden";
+                inputreturn.name = "return_url";
+                inputreturn.value = "<?php echo Mage::getUrl('checkout/onepage')?>";
+                document.getElementById('product_addtocart_form').appendChild(inputreturn);
+                /* add return Url */
+                // Append a line break 
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productBuyNowForm); 
+        /* ====== Buy Now Form Submit Ends ====== */
+    //]]>
+	
+	 
+    </script>
+	 <div class="clearfix"></div>
+
+
+   <?php echo $this->getChildHtml('related'); ?>
+
+	

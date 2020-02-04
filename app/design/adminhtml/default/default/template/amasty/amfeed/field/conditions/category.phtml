@@ -1,0 +1,49 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<?php
+    $attributes = $this->getProductAttributes();
+    $other = $this->getCompoundAttributes(FALSE, TRUE);
+    $categories = $this->getCategories();
+?>
+<div id="condition_row" class="condition-select-row">
+    <input type="hidden" name="advanced[:value_order][condition][type][]" value="<?php 
+        print Amasty_Feed_Model_Filter::$_TYPE_OTHER
+    ?>"/>
+    <select style="vertical-align: top;" name="advanced[:value_order][condition][attribute][]" id="change_condition" class="select">
+        <optgroup label="<?php print $this->__('Attributes');?>">
+            <?php foreach($attributes as $code => $label){ ?>
+            <option data-type="<?php print Amasty_Feed_Model_Filter::$_TYPE_ATTRIBUTE;?>" value="<?php print $code?>"><?php 
+                print $this->htmlEscape($label);
+            ?></option>
+            <?php }?>
+        </optgroup>
+
+        <optgroup label="<?php print $this->__('Other');?>">
+            <?php foreach($other as $code => $label){ ?>
+            <option <?php
+                print $code == Amasty_Feed_Block_Adminhtml_Control::$_OTHER_CONDITION_CATEGORY ?
+                        "selected" :
+                        "";
+            ?> data-type="<?php print Amasty_Feed_Model_Filter::$_TYPE_OTHER;?>" value="<?php print $code?>"><?php 
+                print $this->htmlEscape($label);
+            ?></option>
+            <?php }?>
+        </optgroup>
+    </select>
+    <select style="vertical-align: top;"  id="condition_operator" name="advanced[:value_order][condition][operator][]" class="select select-operator">
+        <option value="eq">equal</option>
+        <option value="neq">not equal</option>
+    </select>
+    <input type="hidden" name="advanced[:value_order][condition][value][]" id="condition_value" />
+    <select multiple id="condition_categories_value" name="advanced-categories" style="height: 300px;" class="select">
+        <?php foreach($categories as $id => $val){?>
+            <option value="<?php print $id;?>"><?php print $val;?></option>
+        <?php }?>
+    </select>
+    <button style="vertical-align: top;" id="delete_condition" type="button" class="scalable delete" style=""><span><span><span></span></span></span></button>
+</div>

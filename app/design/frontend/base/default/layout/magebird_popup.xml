@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<layout>       
+    <default>                                  
+      <reference name="head">
+          <action method="addCss"><stylesheet>css/magebird_popup/style_v148.css</stylesheet></action>                    
+          <block type="magebird_popup/head" name="popup_head" template="magebird/popup/head.phtml"/>                     
+      </reference>              
+    </default> 
+    
+    <add_popup_block>  
+      <reference name="content">
+          <block type="magebird_popup/popup" name="myblockname" after="-" template="magebird/popup/popup.phtml"/>
+      </reference>                                                
+    </add_popup_block> 
+        
+    <magebird_popup_index_preview>  
+      <reference name="head">
+          <action method="setRobots"><value>NOINDEX,NOFOLLOW</value></action>                     
+      </reference>        
+      <reference name="root">   
+        <action method="setTemplate"><template>page/3columns.phtml</template></action>   
+      </reference>   
+      <reference name="content">   
+        <block type="magebird_popup/popup" name="popup_index" template="magebird/popup/preview.phtml"/>   
+      </reference>   
+    </magebird_popup_index_preview>   
+    <magebird_popup_index_template>  
+      <reference name="head">
+          <action method="setRobots"><value>NOINDEX,NOFOLLOW</value></action>                     
+      </reference>             
+      <reference name="root">   
+        <action method="setTemplate"><template>page/3columns.phtml</template></action>   
+      </reference>   
+      <reference name="content">   
+        <block type="magebird_popup/popup" name="popup_index" template="magebird/popup/preview.phtml"/>   
+      </reference>   
+    </magebird_popup_index_template>
+    
+    <magebird_popup_index_aweberapp>  
+      <reference name="head">
+          <action method="setRobots"><value>NOINDEX,NOFOLLOW</value></action>                     
+      </reference>  
+       
+      <reference name="content">   
+        <block type="core/template" name="aweberTokens" template="magebird/popup/aweberTokens.phtml"/>   
+      </reference>   
+    </magebird_popup_index_aweberapp>   
+      
+        <magebird_popup_index_aweberlists>  
+      <reference name="head">
+          <action method="setRobots"><value>NOINDEX,NOFOLLOW</value></action>                     
+      </reference>  
+       
+      <reference name="content">   
+        <block type="core/template" name="aweberLists" template="magebird/popup/aweberLists.phtml"/>   
+      </reference>   
+    </magebird_popup_index_aweberlists>              
+</layout>

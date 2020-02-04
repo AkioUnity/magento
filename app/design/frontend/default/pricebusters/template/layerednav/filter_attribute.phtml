@@ -1,0 +1,10 @@
+<?php 
+$items        = $this->getFiltersArray();
+$displayStyle = $this->getColumnsNum(); 
+?>
+
+<?php if ($displayStyle <=1): // one column ?>
+    <?php foreach ($items as $_item):  ?>
+       <p> <?php echo $_item?></p><br />
+    <?php endforeach ?>
+<?php endif ?>

@@ -1,0 +1,22 @@
+<?php $comments = $this->getComments(); ?>
+<?php if (count($comments) > 0): ?>
+<?php if (is_array($comments) || is_object($comments)): ?>
+    <div class="block block-blog block-blog-comments">
+        <div class="block-title">
+            <strong><span><?php echo $this->__('Recent Comments') ?></span></strong>
+        </div>
+        <div class="block-content">
+            <ul id="recent-comments" class="recent-comments">
+                <?php foreach($comments as $comment): ?>
+                    <?php //if ($comment->getPost()): ?>
+                    <li class="item">
+                        <?php echo $this->__('<span class="comment-author-link">%s</span> on %s', $comment->getCommentName(), '<a href='.$this->getPost($comment->getPostId())->getPostUrl().'#comment-'.$comment->getCommentId().'>'.$this->getPost($comment->getPostId())->getPostTitle().'</a>' ) ?>
+                    </li>
+                    <?php //endif; ?>
+                <?php endforeach; ?>
+            </ul>
+            <script type="text/javascript">decorateList('recent-comments')</script>
+        </div>
+    </div>
+<?php endif; ?>
+<?php endif; ?>

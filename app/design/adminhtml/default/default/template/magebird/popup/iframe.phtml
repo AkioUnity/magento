@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Popup Mousetracking</title>                                         
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/styles.css',array('_area'=>'frontend'))?>" media="all" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/magebird_popup/style_v148.css',array('_area'=>'frontend'))?>" media="all" />
+<?php
+$store = Mage::app()->getStore();                 
+$storeId = 1;
+if ($store instanceof Mage_Core_Model_Store) {
+    $storeId = $store->getId();
+}
+if(Mage::app()->getStore()->isCurrentlySecure()){    
+  $baseUrl = urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK, true));
+  //$rootUrl = substr(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN, true),0,-5);
+  $rootUrl = Mage::getStoreConfig(Mage_Core_Model_Url::XML_PATH_SECURE_URL);
+}else{
+  $baseUrl = urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK));
+  //$rootUrl = substr(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN),0,-5);
+  $rootUrl = Mage::getStoreConfig(Mage_Core_Model_Url::XML_PATH_UNSECURE_URL);
+}  
+
+if(strpos($baseUrl, "www")!==false && strpos($_SERVER["HTTP_HOST"], "www")===false){
+  $baseUrl = str_replace("www.", "", $baseUrl);
+  $rootUrl = str_replace("www.", "", $rootUrl);
+}
+?>
+<script type="text/javascript">
+//<![CDATA[
+var mbPopupParams = {"storeId":"<?php echo $storeId ?>","previewId":0,"templateId":0,"popupPageId":1,"filterId":0,"isAjax":"0","page":"1","requestType":"3","rootUrl":"<?php echo $rootUrl;?>","baseUrl":"<?php echo $baseUrl;?>","ajaxAsync":"false","doGaTracking":"false","customParams":""};
+//]]>
+</script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/magebird_popup/jquery.js',array('_area'=>'frontend')) ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/magebird_popup/main.js',array('_area'=>'frontend')) ?>"></script> 
+</head>
+<body>
+<?php
+$data = $this->getTrackingData();
+$mousetracking = $data['mousetracking']->getData(); 
+$mouseflow = $mousetracking['mousetracking'];
+?>
+<style>
+html,body{overflow:hidden !important;}
+#userWindow{
+  background:none;
+  background-color:#eaeef3;
+}
+#mousetrackBg{
+  min-width:900px;
+  min-height:1200px;
+}
+#circle {
+	border-radius: 50%;
+	width: 30px;
+	height: 30px; 
+	background-color:yellow;
+  opacity: 0.8;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);  
+  position:absolute;
+  z-index:99999999;
+  top:10px;
+  left:10px;
+  display:none;
+}
+</style>
+<?php
+
+if(Mage::app()->getStore()->isCurrentlySecure()){
+  $jsUrl = $this->getSkinUrl('js/magebird_popup/', array('_secure' => true,'_nosid' => true));          
+}else{
+  $jsUrl = $this->getSkinUrl('js/magebird_popup/',array('_nosid' => true));
+} 
+$style = "";
+$script = "";
+$mousetrackingPopup = $data['mousetrackingpopup']->getData();  
+$popup = $data['popup']->getData();  
+
+//image popup  
+if($popup['popup_type']==1){  
+  if($popup['image'] && $popup['width_unit']==2){
+    $imgSrc = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . "media/" . $popup['image'];
+    $style .= '.mbdialog.popupid'.$popup['popup_id'].' .dialogBody img{width:100%; height:auto;}';
+  }elseif($popup['image']){
+    $imgSrc = Mage::getModel('magebird_popup/popup')->getPictureResize($popup['width'],null,$popup['image']);
+  }                                                                                              
+  
+  if(!$popup['image']){
+    $content = '';
+  }elseif($popup['url']){
+    $content = "<a class='imgType' href='".$popup['url']."'><img src='".$imgSrc."' /></a>";    
+  }else{
+    $content = "<img src='".$imgSrc."' />";       
+  }              
+}else{
+  $_stores = Mage::getModel('core/store')->getCollection();
+  foreach($_stores as $_store){
+    $storeId = $_store->getData('store_id');          
+    $appEmulation = Mage::getSingleton('core/app_emulation');
+    $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation($storeId);                   
+    $content = $popup['popup_content'];
+    $content = Mage::helper('cms')->getBlockTemplateProcessor()->filter($content); 
+    $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
+    break;   
+  }  
+}     
+
+                      
+$cellspacing = $this->getHtmlAttributeVal("cellspacing",$content);
+$popupBackground = $popup['popup_background'];
+if(strpos($popupBackground,'#') === false) $popupBackground = "#".$popupBackground;
+$borderColor = $popup['border_color'];
+if(strpos($borderColor,'#') === false) $borderColor = "#".$borderColor;    
+$popup_js['popupId'] = $popup['popup_id'];
+if($popup['vertical_position']==4) $popup['background_color'] = 4; //if push content down
+$popup_js['overlay'] = $popup['background_color'];
+$popup_js['appearType'] = $popup['appear_effect'];
+$popup_js['closeEffect'] = 1;
+$popup_js['startTime'] = '';
+$popup_js['showWhen'] = 1;
+$popup_js['scrollPx'] = $popup['scroll_px'];
+//if show on click
+if($popup['show_when']==4){
+  $popup_js['selector'] = $popup['click_selector'];
+//if show on hover
+}elseif($popup['show_when']==5){
+  $popup_js['selector'] = $popup['hover_selector'];
+  $popup_js['closeOnOut'] = $popup['close_on_hoverout']; 
+}
+$popup_js['secondsDelay'] = $popup['seconds_delay'];
+$popup_js['totalSecondsDelay'] = 0;
+$popup_js['closeTimeout'] = $popup['close_on_timeout'];
+$popup_js['closeOnOverlay'] = $popup['close_on_overlayclick'];
+$popup_js['title'] = $popup['title'];
+$popup_js['content'] = $content;
+$popup_js['horizontalPosition'] = $popup['horizontal_position'];
+$popup_js['horizontalPositionPx'] = $popup['horizontal_position_px'];
+$popup_js['verticalPosition'] = $popup['vertical_position'];
+$popup_js['verticalPositionPx'] = $popup['vertical_position_px'];
+if(isset($popup['element_id_position'])){
+  $popup_js['elementIdPosition'] = $popup['element_id_position'];
+}else{
+  $popup_js['elementIdPosition'] = '';
+}
+ 
+$popup_js['closeStyle'] = $popup['close_style'];
+$popup_js['makeStats'] = false;
+$popup_js['cookieId'] = "c".rand(1,10000); //need this for countdown timer
+  
+$popups[$popup['popup_id']] = $popup_js;  
+
+if($cellspacing = $this->getHtmlAttributeVal("cellspacing",$content)){
+  $style .= ".mbdialog.popupid{$popup['popup_id']} .dialogBody table{border-spacing:{$cellspacing}px}";
+}
+if($cellpadding = $this->getHtmlAttributeVal("cellpadding",$content)){
+  $style .= ".mbdialog.popupid{$popup['popup_id']} .dialogBody > table > tbody > tr > td{padding:{$cellpadding}px !important}";
+} 
+
+$border = $popup['border_color'] ? "border:{$popup['border_size']}px solid {$borderColor};" : "";
+$style .= ".mbdialog.popupid{$popup['popup_id']} .dialogBody{{$border};padding:{$popup['padding']}px;}";
+$style .= ".mbdialog.popupid{$popup['popup_id']}{width:".($mousetrackingPopup['popup_width'])."px;}"; 
+
+if($popup['corner_style']==1){ //if sharp corners
+  $style .= ".mbdialog.popupid{$popup['popup_id']} .dialogBody{border-radius: {$popup['border_radius']}px; -webkit-border-radius:{$popup['border_radius']}px; -moz-border-radius: {$popup['border_radius']}px; -o-border-radius: {$popup['border_radius']}px;}";
+}elseif($popup['corner_style']==2){ //if circle popup
+  $style .= ".mbdialog.popupid{$popup['popup_id']} .dialogBody, .mbdialog.popupid{$popup['popup_id']} .dialogBody table{border-radius: 50%; -webkit-border-radius: 50%; -moz-border-radius: 50%; -o-border-radius: 50%;}";
+  $style .= ".mbdialog.popupid{$popup['popup_id']} .dialogBody{height:{$mousetrackingPopup['popup_width']}px;}";
+}
+
+if($popup['background_color']==2){ //popup overlay background 1=white,2=dark,3 and 4=no overlay
+  $style .= ".dialogBg.popupid{$popup['popup_id']}{background: rgba(0, 0, 0, 0.65);}";           
+}
+
+if($popup['close_on_overlayclick']==0){
+  $style .= ".dialogBg.popupid{$popup['popup_id']}{cursor:auto;}";
+}    
+
+$style .= ".mbdialog.popupid{$popup['popup_id']} .dialogBody{background-color: {$popupBackground};".($popup['popup_shadow']!=1 ? "-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;" : "")."}";
+$style .= ".mbdialog.popupid{$popup['popup_id']} table{border-spacing:none !important;}";
+$style .= ".popupid{$popup['popup_id']} .dialogClose.style4,
+           .popupid{$popup['popup_id']} .dialogClose.style6,
+           .popupid{$popup['popup_id']} .dialogClose.style7,
+           .popupid{$popup['popup_id']} .dialogClose.style8,
+           .popupid{$popup['popup_id']} .dialogClose.style9,
+           .popupid{$popup['popup_id']} .dialogClose.style10,
+           .popupid{$popup['popup_id']} .dialogClose.style11,
+           .popupid{$popup['popup_id']} .dialogClose.style3{
+           top:".($popup['border_size']+0)."px;right:".($popup['border_size']+0)."px;
+           }"; 
+$style .= ".mbdialog.popupid{$popup['popup_id']}{";
+if($popup['background_color']==3){
+    $style .= "position:fixed;";  
+}
+$style .= "left: {$mousetrackingPopup['popup_left_position']}px;";
+$style .= "top:{$mousetrackingPopup['popup_top_position']}px;";
+$style .= "}";
+
+if($popup['custom_css']){
+  $style .= $this->getPrefixedCss($popup['custom_css'],'.mbdialog.popupid'.$popup['popup_id']);            
+}
+if($popup['custom_script']){
+  $script .= $popup['custom_script']."\n";
+}             
+
+?>     
+<script type="text/javascript">  
+//<![CDATA[
+var mb_popup_style = jQuery('<style type="text/css">'+<?php echo json_encode($style); ?>+'</style>');
+jQuery('html > head').append(mb_popup_style);
+var mb_popups =  <?php echo json_encode($popups) ?>;
+mb_popup.statsUrl = '';
+mb_popup.jsUrl = '<?php echo $jsUrl?>';                 
+mb_popup.doGaTracking = 2;
+mb_popup.ajaxAsync = <?php echo Mage::getStoreConfig('magebird_popup/statistics/ajax_async');?>;
+mb_popup.requestType = '<?php echo Mage::getStoreConfig('magebird_popup/settings/requesttype') == 1 ? 'GET' : 'POST';?>';
+mb_popup.serverTime = <?php echo time()?>;
+for (var key in mb_popups) {
+    if (!mb_popups.hasOwnProperty(key)) continue
+    mb_popups[key].dialogActive = false;
+    mb_popup.prepareDialog(mb_popups[key]);              
+    if(mb_popups[key].makeStats!=false){
+      mb_popup.showStatsGlobal = true;
+    }    
+    var popupListener = setInterval(function(){
+        //wait until popup is loaded
+        if(typeof mb_popups[key].startTime !== 'undefined'){                                          
+            clearInterval(popupListener)
+            startMouse(mb_popups[key])
+        }
+        <?php echo $script?>
+    },20)         
+}
+        
+mb_popup.mouseTracking();                           
+//for case if popup show delay (e.g. show when using scroller, show after 4 seconds, ...)
+var delayMiliS = <?php echo $mousetrackingPopup['start_seconds']?>;
+var totalMiliSeconds = <?php echo $mousetrackingPopup['total_ms']?>;
+var popupId = <?php echo $mousetrackingPopup['popup_id']?>;
+function startMouse(popup){            
+  var mousetracks = "<?php echo $mouseflow?>";  
+  mousetracks = mousetracks.split(',');
+  var trackNo = parseInt(delayMiliS/100); //10 because of extra delay
+  var trackData = '';
+  var myVar = setInterval(function(){
+      if(trackNo==jQuery(mousetracks).size()){
+        clearInterval(myVar)           
+      }else{
+        if(mousetracks[trackNo]!=''){          
+          trackData = mousetracks[trackNo].split('-');
+          //trackData[0]=cursorX,trackData[1]=cursorY,trackData[2]=click type
+          jQuery('#circle').css('background-color','yellow')
+          jQuery('#circle').css('left',parseInt(trackData[0]-15)+'px')
+          jQuery('#circle').css('top',parseInt(trackData[1]-15)+'px')
+          jQuery('#circle').show();
+                   
+          if(trackData[2]==1){                        
+            jQuery('#circle').css('background-color','red') 
+          }
+          
+          if(trackData[3]){
+            jQuery(trackData[3]).val(trackData[4]);
+          }
+        }  
+
+        if(trackNo == parseInt((totalMiliSeconds+delayMiliS+300)/100)){
+          clearInterval(myVar)                        
+          alert('End mousetracking for this popup');
+        }                 
+        trackNo++;    
+      }  
+  }, 100); //100 must be the same as inside main.js interval inside mouseTracking function
+}
+
+
+//]]>
+</script>
+<div id="userWindow">
+</div>
+<div id="circle"></div>
+<div id="mousetrackBg">  
+</body>
+</html>

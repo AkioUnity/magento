@@ -1,0 +1,91 @@
+<?xml version="1.0"?> 
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+-->
+<config>
+    <!--<menu>-->
+	    <!--<catalog>-->
+            <!--<children>-->
+                <!--<amfeed translate="title" module="amfeed">-->
+                    <!--<title>Products Feeds</title>-->
+                    <!--<sort_order>800</sort_order>-->
+                    <!--<children>-->
+                        <!--<feeds translate="title" module="amfeed">-->
+                            <!--<title>Feeds</title>-->
+                            <!--<action>amfeed/adminhtml_profile</action>-->
+                            <!--<sort_order>10</sort_order>-->
+                        <!--</feeds> -->
+                        <!--<fields translate="title" module="amfeed">-->
+                            <!--<title>Custom Fields</title>-->
+                            <!--<action>amfeed/adminhtml_field</action>-->
+                            <!--<sort_order>20</sort_order>-->
+                        <!--</fields> -->
+                        <!--<settings translate="title" module="amfeed">-->
+                            <!--<title>Settings</title>-->
+                            <!--<action>adminhtml/system_config/edit/section/amfeed</action>-->
+                            <!--<sort_order>30</sort_order>-->
+                        <!--</settings> -->
+                    <!--</children>-->
+                <!--</amfeed>-->
+            <!--</children>-->
+        <!--</catalog>-->
+	<!--</menu>     -->
+
+	<acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+            <admin>
+                <children>
+        		    <catalog>
+                        <children>
+                            <amfeed translate="title" module="amfeed">
+                                <title>Product Feeds</title>
+                                <children>
+                                    <feeds translate="title" module="amfeed">
+                                        <title>Feeds</title>
+                                    </feeds> 
+                                    <fields translate="title" module="amfeed">
+                                        <title>Custom Fields</title>
+                                    </fields>
+                                    <categories translate="title" module="amfeed">
+                                        <title>Categories</title>
+                                    </categories>
+                                    <settings translate="title" module="amfeed">
+                                        <title>Settings</title>
+                                    </settings> 
+                                </children>
+                            </amfeed>
+                        </children>
+                    </catalog>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <amfeed translate="title" module="amfeed">
+                                        <title>Product Feeds</title>
+                                    </amfeed>
+                                </children>
+                            </config>
+                        </children>
+                    </system>            
+                 </children>
+            </admin> 
+		</resources>
+	</acl>
+    
+    <translate>
+        <modules>
+            <Amasty_Feed>
+                <files>
+                    <default>Amasty_Feed.csv</default>
+                </files>
+            </Amasty_Feed>
+        </modules>
+    </translate>
+</config> 

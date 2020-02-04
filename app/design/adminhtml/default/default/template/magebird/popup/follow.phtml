@@ -1,0 +1,31 @@
+<?php
+$color = "#51B500";
+?>
+<style>
+
+#registerInput li{
+  padding:20px 30px;
+  background-color:#FFFFFF;
+  border:1px solid silver;
+  margin-bottom:10px;
+  cursor:pointer; 
+  width:290px;
+}
+
+#registerInput li:hover{
+  box-shadow:1px 1px 2px 1px rgba(0,0,0,.1);
+}
+
+</style>
+<p><?php echo Mage::helper('magebird_popup')->__("Click to the registration form to select template. You can change width and color later.")?></p>
+<ul id="registerInput">
+<?php for($n=1; $n<4; $n++):?>
+  <li onclick='window.submitValue("<?php echo $n;?>"); Windows.close("widget-chooser", event)'><img src="<?php echo $this->getSkinUrl('popup/images/register/'.$n.'.png') ?>" /></li>
+<?php endfor;?>
+</ul>
+<script>
+window.submitValue = function (elId){
+    jQuery("input[name='parameters[template]']").val("magebird/popup/register/"+elId+".phtml");
+    jQuery("input[name='parameters[template]']").parent().parent().prev().find('td[class="value"] label').text('Template '+elId)
+};
+</script>

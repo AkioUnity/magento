@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+-->
+<config>
+    <sections>
+        <amfeed translate="label" module="amfeed">
+            <label>Product Feeds</label>
+            <tab>amasty</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>161806</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <system translate="label">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <max_memory translate="label">
+                            <label>Max Memory Used (Mb)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Will be ignored for some servers, depends on the hosting plan.]]></comment>
+                        </max_memory> 
+                        <batch_size translate="label">
+                            <label>Batch Size</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Indicate how many products will be handled during one iteration. Affects the feed generation time and the server memory consumption.]]></comment>
+                        </batch_size> 
+<!--                        <parent_url translate="label">
+                            <label>Parent URL</label>
+                            <frontend_type>select</frontend_type> 
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Use URL of parent configurable product (additional setting for feed configuration).]]></comment>
+                        </parent_url>-->
+<!--                        <image_url translate="label">
+                            <label>No Image URL</label>
+                            <frontend_type>select</frontend_type> 
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[If a product has no image (additional setting for feed configuration).]]></comment>
+</image_url>
+                        <templates translate="label">
+                            <label>Import Templates</label>
+                            <frontend_type>File</frontend_type> 
+                            <backend_model>amfeed/system_config_backend_file</backend_model>
+                            <upload_dir>var/uploads</upload_dir>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </templates>-->
+                    </fields>
+                </system>
+                <!--<amfeed_cron translate="label" module="amfeed">
+                    <label>Run Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <frequency translate="label">
+                            <label>Frequency</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_cron_frequency</source_model>
+                            <backend_model>amfeed/adminhtml_system_config_cron</backend_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </frequency>
+                        <time translate="label">
+                            <label>Start Time</label>
+                            <frontend_type>time</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </time>
+                    </fields>
+                </amfeed_cron>-->
+            </groups>
+        </amfeed>
+    </sections>
+</config>

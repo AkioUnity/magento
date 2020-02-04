@@ -1,0 +1,26 @@
+<?php
+$_categories=$this->getCurrentChildCategories();
+if($_categories->count()):
+foreach ($_categories as $_category):
+if($_category->getIsActive()) {
+	?>
+<div class="col-sm-4 col-md-3">
+	<div class="product-wrap">
+		<div class="product-wrap-image">
+			<a href="<?php echo $_category->getURL() ?>"><img class="img-responsive"
+				src="<?php echo $_category->getImageUrl() ?>"
+				alt="<?php echo $_category->getName() ?>"> </a>
+		</div>
+		<h4 class="p-title">
+			<a class="label-text" href="<?php echo $_category->getURL() ?>"><?php echo $_category->getName() ?>
+			</a>
+		</h4>
+	</div>
+	<!-- product-wrap -->
+</div>
+<!-- col -->
+	<?php
+}
+endforeach;
+endif;
+?>

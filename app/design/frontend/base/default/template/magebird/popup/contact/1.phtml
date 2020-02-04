@@ -1,0 +1,84 @@
+<script type="text/javascript"> 
+jQuery('head').append('<link rel="stylesheet" href="<?php echo $this->getSkinUrl('css/magebird_popup/widget/contact/1.css?v=1.5.6') ?>" type="text/css" />');
+var successMsg = decodeURIComponent(('<?php echo urlencode(Mage::helper('cms')->getBlockTemplateProcessor()->filter(urldecode($this->getData('success_msg')))) ?>'+'').replace(/\+/g, '%20'));
+var errorText = '<?php echo __('Please submit all fields and write a valid e-mail address');?>'  
+jQuery('head').append('<link rel="stylesheet" href="<?php echo $this->getSkinUrl('css/magebird_popup/widget/contact/global.css?v=1.5.6') ?>" type="text/css" />');
+var workingText = '<?php echo $this->__('Working')?>...';
+<?php
+if(Mage::app()->getStore()->isCurrentlySecure()){
+  $sendemailUrl = Mage::getUrl('magebird_popup/contact/submit', array('_forced_secure' => true));         
+}else{
+  $sendemailUrl = Mage::getUrl('magebird_popup/contact/submit');
+}
+?>
+var sendemailUrl = '<?php echo $sendemailUrl ?>'; 
+</script>
+<?php 
+$randomId = $this->getWidgetId();
+$buttonColor = $this->getData('button_color') ? $this->getData('button_color') : '#d83c3c';
+if(strpos($buttonColor,'#') === false) $buttonColor = "#".$buttonColor; 
+$buttonTextColor = $this->getData('button_text_color');
+if(!$buttonTextColor) $buttonTextColor = "#FFFFFF";
+if(strpos($buttonTextColor,'#') === false) $buttonTextColor = "#".$buttonTextColor; 
+?>
+<style>
+#<?php echo $randomId?>.contactPopup form {              
+    width: <?php echo $this->getData('width')?><?php echo $this->getData('width_unit')==2 ? "%" : "px";?>;   
+}
+
+#<?php echo $randomId?>.contactPopup form input, #<?php echo $randomId?>.contactPopup form textarea {
+    <?php if($this->getData('width_unit')==2):?>              
+    width: 100%;
+    -moz-box-sizing:    border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing:        border-box;     
+    <?php else:?>    
+    width: <?php echo $this->getData('width')-7?>px;    
+    <?php endif; ?>
+}
+
+
+#<?php echo $randomId?>.contactPopup button {
+    background-color: <?php echo $this->getButtonColor() ?>;
+    <?php if($this->getData('width_unit')==2):?>              
+    width: 100%; 
+    -moz-box-sizing:    border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing:        border-box;        
+    <?php else:?>
+    width: <?php echo $this->getData('width')-8?>px;
+    <?php endif; ?>         
+    color:<?php echo $this->getButtonTextColor()?>;   
+}             
+
+</style>     
+
+<div class="contactPopup tp1" id="<?php echo $randomId?>">   
+  <div class="error" style="display:none;"></div>
+  <form action="<?php echo $this->getRegisterUrl() ?>" method="post" id="signup-form" data-widgetId="<?php echo $randomId;?>" class="site-form" onsubmit="return false">
+    <ul>
+      <li>
+        <label for="name"><?php echo $this->__('Your Name')?></label>
+        <input type="text" id="name" name="name" name="<?php echo $this->__('Enter Your First Name')?>" />
+      </li>
+      <li>
+        <label for="email"><?php echo $this->__('Email address')?></label>
+        <input type="text" id="email" name="email" title="<?php echo $this->__('Enter Your Email')?>" />
+      </li>
+      <li>
+        <label for="comment"><?php echo $this->__('Message')?></label>
+        <textarea name="comment" title="<?php echo $this->__('Message')?>"></textarea>
+      </li>
+      <li> 
+        <button class="async_false" type="submit" title="<?php echo $this->getData('button_text')?>">
+        <?php echo $this->getData('button_text') ?>
+        </button>
+      </li>
+    </ul>
+  </form>
+</div>
+<!--DONT REMOVE! jQuery use it to check if css is loaded-->
+<div class="cssLoadedChecker moctod-dribegam"></div>
+<div class="cssLoadedChecker2 moctod-dribegam"></div>
+<?php $async = Mage::getStoreConfig('magebird_popup/settings/asynchronous') ? 'async' : ''; ?>
+<script <?php echo $async; ?> src="<?php echo $this->getSkinUrl('js/magebird_popup/contact.js') ?>"></script>

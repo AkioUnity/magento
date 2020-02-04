@@ -1,0 +1,9 @@
+<config>
+    <modules>
+        <Srdt_Slider>
+            <codePool>true</codePool>
+            <active>false</active>
+        </Srdt_Slider>
+    </modules>
+</config>
+

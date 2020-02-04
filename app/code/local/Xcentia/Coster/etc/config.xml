@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Xcentia_Coster extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Xcentia
+ * @package        Xcentia_Coster
+ * @copyright      Copyright (c) 2017
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config>
+    <modules>
+        <Xcentia_Coster>
+            <version>1.0.7</version>
+        </Xcentia_Coster>
+    </modules>
+    <global>
+        <resources>
+            <xcentia_coster_setup>
+                <setup>
+                    <module>Xcentia_Coster</module>
+                    <class>Xcentia_Coster_Model_Resource_Setup</class>
+                </setup>
+            </xcentia_coster_setup>
+        </resources>
+        <blocks>
+            <xcentia_coster>
+                <class>Xcentia_Coster_Block</class>
+            </xcentia_coster>
+        </blocks>
+        <helpers>
+            <xcentia_coster>
+                <class>Xcentia_Coster_Helper</class>
+            </xcentia_coster>
+        </helpers>
+        <models>
+            <xcentia_coster>
+                <class>Xcentia_Coster_Model</class>
+                <resourceModel>xcentia_coster_resource</resourceModel>
+            </xcentia_coster>
+            <xcentia_coster_resource>
+                <class>Xcentia_Coster_Model_Resource</class>
+                <entities>
+                    <product>
+                        <table>xcentia_coster_product</table>
+                    </product>
+                    <category>
+                        <table>xcentia_coster_category</table>
+                    </category>
+                    <collections>
+                        <table>xcentia_coster_collections</table>
+                    </collections>
+                    <style>
+                        <table>xcentia_coster_style</table>
+                    </style>
+                </entities>
+            </xcentia_coster_resource>
+        </models>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <xcentia_coster>
+                    <file>xcentia_coster.xml</file>
+                </xcentia_coster>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Xcentia_Coster>
+                    <files>
+                        <default>Xcentia_Coster.csv</default>
+                    </files>
+                </Xcentia_Coster>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Xcentia_Coster before="Mage_Adminhtml">Xcentia_Coster_Adminhtml</Xcentia_Coster>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <frontend>
+        <routers>
+            <xcentia_coster>
+                <use>standard</use>
+                <args>
+                    <module>Xcentia_Coster</module>
+                    <frontName>coster</frontName>
+                </args>
+            </xcentia_coster>
+        </routers>
+        <layout>
+            <updates>
+                <xcentia_coster>
+                    <file>xcentia_coster.xml</file>
+                </xcentia_coster>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Xcentia_Coster>
+                    <files>
+                        <default>Xcentia_Coster.csv</default>
+                    </files>
+                </Xcentia_Coster>
+            </modules>
+        </translate>
+    </frontend>
+    <default>
+        <xcentia_coster>
+            <product>
+                <breadcrumbs>1</breadcrumbs>
+            </product>
+            <category>
+                <breadcrumbs>1</breadcrumbs>
+            </category>
+        </xcentia_coster>
+    </default>
+    <crontab>
+        <jobs>
+            <!--
+            <xcentia_coster_create_products>
+                <schedule><cron_expr>* * * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::createProduct</model></run>
+            </xcentia_coster_create_products>
+            <xcentia_coster_recreate_info>
+                <schedule><cron_expr>* * * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::recreateProduct</model></run>
+            </xcentia_coster_recreate_info>
+            -->
+            <xcentia_coster_sync_coster_inventory>
+                <schedule><cron_expr>*/15 * * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::syncCosterInventory</model></run>
+            </xcentia_coster_sync_coster_inventory>
+            <xcentia_coster_update_product_inventory>
+                <schedule><cron_expr>*/5 * * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::updateInventory</model></run>
+            </xcentia_coster_update_product_inventory>
+            <xcentia_coster_sync_coster_cost>
+                <schedule><cron_expr>0 1 * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::syncCosterCost</model></run>
+            </xcentia_coster_sync_coster_cost>
+            <xcentia_coster_update_product_price>
+                <schedule><cron_expr>20 * * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::updateProductPrice</model></run>
+            </xcentia_coster_update_product_price>
+            <xcentia_coster_sync_exeption_price>
+                <schedule><cron_expr>0 2 * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::syncCosterExceptionPrice</model></run>
+            </xcentia_coster_sync_exeption_price>
+            <xcentia_coster_update_free_shipping_per_product>
+                <schedule><cron_expr>30 * * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::updateFreeShippingPerProduct</model></run>
+            </xcentia_coster_update_free_shipping_per_product>
+            <xcentia_coster_sync_coster_products>
+                <schedule><cron_expr>0 0 * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::syncCosterProducts</model></run>
+            </xcentia_coster_sync_coster_products>
+            <xcentia_coster_create_new_products>
+                <schedule><cron_expr>10 * * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::createNewProduct</model></run>
+            </xcentia_coster_create_new_products>
+            <xcentia_coster_enable_products>
+                <schedule><cron_expr>40 * * * *</cron_expr></schedule>
+                <run><model>xcentia_coster/observer::enablesCoasterProducts</model></run>
+            </xcentia_coster_enable_products>
+        </jobs>
+    </crontab>
+</config>

@@ -1,0 +1,148 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+
+$params = array(
+    'html' => $this->getCustomBlocksHTML(),
+    'url' => array(
+        'new_value' => Mage::helper("adminhtml")->getUrl("adminhtml/amfeed_filter/newvalue"),
+        'new_condition' => Mage::helper("adminhtml")->getUrl("adminhtml/amfeed_filter/newcondition", array('mode' => 'profile')),
+    )
+
+);
+
+?>
+<?php $code = 'Condition'; ?>
+<script type="text/javascript">
+//<![CDATA[
+<?php echo $this->getDynamicJs($code) ?>
+//]]>
+</script>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Base Filter') ?></h4>
+    </div>
+    <div class="fieldset" id="amfeed_cond_base">
+        <div class="hor-scroll">
+        <table class="form-list" cellspacing="0">
+        <tbody>
+        <tr>
+            <td class="label"><label for="cond_disabled"><?php echo $this->__('Exclude Disabled Products') ?></label></td>
+            <td class="value">
+                <select id="cond_disabled" name="cond_disabled" class="select">
+                    <option value="0"><?php echo $this->__('No')?></option>
+                    <option value="1" <?php echo $this->getSelectedHtml('cond_disabled',1)?> ><?php echo $this->__('Yes')?></option>
+                </select>            
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="cond_stock"><?php echo $this->__('Exclude Out of Stock Products') ?></label></td>
+            <td class="value">
+                <select id="cond_stock" name="cond_stock" class="select">
+                    <option value="0"><?php echo $this->__('No')?></option>
+                    <option value="1" <?php echo $this->getSelectedHtml('cond_stock',1)?> ><?php echo $this->__('Yes')?></option>
+                </select>            
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="cond_type"><?php echo $this->__('Product Types') ?> <span class="required">*</span></label></td>
+            <td class="value">
+                <select id="cond_type[]" name="cond_type[]" class="select multiselect required-entry" multiple="multiple">
+                <?php foreach ($this->getProductTypes() as $_value => $_label): ?>
+                    <option value="<?php echo $_value ?>" <?php echo $this->getSelectedHtmlMultiselect('cond_type', $_value)?> ><?php echo $this->htmlEscape($_label) ?></option>
+                <?php endforeach ?>
+                </select>            
+            </td>
+        </tr>        
+        <tr>
+            <td class="label"><label for="cond_attribute_sets"><?php echo $this->__('Attribute Sets') ?></label></td>
+            <td class="value">
+                <select id="cond_attribute_sets[]" name="cond_attribute_sets[]" class="select multiselect" multiple="multiple">
+                <?php foreach ($this->getAttributeSets() as $_value => $_label): ?>
+                    <option value="<?php echo $_value ?>" <?php echo $this->getSelectedHtmlMultiselect('cond_attribute_sets', $_value)?> ><?php echo $this->htmlEscape($_label) ?></option>
+                <?php endforeach ?>
+                </select>            
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+    	<h4 class="icon-head head-edit-form fieldset-legend"><?php 
+            print $this->__("Products Filter Configuration")
+        ?></h4>
+    </div>
+    <div class="fieldset ">
+        <div class="grid amfeed-filter-grid">
+            <table id="data-table" class="amfeed-field-advanced" cellspacing="0" cellpadding="0" class="data">
+                <thead>
+                    <tr class="headings">
+                        <th><?php print $this->__("Condition")?></th>
+                        
+                        <th><?php print $this->__("Action")?></th>
+                    </tr>
+                </thead>
+                <tbody id="conditions_table_body">
+                    <tr class="tpl-row" id="tpl_row">
+                        <td class="condition-col">
+                            <div >
+                                <div id="condition">
+                                    
+                </div>
+                                <div id="new_condition" class="new-condition">
+                                    
+                                </div>
+                            </div>
+                        </td>
+                        
+                        <td class="actions-col" id="actions">
+
+                        </td>
+                    </tr>
+                    <tr class="tpl-row condition-tpl-row" id="condition_tpl_row">
+                        <td colspan="2">
+                            <?php
+                                print $this->__("OR");
+                            ?>
+                        </td>
+                    </tr>
+                    <tr class="tpl-row value-tpl-row" id="value_tpl_row">
+                        <td colspan="2">
+                            <?php
+                                print $this->__("AND");
+                            ?>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <?php
+                                print $this->getChildHtml('new_value')
+                            ?>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+                </div>                
+    </div>
+</div>
+
+<script>
+    
+    var am_feed_filter = new amFeedFilter(<?php 
+        print Mage::helper('core')->jsonEncode($params)
+    ?>, <?php
+        print $this->getModel()->getId() == null ? 'null' : 
+        Mage::helper('core')->jsonEncode($this->getModel()->getCondition())
+    ?>);
+    
+</script>

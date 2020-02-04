@@ -1,0 +1,16 @@
+   
+<?php // $productlist = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*')->setPageSize(4)->addAttributeToSort('entity_id', 'DESC');
+
+//$productlist = Mage::getModel('catalog/product')->load(15);
+
+
+
+
+$productlist = Mage::getModel('catalog/product')
+       ->getCollection()
+    ->addAttributeToFilter('featuredproduct',1)
+       ->addAttributeToSelect('*')->setPageSize(4);
+ 
+
+ ?>			   				
+<!-- FirstImgGall secton end and ApplicationSection Starts -->

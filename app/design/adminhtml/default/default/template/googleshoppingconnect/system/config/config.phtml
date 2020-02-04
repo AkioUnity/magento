@@ -1,0 +1,66 @@
+<?php
+/**
+ * Copyright 2016 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @category   Google
+ * @package    Google_Shoppingconnect
+ * @copyright  Copyright 2016 Google Inc.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License Version 2.0
+ */
+?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td style="<?php echo $this->getHeaderWidth() ?>">
+                <a href="https://www.google.com/retail/merchant-center/" target="_blank">
+                    <img src="https://www.gstatic.com/shopping-platforms/google-shopping-logo.svg" style="heigth:20px; width:147px" />
+               </a>
+           </td>
+            <td class="form-buttons">
+                <?php echo $this->getButtonsHtml() ?>
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="width:350px; float:left">
+    <?php if ($this->getVerificationUrls()): ?>
+        <?php echo $this->getVerifiedWebsitesText(); ?>
+        <a href="https://support.google.com/webmasters/answer/35179">
+            <?php echo $this->getLearnMoreText(); ?>
+        </a>
+        <?php foreach ($this->getVerificationUrls() as $url):?>
+             <li><?php echo $url ?></li>
+        <?php endforeach;?>
+        <br/>
+    <?php endif; ?>
+    <p>
+        <?php echo $this->getIntroText(); ?>
+    </p>
+    <br/>
+    <p>
+        <?php echo $this->getConnectText(); ?>
+    </p>
+    <br/>
+    <p>
+        <?php echo $this->getCallToActionText(); ?>
+        <a href="https://support.google.com/merchants/answer/6351224">
+            <?php echo $this->getLearnMoreText(); ?>
+        </a>
+    </p>
+    <br/>
+    <?php echo $this->getLaunchButtonHtml() ?><br/>
+    <br/>
+</div>
+<img src="https://www.gstatic.com/shopping-platforms/shopping-ads.png" height="300" style="float:left; margin-left:20px" />

@@ -1,0 +1,33 @@
+<style>
+
+#timerInput li{
+  padding:30px;
+  background-color:#f8f8f8;
+  border:1px solid silver;
+  margin-bottom:10px;
+  cursor:pointer; 
+}
+
+#timerInput li:hover{
+  box-shadow:1px 1px 2px 1px rgba(0,0,0,.1);
+}
+
+.calendar{
+  z-index:99999;         
+}
+
+</style>
+<p><?php echo Mage::helper('magebird_popup')->__("Click to the input to select style. You can change size later.")?></p>
+<ul id="timerInput">
+<?php for($n=1; $n<5; $n++):?>
+  <li onclick='window.submitValue("<?php echo $n;?>"); Windows.close("widget-chooser", event)'><img src="<?php echo $this->getSkinUrl('magebird_popup/images/timer/'.$n.'.png') ?>" /></li>
+<?php endfor;?>
+</ul>
+<script>
+window.submitValue = function (elId){
+    jQuery("input[name='parameters[style]']").val(elId);
+    jQuery("input[name='parameters[style]']").parent().parent().prev().find('td[class="value"] label').text('Template '+elId)
+};
+</script>
+
+        

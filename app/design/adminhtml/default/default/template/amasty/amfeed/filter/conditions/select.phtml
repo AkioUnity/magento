@@ -1,0 +1,58 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<?php
+    $attributes = $this->getProductAttributes();
+    $conditions = $this->getConditions();
+    $options = array();//$this->_attribute->getAllOptions(false);
+    $other = $this->getCompoundAttributes();
+    
+    if ($this->_attribute->usesSource()) {
+        $options = $this->_attribute->getSource()->getAllOptions(false);
+    }
+?>
+<div id="condition_row" class="condition-select-row">
+    <input type="hidden" name="advanced[:value_order][condition][type][]" value="<?php 
+        print Amasty_Feed_Model_Filter::$_TYPE_ATTRIBUTE
+    ?>"/>
+    <select name="advanced[:value_order][condition][attribute][]" id="change_condition" class="select">
+        <optgroup label="<?php print $this->__('Product Attributes');?>">
+        <?php foreach($attributes as $code => $title) { ?>
+             <option <?php
+                print $code == $this->_attribute->getAttributeCode() ? 
+                        "selected" :
+                        "";
+                 ?> value="<?php print $code?>" data-type="<?php print Amasty_Feed_Model_Filter::$_TYPE_ATTRIBUTE;?>"><?php 
+                print $this->htmlEscape($title);
+            ?></option>
+        <?php } ?>
+        </optgroup>
+        
+        <optgroup label="<?php print $this->__('Other Attributes');?>">
+            <?php foreach($other as $code => $label){ ?>
+            <option data-type="<?php print Amasty_Feed_Model_Filter::$_TYPE_OTHER;?>" value="<?php print $code?>"><?php 
+                print $this->htmlEscape($label);
+            ?></option>
+            <?php }?>
+        </optgroup>
+    </select>
+    <select id="condition_operator" name="advanced[:value_order][condition][operator][]" class="select select-operator">
+        <?php foreach($conditions as $code => $title){?>
+            <option value="<?php print $code?>"><?php 
+                print $this->htmlEscape($title);
+            ?></option>
+        <?php }?>
+    </select>
+    <select id="condition_value" name="advanced[:value_order][condition][value][]" class="select condition-value">
+        <?php foreach($options as $option){?>
+            <option value="<?php print $option['value']?>"><?php 
+                print $this->htmlEscape($option['label']);
+            ?></option>
+        <?php }?>
+    </select>
+    <button id="delete_condition" type="button" class="scalable delete" style=""><span><span><span></span></span></span></button>
+</div>

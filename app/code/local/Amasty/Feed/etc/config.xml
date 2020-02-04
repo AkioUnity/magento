@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+-->
+<config>
+    <modules>
+        <Amasty_Feed>
+            <version>3.4.6</version>
+        </Amasty_Feed>
+    </modules>
+    
+    <global>
+        <models>
+            <amfeed>
+                <class>Amasty_Feed_Model</class>
+                <resourceModel>amfeed_mysql4</resourceModel>
+            </amfeed>
+            <amfeed_mysql4>
+                <class>Amasty_Feed_Model_Mysql4</class>
+                <entities>
+                    <profile>
+                        <table>am_feed_profile</table>
+                    </profile> 
+                    <field>
+                        <table>am_feed_field</table>
+                    </field> 
+                    <template>
+                        <table>am_feed_template</table>
+                    </template>
+                    <category>
+                        <table>am_feed_category</table>
+                    </category>
+                    <category_mapping>
+                        <table>am_feed_category_mapping</table>
+                    </category_mapping>
+                </entities>
+            </amfeed_mysql4>
+        </models>
+        
+        <resources>
+            <amfeed_setup>
+                <setup>
+                    <module>Amasty_Feed</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </amfeed_setup>
+            <amfeed_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </amfeed_write>
+            <amfeed_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </amfeed_read>
+        </resources>
+
+        <blocks>
+            <amfeed>
+                <class>Amasty_Feed_Block</class>
+            </amfeed>
+        </blocks>
+         
+        <helpers>
+            <amfeed>
+                <class>Amasty_Feed_Helper</class>
+            </amfeed>
+        </helpers>
+        <events>
+            <core_config_data_save_commit_after>
+                <observers>
+                    <amfeed>
+                        <class>amfeed/observer</class>
+                        <method>processConfigDataSave</method>
+                    </amfeed>
+                </observers>
+            </core_config_data_save_commit_after>
+        </events>
+    </global>
+    
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Amasty_Feed after="Mage_Adminhtml">Amasty_Feed_Adminhtml</Amasty_Feed>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <frontend>
+        <routers>
+            <amfeed>
+                <use>standard</use>
+                <args>
+                    <module>Amasty_Feed</module>
+                    <frontName>amfeed</frontName>
+                </args>
+            </amfeed>
+        </routers>
+    </frontend>
+
+   <adminhtml>
+        <menu>
+		    <catalog>
+                <children>
+                    <amfeed translate="title" module="amfeed">
+                        <title>Products Feeds</title>
+                        <sort_order>800</sort_order>
+                        <children>
+                            <feeds translate="title" module="amfeed">
+                                <title>Feeds</title>
+                                <action>adminhtml/amfeed_profile/index</action>
+                                <sort_order>10</sort_order>
+                            </feeds> 
+                            <fields translate="title" module="amfeed">
+                                <title>Custom Fields</title>
+                                <action>adminhtml/amfeed_field/index</action>
+                                <sort_order>20</sort_order>
+                            </fields>
+                            <categories translate="title" module="amfeed">
+                                <title>Categories</title>
+                                <action>adminhtml/amfeed_category/index</action>
+                                <sort_order>30</sort_order>
+                            </categories>
+                            <settings translate="title" module="amfeed">
+                                <title>Settings</title>
+                                <action>adminhtml/system_config/edit/section/amfeed</action>
+                                <sort_order>40</sort_order>
+                            </settings> 
+                        </children>
+                    </amfeed>
+                </children>
+            </catalog>
+		</menu>     
+   
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+                <admin>
+                    <children>
+            		    <catalog>
+                            <children>
+                                <amfeed translate="title" module="amfeed">
+                                    <title>Product Feeds</title>
+                                    <children>
+                                        <feeds translate="title" module="amfeed">
+                                            <title>Feeds</title>
+                                        </feeds> 
+                                        <fields translate="title" module="amfeed">
+                                            <title>Custom Fields</title>
+                                        </fields> 
+                                        <settings translate="title" module="amfeed">
+                                            <title>Settings</title>
+                                        </settings> 
+                                    </children>
+                                </amfeed>
+                            </children>
+                        </catalog>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <amfeed translate="title" module="amfeed">
+                                            <title>Product Feeds</title>
+                                        </amfeed>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>            
+                     </children>
+                </admin> 
+			</resources>
+		</acl>
+        
+        <translate>
+            <modules>
+                <Amasty_Feed>
+                    <files>
+                        <default>Amasty_Feed.csv</default>
+                    </files>
+                </Amasty_Feed>
+            </modules>
+        </translate> 
+        
+        <layout>
+            <updates>
+                <amfeed>
+                    <file>amasty/amfeed/amfeed.xml</file>
+                </amfeed>
+            </updates>
+        </layout>
+    </adminhtml> 
+    
+    <default>
+        <amfeed>
+           <system>
+                <max_memory>2</max_memory>
+                <batch_size>100</batch_size>
+<!--                <parent_url>1</parent_url>
+                <image_url>1</image_url>-->
+                <!--<max_files></max_files>
+                <max_post></max_post>-->
+           </system>
+           <!--<amfeed_cron>
+                <frequency>D</frequency>
+                <time></time>
+           </amfeed_cron>-->
+        </amfeed>
+    </default>
+    
+    <crontab>
+        <jobs>
+            <amfeed_generate>
+                <schedule>
+                    <cron_expr>*/10 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>amfeed/observer::process</model>
+                </run>
+            </amfeed_generate>
+        </jobs>
+    </crontab> 
+</config>

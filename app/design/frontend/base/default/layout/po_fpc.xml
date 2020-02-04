@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss"><stylesheet>po_fpc/css/styles.css</stylesheet></action>
+        </reference>
+        <reference name="before_body_end">
+            <block type="po_fpc/debug" name="po_fpc_debug" template="po_fpc/debug.phtml" />
+        </reference>
+    </default>
+</layout>

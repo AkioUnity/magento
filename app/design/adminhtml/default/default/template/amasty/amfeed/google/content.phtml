@@ -1,0 +1,126 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<?php $_value       = $this->getElement()->getValue()?>
+<?php $_htmlId      = $this->getElement()->getHtmlId() ?>
+<?php $_htmlClass   = $this->getElement()->getClass() ?>
+<?php $_htmlName    = $this->getElement()->getName() ?>
+<?php $_htmlNote    = $this->getElement()->getNote() ?>
+<?php $_readonly    = $this->getElement()->getReadonly() ?>
+<script type="text/javascript">
+    // <![CDATA[
+    var contentControl_<?php echo $_htmlName;?> = {
+        selectType: function(type, idx){
+            var types = $('amasty_feed_content_types_' + idx),
+                attributes = $('amasty_feed_content_attributes_' + idx),
+                images = $('amasty_feed_content_images_' + idx),
+                custom_field = $('amasty_feed_content_custom_field_' + idx),
+                text = $('amasty_feed_content_text_' + idx);
+
+            attributes.hide(); images.hide(); custom_field.hide(); text.hide();
+
+            switch(type){
+                case "<?php echo Amasty_Feed_Model_Google::TYPE_ATTRIBUTE;?>":
+                    attributes.show();
+                    break;
+                case "<?php echo Amasty_Feed_Model_Google::TYPE_IMAGE;?>":
+                    images.show();
+                    break;
+                case "<?php echo Amasty_Feed_Model_Google::TYPE_CUSTOM_FIELD;?>":
+                    custom_field.show();
+                    break;
+                case "<?php echo Amasty_Feed_Model_Google::TYPE_TEXT;?>":
+                    text.show();
+                    break;
+            }
+        }
+    }
+    //]]>
+</script>
+<tr>
+    <td class="grid">
+        <?php if ($_htmlNote): ?>
+        <p><?php echo $_htmlNote; ?></p>
+        <?php endif;?>
+
+        <table class="data border">
+        <?php foreach($_value as $_idx => $_element) :?>
+            <tr>
+                <td>
+                    <div><?php echo $_element->getName();?></div>
+                    <small><?php echo $_element->getDescription();?></small>
+                </td>
+                <td>
+                    <input type="hidden" value="<?php echo $_element->getCode();?>" name="<?php echo $_htmlName; ?>[<?php echo $_idx?>][code]" />
+                    <select name="<?php echo $_htmlName; ?>[<?php echo $_idx?>][type]" id="amasty_feed_content_types_<?php echo $_idx;?>" onchange="contentControl_<?php echo $_htmlName;?>.selectType(this.value, '<?php echo $_idx;?>');">
+                        <?php if (!$_element->getRequired()): ?>
+                            <option value=''><?php echo $this->__('None')?></option>
+                        <?php endif;?>
+                        <?php foreach ($this->getFieldTypes() as $_value => $_label): ?>
+                            <?php $_selected = $this->isSelectedType($_element, $_value);?>
+                            <option <?php echo $_selected ? 'selected' : '' ?> value="<?php echo $_value ?>">
+                                <?php echo $this->htmlEscape($_label) ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                </td>
+                <td>
+                    <select name="<?php echo $_htmlName; ?>[<?php echo $_idx?>][attribute]" id="amasty_feed_content_attributes_<?php echo $_idx;?>">
+                        <?php if (!$_element->getRequired()): ?>
+                            <option value=''><?php echo $this->__('None')?></option>
+                        <?php endif;?>
+                        <?php foreach ($this->getAttributes() as $_type => $_config): ?>
+                            <?php $label = $_config['label'];?>
+                            <optgroup label="<?php echo $label;?>">
+                            <?php foreach($_config['options'] as $_value => $_label): ?>
+                                <?php $_selected = $this->isSelectedAttribute($_element, $_value);?>
+                                <option <?php echo $_selected ? 'selected' : '' ?> value="<?php echo $_value ?>">
+                                    <?php echo $this->htmlEscape($_label) ?>
+                                </option>
+                            <?php endforeach; ?>
+                            </optgroup>
+                        <?php endforeach; ?>
+                    </select>
+                    <select name="<?php echo $_htmlName; ?>[<?php echo $_idx?>][image]" id="amasty_feed_content_images_<?php echo $_idx;?>">
+                        <?php foreach ($this->getImages() as $_value => $_label): ?>
+                            <?php $_selected = $this->isSelectedAttribute($_element, $_value);?>
+                            <option <?php echo $_selected ? 'selected' : '' ?> value="<?php echo $_value ?>">
+                                <?php echo $this->htmlEscape($_label) ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                    <select name="<?php echo $_htmlName; ?>[<?php echo $_idx?>][field]" id="amasty_feed_content_custom_field_<?php echo $_idx;?>">
+                        <?php foreach ($this->getCustomFields() as $_value => $_label): ?>
+                            <?php $_selected = $this->isSelectedAttribute($_element, $_value);?>
+                            <option <?php echo $_selected ? 'selected' : '' ?> value="<?php echo $_value ?>">
+                                <?php echo $this->htmlEscape($_label) ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                    <?php if ($_element instanceof Amasty_Feed_Model_Google_Text && count($_element->getPossibleValues()) > 0 ): ?>
+                        <select name="<?php echo $_htmlName; ?>[<?php echo $_idx?>][text]" id="amasty_feed_content_text_<?php echo $_idx;?>">
+                            <?php foreach ($_element->getPossibleValues() as $_value => $_label): ?>
+                                <?php $_selected = $_value == $this->getAttributeValue($_element);?>
+                                <option <?php echo $_selected ? 'selected' : '' ?> value="<?php echo $_value ?>">
+                                    <?php echo $this->htmlEscape($_label) ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    <?php else: ?>
+                        <input name="<?php echo $_htmlName; ?>[<?php echo $_idx?>][text]" type="text" value="<?php echo $this->getAttributeValue($_element);?>" id="amasty_feed_content_text_<?php echo $_idx;?>">
+                    <?php endif;?>
+                </td>
+            </tr>
+            <script type="text/javascript">
+            // <![CDATA[
+            contentControl_<?php echo $_htmlName;?>.selectType($('amasty_feed_content_types_<?php echo $_idx;?>').value, '<?php echo $_idx;?>');
+            //]]>
+            </script>
+        <?php endforeach;?>
+        </table>
+    </td>
+</tr>

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Catalog
+ * @package    Mconnect_MultiShippingperproduct
+ * @author     M-Connect Solutions (http://www.mconnectsolutions.com, http://www.mconnectmedia.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Mconnect_MultiShippingperproduct>
+            <version>2.0.5</version>
+            <depends>
+                <Mage_Shipping/>
+            </depends>
+        </Mconnect_MultiShippingperproduct>
+    </modules>
+   
+    <global>
+		<events>
+			<controller_action_layout_render_before>
+				<observers>
+					<mconnect_check_valid_multishippingperproduct>
+						<type>model</type>
+						<class>Mconnect_MultiShippingperproduct_Helper_Config</class>
+						<method>initializeModule</method>
+					</mconnect_check_valid_multishippingperproduct>
+				</observers>
+			</controller_action_layout_render_before>
+		</events>
+        <models>
+            <multishippingperproduct>
+                <class>Mconnect_MultiShippingperproduct_Model</class>                
+            </multishippingperproduct>            
+        </models>
+        <resources>
+            <multishippingperproduct_setup>
+                <setup>
+                    <module>Mconnect_MultiShippingperproduct</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </multishippingperproduct_setup>
+       </resources>
+      
+        <helpers>
+            <multishippingperproduct>
+                <class>Mconnect_MultiShippingperproduct_Helper</class>
+            </multishippingperproduct>
+        </helpers>
+    </global>
+    <adminhtml>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<Mconnect_MultiShippingperproduct>
+							<title>Multishippingperproduct Module</title>
+							<sort_order>10</sort_order>
+						</Mconnect_MultiShippingperproduct>
+						 <system>
+							<children>
+								  <config>
+										<children>
+											<multishippingperproduct translate="title" module="multishippingperproduct">
+												<title>Mconnect MultiShippingperproduct</title>
+											</multishippingperproduct>
+										</children>
+								  </config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+     <!--<adminhtml>        
+        <layout>
+            <updates>
+                <shippingperproduct>
+                    <file>shippingperproduct.xml</file>
+                </shippingperproduct>
+            </updates>
+        </layout>
+    </adminhtml>    -->
+    <default>   
+        <carriers>
+            <multishippingperproduct>                                    
+                <active>0</active>
+                <sallowspecific></sallowspecific>
+                <model>multishippingperproduct/carrier_multishippingperproduct</model>
+                <name>Shipping Cost</name>
+                <title>Product Rate</title>
+                <default_shipping_cost>0</default_shipping_cost>
+                <allow_free_shipping>0</allow_free_shipping>
+                <free_shipping_label>Free Shipping</free_shipping_label>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>     
+            </multishippingperproduct>
+            <expediteshippingperproduct>                                    
+                <active>0</active>
+                <sallowspecific></sallowspecific>
+                <model>multishippingperproduct/carrier_expedite</model>
+                <name>Shipping Cost</name>
+                <title>Product Rate</title>
+                <default_shipping_cost>0</default_shipping_cost>
+                <allow_free_shipping>0</allow_free_shipping>
+                <free_shipping_label>Free Shipping</free_shipping_label>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>     
+            </expediteshippingperproduct>
+        </carriers>
+    </default>
+</config>

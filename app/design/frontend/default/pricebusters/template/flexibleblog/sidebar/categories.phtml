@@ -1,0 +1,20 @@
+<?php $categories = $this->getCategories() ?>
+<?php if (count($categories) > 0): ?>
+    <div class="block block-blog block-blog-categories">
+        <div class="block-title">
+            <strong><span><?php echo $this->__('Categories') ?></span></strong>
+        </div>
+        <div class="block-content">
+            <ul class="category-list" id="category-list">
+                <?php foreach($categories as $category): ?>
+                    <li class="item">
+                        <a href="<?php echo $this->getCategoryUrl($category->getCategoryUrlKey()); ?>" title="<?php echo $category->getCategoryTitle() ?>">
+                            <?php echo $category->getCategoryTitle() ?>
+                        </a><?php if ($this->getPostCount($category->getCategoryId())): ?> (<?php echo $this->getPostCount($category->getCategoryId()) ?>)<?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <script type="text/javascript">decorateList('category-list')</script>
+        </div>
+    </div>
+<?php endif; ?>

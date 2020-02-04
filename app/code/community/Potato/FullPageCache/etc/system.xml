@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <po_fpc translate="label" module="po_fpc">
+            <label>Full Page Cache</label>
+            <tab>po_core</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <sort_order>10</sort_order>
+                    <fields>
+                        <use_user_agent translate="label comment">
+                            <label>Separate cache for each unique user-agent</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <comment><![CDATA[Note: If this option is enabled, then Crawler will be disabled.]]></comment>
+                        </use_user_agent>
+                        <max_allowed_size translate="label">
+                            <label>Max. Cache Size (Mb)</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                        </max_allowed_size>
+                    </fields>
+                </general>
+                <auto_generation translate="label">
+                    <label>Crawler - Automatic Cache Generation</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <sort_order>20</sort_order>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable Page Cache Auto Generation</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <backend_model>po_fpc/system_config_backend_generation</backend_model>
+                        </enabled>
+                        <thread_number translate="label comment">
+                            <label>Crawler Thread Number</label>
+                            <comment><![CDATA[Number of parallel requests for cache auto-generation process.]]></comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                        </thread_number>
+                    </fields>
+                </auto_generation>
+                <debug translate="label">
+                    <label>Debug</label>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <sort_order>30</sort_order>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable Page Cache Debug</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                        </enabled>
+                        <ip_addresses translate="label">
+                            <label>Ip Address(es)</label>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                        </ip_addresses>
+                    </fields>
+                </debug>
+            </groups>
+        </po_fpc>
+    </sections>
+</config>

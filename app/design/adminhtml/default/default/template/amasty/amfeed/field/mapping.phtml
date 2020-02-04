@@ -1,0 +1,57 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+$code = 'Mapping';
+?>
+<script type="text/javascript">
+    function addDynamic(tpl){
+        Element.insert($( tpl + "_container"), {
+            bottom: $( tpl + "_template").innerHTML
+        });
+    }
+
+    function removeDynamic(button){
+        Element.remove(button.up(".field-row"));
+    }
+
+    function addDynamicMapping(){
+        addDynamic('Mapping');
+    }
+
+    function removeDynamicMapping(button){
+        removeDynamic(button);
+    }
+</script>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__("Convert") ?></h4>
+    </div>
+    <fieldset>
+        <legend><?php echo $this->__("Convert") ?></legend>
+                <div id="<?php echo $code?>_container">
+                    <?php foreach ($this->getDynamicValue('mapping') as $row): ?>
+                        <span class="field-row">
+                            <?php echo $this->__('From:') ?> 
+                            <input class="input-text" name="mapping[from][]" value="<?php echo htmlentities($row['from'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?>"/>
+                            <?php echo $this->__('To:') ?>
+                            <input class="input-text" name="mapping[to][]" value="<?php echo htmlentities($row['to'], ENT_QUOTES | ENT_IGNORE, "UTF-8")?>" />
+                            <?php echo $this->getRemoveDynamicButtonHtml($code) ?>
+                        </span>
+                    <?php endforeach ?>
+                </div>
+                <div id="<?php echo $code?>_template" style="display:none">
+                    <span class="field-row">
+                        <?php echo $this->__('From:') ?> 
+                        <input class="input-text" name="mapping[from][]"/>
+                        <?php echo $this->__('To:') ?>
+                        <input class="input-text" name="mapping[to][]"/>
+                        <?php echo $this->getRemoveDynamicButtonHtml($code) ?>
+                    </span>
+                </div>                
+        <?php echo $this->getAddDynamicButtonHtml($code) ?>
+    </fieldset>
+</div>

@@ -1,0 +1,479 @@
+<?xml version="1.0"?>
+<config>
+ 	<tabs>
+        <biztech translate="label" module="fedex">
+            <label>Biztech Extensions</label>
+            <sort_order>250</sort_order>
+        </biztech>
+    </tabs>
+    <sections>
+    	<carriers>
+            <groups>
+            	<fedex translate="label" module="usa">
+                    <label>Biztech Fedex</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>120</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled for Checkout</label>
+                            <frontend_type>select</frontend_type>
+                            <!-- <source_model>adminhtml/system_config_source_yesno</source_model> -->
+                            <source_model>fedex/system_config_enabledisable</source_model>
+                            <!-- <frontend_model>fedex/adminhtml_enabledisable</frontend_model> -->
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <account translate="label comment">
+                            <label>Account ID</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Please make sure to use only digits here. No dashes are allowed.</comment>
+                        </account>
+                        <meter_number translate="label">
+                            <label>Meter Number</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </meter_number>
+                        <key translate="label">
+                            <label>Key</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </key>
+                        <password translate="label">
+                            <label>Password</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </password>
+                        <sandbox_mode translate="label">
+                            <label>Sandbox Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>75</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sandbox_mode>
+                        <shipment_requesttype translate="label">
+                            <label>Packages Request Type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>usa/shipping_carrier_abstract_source_requesttype</source_model>
+                            <sort_order>77</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </shipment_requesttype>
+                        <packaging translate="label">
+                            <label>Packaging</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>usa/shipping_carrier_fedex_source_packaging</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packaging>
+                        <dropoff translate="label">
+                            <label>Dropoff</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>usa/shipping_carrier_fedex_source_dropoff</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </dropoff>
+                        <unit_of_measure translate="label">
+                            <label>Weight Unit</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>usa/shipping_carrier_fedex_source_unitofmeasure</source_model>
+                            <sort_order>95</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </unit_of_measure>
+                        <max_package_weight translate="label">
+                            <label>Maximum Package Weight (Please consult your shipping carrier for maximum supported shipping weight)</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number validate-zero-or-greater</validate>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </max_package_weight>
+                        <handling_type translate="label">
+                            <label>Calculate Handling Fee</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>shipping/source_handlingType</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </handling_type>
+                        <handling_action translate="label">
+                            <label>Handling Applied</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>shipping/source_handlingAction</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </handling_action>
+                        <handling_fee translate="label">
+                            <label>Handling Fee</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number validate-zero-or-greater</validate>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </handling_fee>
+                        <residence_delivery translate="label">
+                            <label>Residential Delivery</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>140</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </residence_delivery>
+                        <allowed_methods translate="label">
+                            <label>Allowed Methods</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>usa/shipping_carrier_fedex_source_method</source_model>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </allowed_methods>
+                        <smartpost_hubid translate="label comment">
+                            <label>Hub ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>155</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>The field is applicable if the Smart Post method is selected.</comment>
+                        </smartpost_hubid>
+                        <free_method translate="label">
+                            <label>Free Method</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_class>free-method</frontend_class>
+                            <source_model>usa/shipping_carrier_fedex_source_freemethod</source_model>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </free_method>
+                        <free_shipping_enable translate="label">
+                            <label>Free Shipping with Minimum Order Amount</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>170</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </free_shipping_enable>
+                        <free_shipping_subtotal translate="label">
+                            <label>Minimum Order Amount for Free Shipping</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number validate-zero-or-greater</validate>
+                            <sort_order>180</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </free_shipping_subtotal>
+                        <specificerrmsg translate="label">
+                            <label>Displayed Error Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>190</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificerrmsg>
+                        <sallowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>200</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sallowspecific>
+                        <specificcountry translate="label">
+                            <label>Ship to Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>210</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </specificcountry>
+                        <debug translate="label">
+                            <label>Debug</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </debug>
+                        <showmethod translate="label">
+                            <label>Show Method if Not Applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>230</sort_order>
+                            <frontend_class>shipping-skip-hide</frontend_class>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </showmethod>
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>240</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        0</sort_order>
+                        <!-- <etd_active translate="label">
+                            <label>Include ETD document</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>250</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        0</etd_active> -->
+                        
+
+                        <biztech_fedex_configuration type="group" translate="label comment">
+                            <label>Biztech Fedex Configuration</label>
+                            <sort_order>250</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <expanded>1</expanded>
+                            <fields>
+                                <allow_etd translate="label">
+                                    <label>Allow ETD Document</label>
+                                    <frontend_type>multiselect</frontend_type>
+                                    <sort_order>270</sort_order>
+                                    <source_model>fedex/system_config_source_allowetd</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</allow_etd>
+
+                                <enable_hafl translate="label">
+                                    <label>Enable Hold At Fedex Location</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>280</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_hafl>
+
+
+
+                                <enable_hafl_dangerous translate="label">
+                                    <label>Disable Hold At Fedex Location For dangerous goods and Alcohol</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>282</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_hafl_dangerous>
+
+                                <hafl_message translate="label">
+                                    <label>Dropping location Not available Message</label>
+                                    <frontend_type>textarea</frontend_type>
+                                    <sort_order>285</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</hafl_message>
+
+
+                                <requested_result translate="label">
+                                    <label>Requested Result</label>
+                                    <frontend_type>text</frontend_type>
+                                    <sort_order>290</sort_order>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                    <!-- <comment>Maximum value is 5</comment> -->
+                                0</requested_result>
+
+                                <enable_spod translate="label">
+                                    <label>Enable Signature Proof Of Delivery</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>300</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_spod>
+                               
+
+                                <enable_dangerousgoods translate="label">
+                                    <label>Enable Dangerous Goods</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>310</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_dangerousgoods>
+
+
+                                <enable_alchoholship translate="label">
+                                    <label>Enable Alcohol Shipping</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>320</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_alchoholship>
+
+
+                                <enable_dryice translate="label">
+                                    <label>Enable Dry Ice Shipping</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>325</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_dryice>
+
+                                <enable_trackbyref translate="label">
+                                    <label>Enable Track By Reference</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>330</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_trackbyref>
+
+
+                                <enable_addressvalidationfront translate="label">
+                                    <label>Enable Address Validation in Front</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>340</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_addressvalidationfront>
+
+
+                                <!-- <enable_addressvalidationadmin translate="label">
+                                    <label>Enable Address Validation in Admin</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>340</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_addressvalidationadmin> -->
+
+                                <enable_pickup translate="label">
+                                    <label>Enable Pickup</label>
+                                    <frontend_type>select</frontend_type>
+                                    <sort_order>350</sort_order>
+                                    <source_model>adminhtml/system_config_source_yesno</source_model>
+                                    <show_in_default>1</show_in_default>
+                                    <show_in_website>1</show_in_website>
+                                    <show_in_store>0</show_in_store>
+                                0</enable_pickup>
+                            </fields>
+                        </biztech_fedex_configuration>
+
+
+                        
+
+
+                      
+
+
+
+                    </fields>
+                </fedex>
+            </groups>
+        </carriers>
+        <fedex translate="label" module="fedex">
+            <label>Fedex</label>
+            <tab>biztech</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <activation translate="label">
+                    <label>Fedex Activation</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <key>
+                            <label>Activation Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                        </key>
+                        <websites translate="label">
+                            <label>Select Websites</label>
+                            <frontend_type>checkbox</frontend_type>
+                            <source_model>adminhtml/system_config_source_website</source_model>
+                            <frontend_model>fedex/adminhtml_config_form_renderer_website</frontend_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </websites>
+                    </fields>
+                </activation>
+            </groups>
+        </fedex>
+    </sections>
+</config>

@@ -1,0 +1,75 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[
+function amfeed_toggleDeliveryType() {
+    if ($('delivery_type').value == <?php echo Amasty_Feed_Model_Profile::DELIVERY_TYPE_DLD?>) {
+        $('ftp_type').hide();
+    } else {
+        $('ftp_type').show();
+    }
+}
+//]]>
+</script>
+
+<div>
+    <ul class="messages">
+        <li class="notice-msg">
+            <ul><li><?php echo $this->__('You can download the file from `Manage Feeds` grid or use `Download` button on `Edit Feed` page.') ?></li></ul>
+        </li>
+    </ul>
+</div>
+
+<div class="entry-edit" id="ftp_type" <?php if ($this->getValueHtml('delivery_type') == Amasty_Feed_Model_Profile::DELIVERY_TYPE_DLD) echo 'style="display:none"'?>>
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Settings') ?></h4>
+    </div>
+    <div class="fieldset">
+        <div class="hor-scroll">
+        <table class="form-list" cellspacing="0">
+        <tbody>
+        <tr>
+            <td class="label"><label for="ftp_host"><?php echo $this->__('Host') ?></label></td>
+            <td class="value">
+                <input id="ftp_host" name="ftp_host" value="<?php echo $this->getValueHtml('ftp_host') ?>" class="input-text" type="text" />
+                <p class="note" id="note_ftp_is_passive"><span><?php echo $this->__('Add port if necessary (example.com:2222)'); ?></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="ftp_user"><?php echo $this->__('User') ?></label></td>
+            <td class="value">
+                <input id="ftp_user" name="ftp_user" value="<?php echo $this->getValueHtml('ftp_user') ?>" class="input-text" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="ftp_pass"><?php echo $this->__('Password') ?></label></td>
+            <td class="value">
+                <input id="ftp_pass" name="ftp_pass" value="<?php echo $this->getValueHtml('ftp_pass') ?>" class="input-text" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="ftp_folder"><?php echo $this->__('Path') ?></label></td>
+            <td class="value">
+                <input id="ftp_folder" name="ftp_folder" value="<?php echo $this->getValueHtml('ftp_folder') ?>" class="input-text" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td class="label"><label for="ftp_is_passive"><?php echo $this->__('Passive Mode') ?></label></td>
+            <td class="value">
+                <select id="ftp_is_passive" name="ftp_is_passive" class="select">
+                    <option value="0"><?php echo $this->__('No')?></option>
+                    <option value="1" <?php echo $this->getSelectedHtml('ftp_is_passive', 1) ?> ><?php echo $this->__('Yes')?></option>
+                </select>            
+                <p class="note" id="note_ftp_is_passive"><span><?php echo $this->__('Set to `Yes` if the user and pass are OK, but FTP upload fails.'); ?></span></p>
+            </td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+    </div>
+</div>

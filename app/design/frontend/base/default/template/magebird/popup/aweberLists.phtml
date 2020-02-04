@@ -1,0 +1,10 @@
+<p>AWeber lists names and IDS:</p>
+
+<?php 
+$lists = $this->getLists();
+	?>
+<ul>
+<?php foreach ($lists->data['entries'] as $lis){ ?>
+	<li>List ID: <?php echo $lis['id'] ?> Name: <?php echo $lis['name'] ?> </li>
+<?php } ?>
+</ul>

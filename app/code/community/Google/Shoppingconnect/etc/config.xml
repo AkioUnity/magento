@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2016 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @category   Google
+ * @package    Google_Shoppingconnect
+ * @copyright  Copyright 2016 Google Inc.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License Version 2.0
+ */
+-->
+<config>
+    <modules>
+        <Google_Shoppingconnect>
+            <version>1.0.0</version>
+        </Google_Shoppingconnect>
+    </modules>
+    <global>
+        <models>
+            <googleshoppingconnect>
+                <class>Google_Shoppingconnect_Model</class>
+            </googleshoppingconnect>
+        </models>
+        <helpers>
+            <googleshoppingconnect>
+                <class>Google_Shoppingconnect_Helper</class>
+            </googleshoppingconnect>
+        </helpers>
+        <blocks>
+            <googleshoppingconnect>
+                <class>Google_Shoppingconnect_Block</class>
+            </googleshoppingconnect>
+        </blocks>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <googleshoppingconnect before="Mage_Adminhtml">Google_Shoppingconnect_Adminhtml</googleshoppingconnect>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <translate>
+            <modules>
+                <googleshoppingconnect>
+                    <files>
+                        <default>Google_Shoppingconnect.csv</default>
+                    </files>
+                </googleshoppingconnect>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <googleshoppingconnect>
+                    <file>google_shoppingconnect.xml</file>
+                </googleshoppingconnect>
+            </updates>
+        </layout>
+    </adminhtml>
+    <frontend>
+        <layout>
+            <updates>
+                <googleshoppingconnect>
+                    <file>google_shoppingconnect.xml</file>
+                </googleshoppingconnect>
+            </updates>
+        </layout>
+    </frontend>
+</config>
+

@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+* @category   Biztech
+* @package    Biztech_Fedex
+* @author     Biztech
+* @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config>
+	<modules>
+		<Biztech_Fedex>
+			<version>0.1.1</version>
+		</Biztech_Fedex>
+	</modules>
+	<frontend>
+		<routers>
+			<fedex>
+                <use>standard</use>
+                <args>
+                    <module>Biztech_Fedex</module>
+                    <frontName>fedex</frontName>
+                </args>
+            </fedex>
+
+            <checkout>
+                <args>
+                    <modules>
+                        <fedex before="Mage_Checkout">Biztech_Fedex</fedex>
+                    </modules>
+                </args>
+            </checkout>
+
+
+		</routers>
+        <layout>
+            <updates>
+                <fedex>
+                    <file>fedex.xml</file>
+                </fedex>
+            </updates>
+        </layout>
+
+        <events>
+            
+
+            <checkout_controller_onepage_save_shipping_method>
+                <observers>
+                    <fedexhalcontent1>
+                        <type>model</type>
+                        <class>fedex/observer</class>
+                        <method>salesQuoteItemSetCustomAttributeShipping</method>
+                    </fedexhalcontent1>
+                </observers>
+            </checkout_controller_onepage_save_shipping_method>
+
+
+            <sales_quote_item_set_product>
+                <observers>
+                    <is_dangerous_goods_check>
+                        <class>fedex/observer</class>
+                        <method>setDangerousGoods</method>
+                    </is_dangerous_goods_check>
+                </observers>
+            </sales_quote_item_set_product>
+
+
+
+
+        </events>
+
+	</frontend>
+	<admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <!-- <fedex after="Mage_Adminhtml">Biztech_Fedex_Adminhtml</fedex> -->
+                        <fedex before="Mage_Adminhtml">Biztech_Fedex_Adminhtml</fedex>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <menu>
+            <fedex translate="title" module="fedex">
+                <title>Biztech Fedex</title>
+                <sort_order>9999</sort_order>
+                <children>
+                    <pickup translate="title" module="fedex">
+                        <title>Pickup</title>
+                        <action>adminhtml/pickup/index</action>
+                        <sort_order>10</sort_order>
+                    </pickup>
+
+                    <etdtype translate="title" module="fedex">
+                        <title>ETD Type</title>
+                        <action>adminhtml/etdtype/index</action>
+                        <sort_order>10</sort_order>
+                    </etdtype>
+                </children>
+            </fedex>
+        </menu> 
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <Biztech_Fedex>
+                            <title>Fedex Module</title>
+                            <sort_order>10</sort_order>
+                        </Biztech_Fedex>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <fedex>
+                                            <title>Fedex</title>
+                                        </fedex>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <fedex>
+                    <file>fedex.xml</file>
+                </fedex>
+            </updates>
+        </layout>
+        <events>
+            <admin_system_config_changed_section_fedex>
+                <observers>
+                    <productdesigner>
+                        <type>model</type>
+                        <class>fedex/observer</class>
+                        <method>checkKey</method>
+                    </productdesigner>
+                </observers>
+            </admin_system_config_changed_section_fedex>
+        </events>
+    </adminhtml>
+    <global>
+        <fieldsets>
+            <sales>
+                <quote>
+                    <item>
+                        <product_attributes>
+                            <is_dangerous_goods />
+                            <is_alchohol />
+                            <dry_ice />
+                        </product_attributes>
+                    </item>
+                </quote>
+            </sales>
+            <sales_convert_quote>
+                <fedex_hal_content>
+                    <to_order>*</to_order>
+                </fedex_hal_content>
+                <fedex_hal_enable>
+                    <to_order>*</to_order>
+                </fedex_hal_enable>
+                <is_dangerous_goods>
+                    <to_order>*</to_order>
+                </is_dangerous_goods>
+                <is_alchohol>
+                    <to_order>*</to_order>
+                </is_alchohol>
+                <dry_ice>
+                    <to_order>*</to_order>
+                </dry_ice>
+            </sales_convert_quote>
+            <sales_convert_order>
+                <fedex_hal_content>
+                    <to_quote>*</to_quote>
+                </fedex_hal_content>
+                <fedex_hal_enable>
+                    <to_quote>*</to_quote>
+                </fedex_hal_enable>
+                <is_dangerous_goods>
+                    <to_quote>*</to_quote>
+                </is_dangerous_goods>
+                <is_alchohol>
+                    <to_quote>*</to_quote>
+                </is_alchohol>
+                <dry_ice>
+                    <to_quote>*</to_quote>
+                </dry_ice>
+            </sales_convert_order>
+
+
+            <sales_convert_quote_item>
+                <is_dangerous_goods>
+                    <to_order_item>*</to_order_item>
+                </is_dangerous_goods>
+                <is_alchohol>
+                    <to_order_item>*</to_order_item>
+                </is_alchohol>
+                <dry_ice>
+                    <to_order_item>*</to_order_item>
+                </dry_ice>
+            </sales_convert_quote_item>
+            <sales_convert_order_item>
+                <is_dangerous_goods>
+                    <to_quote_item>*</to_quote_item>
+                </is_dangerous_goods>
+                <is_alchohol>
+                    <to_quote_item>*</to_quote_item>
+                </is_alchohol>
+                <dry_ice>
+                    <to_quote_item>*</to_quote_item>
+                </dry_ice>
+            </sales_convert_order_item>
+
+
+
+        </fieldsets>
+
+        <models>
+            <fedex>
+                <class>Biztech_Fedex_Model</class>
+                <resourceModel>fedex_mysql4</resourceModel>
+            </fedex>
+            <fedex_mysql4>
+                <class>Biztech_Fedex_Model_Mysql4</class>
+                <entities>        
+                    <pickup>
+                        <table>fedex_pickup</table>
+                    </pickup>
+                    <pshipment>
+                        <table>fedex_pickup_shipment</table>
+                    </pshipment>
+                    <shipment>
+                        <table>fedex_shipment</table>
+                    </shipment>
+                    <etdtype>
+                        <table>fedex_etdtype</table>
+                    </etdtype>
+                </entities>
+            </fedex_mysql4>
+            <usa>
+                <rewrite>
+                    <shipping_carrier_abstract>Biztech_Fedex_Model_Shipping_Carrier_Fedex</shipping_carrier_abstract>
+                </rewrite>
+            </usa>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_shipment_view_form>Biztech_Fedex_Block_Adminhtml_Sales_Order_Shipment_View_Form</sales_order_shipment_view_form>
+                </rewrite>
+            </adminhtml>
+            <usa>
+                <rewrite>
+                    <shipping_carrier_abstract>Biztech_Fedex_Model_Shipping_Carrier_Abstract</shipping_carrier_abstract>
+                </rewrite>
+            </usa>
+        </models>
+        <resources>
+            <fedex_setup>
+                <setup>
+                    <module>Biztech_Fedex</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </fedex_setup>
+            <fedex_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </fedex_read>
+            <fedex_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </fedex_write>
+        </resources>
+        <helpers>
+            <fedex>
+                <class>Biztech_Fedex_Helper</class>
+            </fedex>
+        </helpers>
+        <blocks>
+            <fedex>
+                <class>Biztech_Fedex_Block</class>
+            </fedex>
+            <sales>
+                <rewrite>
+                    <order_history>Biztech_Fedex_Block_Order_History</order_history>
+                </rewrite>
+            </sales>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_shipment_view_form>Biztech_Fedex_Block_Adminhtml_Sales_Order_Shipment_View_Form</sales_order_shipment_view_form>
+                    <sales_order_address_form>Biztech_Fedex_Block_Adminhtml_Sales_Order_Address_Form</sales_order_address_form>
+                    <sales_order_shipment_view>Biztech_Fedex_Block_Adminhtml_Sales_Order_Shipment_View</sales_order_shipment_view>
+                    <sales_shipment_grid>Biztech_Fedex_Block_Adminhtml_Sales_Shipment_Grid</sales_shipment_grid>
+                </rewrite>
+            </adminhtml>
+
+            <!-- <adminhtml>
+                <rewrite>
+                    <sales_order_view>Biztech_Fedex_Block_Adminhtml_Sales_Order_View</sales_order_view>
+                </rewrite>
+            </adminhtml> -->
+        </blocks>
+    </global>
+</config>

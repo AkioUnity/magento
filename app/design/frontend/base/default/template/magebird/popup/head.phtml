@@ -1,0 +1,78 @@
+<script type="text/javascript" po_cmp_ignore>
+//<![CDATA[
+<?php
+$previewId = $this->getPreviewId() ? $this->getPreviewId() : 0;
+$templateId = $this->getTemplateId() ? $this->getTemplateId() : 0;
+$targetPageId = $this->getTargetPageId() ? $this->getTargetPageId() : 0;
+$filterId = $this->getFilterId() ? $this->getFilterId() : 0;
+$isAjax = $this->isAjax();
+$requestType = $this->requestType();
+$store = Mage::app()->getStore();                 
+$storeId = 1;
+if ($store instanceof Mage_Core_Model_Store) {
+    $storeId = $store->getId();
+}
+if(Mage::app()->getStore()->isCurrentlySecure()){    
+  $baseUrl = urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK, true));
+  //$rootUrl = substr(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN, true),0,-5);
+  $rootUrl = Mage::getStoreConfig(Mage_Core_Model_Url::XML_PATH_SECURE_URL);
+}else{
+  $baseUrl = urlencode(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK));
+  //$rootUrl = substr(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN),0,-5);
+  $rootUrl = Mage::getStoreConfig(Mage_Core_Model_Url::XML_PATH_UNSECURE_URL);
+}  
+
+if(strpos($baseUrl, "www")!==false && strpos($_SERVER["HTTP_HOST"], "www")===false){
+  $baseUrl = str_replace("www.", "", $baseUrl);
+  $rootUrl = str_replace("www.", "", $rootUrl);
+}
+
+                      
+$ajaxAsync = Mage::getStoreConfig('magebird_popup/statistics/ajax_async')==2 ? 'false':'true';
+$requestType = Mage::getStoreConfig('magebird_popup/settings/requesttype');
+$doGaTracking = Mage::getStoreConfig('magebird_popup/statistics/ga_tracking') ? 'true':'false';
+$doMousetracking = Mage::getStoreConfig('magebird_popup/statistics/mousetracking');
+
+$baseCurrency = Mage::app()->getStore()->getBaseCurrencyCode();
+$currentCurrency = Mage::app()->getStore()->getCurrentCurrencyCode();
+$symbol = Mage::app()->getLocale()->currency($currentCurrency)->getSymbol();
+$format = Mage::app()->getLocale()->currency($currentCurrency)->toCurrency(1);
+
+$data = array('storeId'=>$storeId,
+              'previewId'=>$previewId,
+              'templateId'=>$templateId,
+              'popupPageId'=>$targetPageId,
+              'filterId'=>$filterId,
+              'isAjax'=>$isAjax,
+              'page'=>$this->getPage(),
+              'requestType'=>$requestType,              
+              'rootUrl'=>$rootUrl,
+              'baseUrl'=>$baseUrl,
+              'ajaxAsync'=>$ajaxAsync,
+              'doGaTracking'=>$doGaTracking,
+              'doMousetracking'=>$doMousetracking,
+              'bc'=>$baseCurrency,
+              'cc'=>$currentCurrency,
+              'cs'=>$symbol,
+              'cf'=>$format,
+              'customParams'=>''
+              );           
+?>
+var mbPopupParams = <?php echo json_encode($data);?>;
+
+//]]>
+</script>
+<?php $async = Mage::getStoreConfig('magebird_popup/settings/asynchronous') ? 'async' : ''; ?>
+<?php if(Mage::helper('magebird_popup')->showPopup()):?>
+<?php if(Mage::app()->getStore()->isCurrentlySecure()): ?>
+  <?php if(Mage::getStoreConfig('magebird_popup/settings/load_jquery')): ?>
+  <script <?php echo $async; ?> type="text/javascript" src="<?php echo $this->getSkinUrl('js/magebird_popup/jquery.js', array('_secure' => true,'_nosid' => true)); ?>"></script>
+  <?php endif;?>
+  <script <?php echo $async; ?> type="text/javascript" src="<?php echo $this->getSkinUrl('js/magebird_popup/main.js', array('_secure' => true,'_nosid' => true)); ?>?v=1.6.2"></script>        
+<?php else:?>
+  <?php if(Mage::getStoreConfig('magebird_popup/settings/load_jquery')): ?>
+  <script <?php echo $async; ?> type="text/javascript" src="<?php echo $this->getSkinUrl('js/magebird_popup/jquery.js') ?>"></script>
+  <?php endif;?>
+  <script <?php echo $async; ?> type="text/javascript" src="<?php echo $this->getSkinUrl('js/magebird_popup/main.js') ?>?v=1.6.2"></script>
+<?php endif; ?> 
+<?php endif; ?>

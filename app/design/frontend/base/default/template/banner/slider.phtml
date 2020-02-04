@@ -1,0 +1,61 @@
+
+	<?php 
+	// echo "before loop";
+	$banners=$this->getBanners();
+	// echo "abhishek";
+	// 	exit;
+	?>
+<?php if($banners->getSize()>0) { ?>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/srdt/jquery.bxslider.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/srdt/jquery.fitvids.js'); ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('css/srdt/jquery.bxslider.css'); ?>" media="all">
+<div class="conatiner" style="width:100%;float:left;border:0px dotted red">
+<ul class="bxslider">
+<?php foreach ($banners as $banner): ?>
+	<?php if($banner->getBannerType()==2): ?>
+	<?php 
+	$url=$banner->getBannerUrl();
+	if($url){
+  if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+        $url = "http://" . $url;
+    }}else{
+    	$url="javascript:void(0)";
+    }
+   
+	?>
+	<li><a href="<?php echo $url; ?>" />
+<img src="<?php echo  Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."bannerslider/".$banner->getBannerImage()?>" <?php if($banner->getBannerCaption()): ?>title="<?php echo $banner->getBannerCaption(); ?>" <?php endif;?> /></a>
+</li>
+<?php elseif($video_id=$this->getVideoId($banner->getYoutubeUrl())): ?>
+
+ <li>
+<iframe style="width:100%;" src="https://www.youtube.com/embed/<?php echo $video_id ?>" frameborder="0" allowfullscreen></iframe>
+  </li>
+
+
+<?php endif; ?>	
+
+<?php endforeach; ?>
+
+</ul>	
+
+
+</div>	
+
+<script>
+$kkk=jQuery.noConflict();
+$kkk('.bxslider').bxSlider({
+ // mode: 'fade',
+//  captions: true
+adaptiveHeight:true,
+ video: true,
+  useCSS: false,
+   captions: true
+});
+</script>
+<?php }
+
+else{
+	echo "Either you have not added sliders or All the sliders are disable";
+}
+ ?>

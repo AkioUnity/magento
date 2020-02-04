@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Xcentia_Coster extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       Xcentia
+ * @package        Xcentia_Coster
+ * @copyright      Copyright (c) 2017
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+--> 
+<layout>
+    <adminhtml_coster_product_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_coster/product</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_coster/adminhtml_product" name="product" />
+
+        </reference>
+    </adminhtml_coster_product_index>
+    <adminhtml_coster_product_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="xcentia_coster/adminhtml_product_grid" name="product_grid"/>
+        </block>
+    </adminhtml_coster_product_grid>
+    <!-- Product add/edit action -->
+    <adminhtml_coster_product_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_coster/product</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_coster/adminhtml_product_edit" name="product_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="xcentia_coster/adminhtml_product_edit_tabs" name="product_tabs"></block>
+        </reference>
+    </adminhtml_coster_product_edit>
+
+    <adminhtml_coster_category_index>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_coster/category</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_coster/adminhtml_category" name="category" />
+
+        </reference>
+    </adminhtml_coster_category_index>
+    <adminhtml_coster_category_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="xcentia_coster/adminhtml_category_grid" name="category_grid"/>
+        </block>
+    </adminhtml_coster_category_grid>
+    <!-- Category add/edit action -->
+    <adminhtml_coster_category_edit>
+        <update handle="editor"/>
+        <reference name="menu">
+            <action method="setActive">
+                <menupath>xcentia_coster/category</menupath>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="xcentia_coster/adminhtml_category_edit" name="category_edit"></block>
+        </reference>
+        <reference name="left">
+            <block type="xcentia_coster/adminhtml_category_edit_tabs" name="category_tabs"></block>
+        </reference>
+    </adminhtml_coster_category_edit>
+
+</layout>

@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2016 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @category   Google
+ * @package    Google_Shoppingconnect
+ * @copyright  Copyright 2016 Google Inc.
+ * @license    http://www.apache.org/licenses/LICENSE-2.0 Apache License Version 2.0
+ */
+-->
+<config>
+    <api>
+        <resources>
+            <Google_Shoppingconnect module="googleshoppingconnect">
+                <model>googleshoppingconnect/Api</model>
+                <title>Google Shopping Connect</title>
+                <acl>googleshoppingconnect</acl>
+                <methods>
+                    <basic_shop_info module="googleshoppingconnect">
+                        <title>Retrieve basic shop information</title>
+                        <acl>googleshoppingconnect/shop_info</acl>
+                    </basic_shop_info>
+                    <shop_info module="googleshoppingconnect">
+                        <title>Retrieve shop information</title>
+                        <acl>googleshoppingconnect/shop_info</acl>
+                    </shop_info>
+                    <products module="googleshoppingconnect">
+                        <title>Retrieve product information</title>
+                        <acl>googleshoppingconnect/products</acl>
+                    </products>
+                    <add_verification_tag module="googleshoppingconnect">
+                        <title>Add Google website verification meta tag</title>
+                        <acl>googleshoppingconnect/add_verification_tag</acl>
+                    </add_verification_tag>
+                </methods>
+                <faults module="googleshoppingconnect">
+                    <unknown_store_view>
+                        <code>100</code>
+                        <message>Unknown Store View</message>
+                    </unknown_store_view>
+                    <bad_page_number>
+                        <code>200</code>
+                        <message>Bad page number.</message>
+                    </bad_page_number>
+                    <bad_page_size>
+                        <code>300</code>
+                        <message>Bad page size.</message>
+                    </bad_page_size>
+                    <missing_verification_tag_content>
+                        <code>400</code>
+                        <message>Missing verification tag content.</message>
+                    </missing_verification_tag_content>
+                    <missing_url>
+                        <code>500</code>
+                        <message>Missing url.</message>
+                    </missing_url>
+                </faults>
+            </Google_Shoppingconnect>
+        </resources>
+        <acl>
+            <resources>
+                <googleshoppingconnect translate="title" module="googleshoppingconnect">
+                    <title>Google Shopping Connect</title>
+                    <shop_info translate="title" module="googleshoppingconnect">
+                        <title>Retrieve shop information</title>
+                    </shop_info>
+                    <products translate="title" module="googleshoppingconnect">
+                        <title>Retrieve product information</title>
+                    </products>
+                    <add_verification_tag translate="title" module="googleshoppingconnect">
+                        <title>Add Google website verification meta tag</title>
+                    </add_verification_tag>
+                </googleshoppingconnect>
+            </resources>
+        </acl>
+    </api>
+</config>
