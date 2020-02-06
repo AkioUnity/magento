@@ -2,7 +2,7 @@
   /******************************************************************************************************************
    * Source: http://www.emvee-solutions.com/blog/magento-custom-reindex-script/
    * 
-   * Custom Magento re-indexing script
+   * Custom Magento re-indexing script  //per 5 min
    ******************************************************************************************************************/
 
 

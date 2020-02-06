@@ -1,36 +1,53 @@
- <?php foreach ($this->getItems() as $_item):?>
-    <div class="checkbox">       
-        <?php if ($_item->getIsCurrent()): ?>
-		 <?php /* <label><?php echo $_item->getLabel() ?></label> */ ?>
-        <?php  else: ?>
-		<?php if (Mage::getStoreConfig('layerednav/layerednav/reload_categories')) { ?>
-		<?php $children = Mage::getModel('catalog/category')->getCategories($_item->getCategoryId()); ?>
-		 <?php $mainCategory=Mage::getModel('catalog/category')->load($_item->getCategoryId()); ?>
-		<h4><?php echo $mainCategory->getName(); ?></h4>
-		<?php foreach ($children as $category) {  ?>
-        <a id="cat-<?php echo $category->getId()?>" href="<?php echo $category->getUrl()?>" class="adj-nav-pad<?php echo $category->getLevel()?>">
-        <label><?php echo $category->getName() ?></label>
+<style>
+    .parent_url{
+        text-transform: initial!important;
+        font-size: 16px!important;
+        color: #1a790c!important;
+    }
+</style>
+<?php foreach ($this->getItems() as $_item): ?>
+    <div class="checkbox">
+        <!--        $_item->getIsCurrent()-->
+        <?php
+        $mainCategory = Mage::getModel('catalog/category')->load($_item->getCategoryId());
+
+        if (!$_item->getCount()) {
+            if (!$_item->getIsCurrent()) { ?>
+                <!--            <h4>--><?php //echo $_item->getLabel(); ?><!-- </h4>-->
+                <a href="<?php echo $mainCategory->getUrl() ?>">
+                    <label class="parent_url"><?php echo $_item->getLabel() ?></label>
                 </a>
-		<?php } ?>		
-				<?php } else { ?>
-				<?php    ?>
-				 <?php $mainCategory2=Mage::getModel('catalog/category')->load($_item->getCategoryId());
-					?>
-				<h4><?php echo $mainCategory2->getName(); ?></h4>
-				<?php $children2 = Mage::getModel('catalog/category')->getCategories($_item->getCategoryId());
-				?>
-				 
-				<?php $catID= array(); foreach ($children2 as $category1) {  ?>
-                        <a id="cat-<?php echo $category1->getId()?>" href="<?php echo $category1->getUrl()?>" class="fme_layered_category adj-nav-pad<?php echo $category1->getLevel()?>">
-						<label><input type="checkbox" value=""><?php echo $category1->getName()  ?></label></a>
-						<?php } ?>	
-				 
+            <?php }
+        } else {
+            if (Mage::getStoreConfig('layerednav/layerednav/reload_categories')) {
+//                echo ("category_id:".$_item->getCategoryId());
+//                $children = Mage::getModel('catalog/category')->getCategories($_item->getCategoryId());
+
+                $children = $mainCategory->getChildrenCategories();
+                ?>
+                <h4><?php echo $_item->getLabel(); ?> </h4>
+                <?php foreach ($children as $category) { ?>
+                    <a id="cat-<?php echo $category->getId() ?>" href="<?php echo $category->getUrl() ?>"
+                       class="adj-nav-pad<?php echo $category->getLevel() ?>">
+                        <label><?php echo $category->getName() ?></label>
+                    </a>
                 <?php }
-                   /*if($_item->getCount()): ?>  
-                     (<?php echo $_item->getCount() ?>) 
-            <?php endif; */ ?>
-        <?php endif ?>
- </div>   
+            } else {
+                $mainCategory2 = Mage::getModel('catalog/category')->load($_item->getCategoryId());
+                ?>
+                <h4><?php echo $mainCategory2->getName(); ?> mainCategory2 </h4>
+                <?php $children2 = Mage::getModel('catalog/category')->getCategories($_item->getCategoryId());
+                $catID = array();
+                foreach ($children2 as $category1) { ?>
+                    <a id="cat-<?php echo $category1->getId() ?>" href="<?php echo $category1->getUrl() ?>"
+                       class="fme_layered_category adj-nav-pad<?php echo $category1->getLevel() ?>">
+                        <label><input type="checkbox" value=""><?php echo $category1->getName() ?></label></a>
+                <?php }
+            }
+//            if ($_item->getCount())
+//                echo "count:".$_item->getCount();
+        } ?>
+    </div>
 <?php endforeach ?>
 
 <?php /* foreach ($this->getItems() as $_item):?>

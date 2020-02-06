@@ -1,5 +1,5 @@
 <?php
-/**
+/**  per 1min
  * Magento
  *
  * NOTICE OF LICENSE

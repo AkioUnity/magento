@@ -1,5 +1,5 @@
 <?php
-/**
+/**  per a day
  * File: Disable Coster Product if the product discontinued at coster connect
  * Status =>  1:Enabled, 2:Disabled
  * http://coasterconnect.coasteramer.com
