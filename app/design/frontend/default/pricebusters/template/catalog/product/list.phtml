@@ -178,11 +178,11 @@
         }
         ?>
         <select id="sortby" onchange="sortby()">
-            <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=position" <?php echo ($set_sort == 'position')? 'selected="selected"' : ''; ?>>
+            <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=position" <?php echo ''; ?>>
             Position</option>
             <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=name" <?php echo ($set_sort == 'name')? 'selected="selected"' : ''; ?>>
             Name</option>
-            <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=price" <?php echo ($set_sort == 'price')? 'selected="selected"' : ''; ?>>
+            <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=price" <?php echo 'selected="selected"'; ?>>
             Price</option>
             <option value="<?php echo $sort_by_base_url; ?>dir=asc&amp;order=is_coaster" <?php echo ($set_sort == 'is_coaster')? 'selected="selected"' : ''; ?>>
             Is a Coaster Product</option>

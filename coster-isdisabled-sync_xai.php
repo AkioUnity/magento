@@ -14,7 +14,7 @@ umask(0);
 Mage::app();
 $chunk = 50;
 echo date('d-m-Y h:i:s a') . ' >> Started updating....<br>';
-$connection = Mage::getModel('core/resource')->getConnection('core_read');
+//$connection = Mage::getModel('core/resource')->getConnection('core_read');
 //Status =>  1:Enabled, 2:Disabled
 $allProducts = Mage::getModel('catalog/product')->getCollection()
     ->addAttributeToFilter(
@@ -31,12 +31,14 @@ foreach( $allProducts as $zProduct) {
 }
 $productChunks = array_chunk($prods , 50);
 foreach($productChunks as $productChunk) {
+    print_r($productChunk);
     $filtercode = _sendRequest('getFilter?ProductNumber='.implode(',', $productChunk));
     $productList =  _sendRequest('GetProductList?filtercode='.$filtercode.'&customernumber=16998');
     foreach($productList as $product) {
         $sku = $product->ProductNumber;
         $status = ($product->IsDiscontinued) ? 2 : 1;
-        //echo 'Product: '.$sku.' has status: '.$status.'<br>';
+        if ($status==2)
+            echo 'Product: '.$sku.' has status: '.$status.'<br>';
         $updateProduct = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
         $updateProduct->setStatus($status);
         $updateProduct->save();

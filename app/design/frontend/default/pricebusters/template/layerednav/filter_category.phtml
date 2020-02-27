@@ -25,7 +25,12 @@
 
                 $children = $mainCategory->getChildrenCategories();
                 ?>
-                <h4><?php echo $_item->getLabel(); ?> </h4>
+                <h4>
+                    <a href="<?php echo $mainCategory->getUrl() ?>" style="color:white;">
+                    <?php echo $_item->getLabel(); ?>
+                    </a>
+                </h4>
+
                 <?php foreach ($children as $category) { ?>
                     <a id="cat-<?php echo $category->getId() ?>" href="<?php echo $category->getUrl() ?>"
                        class="adj-nav-pad<?php echo $category->getLevel() ?>">
