@@ -2,11 +2,10 @@
 /**
  * File: Disable Coster Product if the product discontinued at coster connect
  * http://coasterconnect.coasteramer.com
- * Coaster catalogs 
- * @SGDEV
- * v:1.1
  */
 echo "<pre>";
+// per a day
+//https://pricebusters.furniture/coster-isdisabled-sync_xai.php
 ini_set('max_execution_time', 0);
 //set_time_limit(0);
 require_once('app/Mage.php'); 
@@ -19,10 +18,9 @@ echo date('d-m-Y h:i:s a') . ' >> Started updating....<br>';
 $allProducts = Mage::getModel('catalog/product')->getCollection()
     ->addAttributeToFilter(
         array(
-            array('attribute'=>'status', 'eq'=>'1'),
+            array('attribute'=>'status', 'neq'=>'2'),
         )
     );
-$ids = $allProducts->getAllIds();
 foreach( $allProducts as $zProduct) {
     $_product = Mage::getModel('catalog/product')->load($zProduct->getId());
     if( $_product->getIsCoaster() == '1' ) {
@@ -31,20 +29,32 @@ foreach( $allProducts as $zProduct) {
 }
 $productChunks = array_chunk($prods , 50);
 foreach($productChunks as $productChunk) {
-    print_r($productChunk);
+//    print_r($productChunk);
     $filtercode = _sendRequest('getFilter?ProductNumber='.implode(',', $productChunk));
     $productList =  _sendRequest('GetProductList?filtercode='.$filtercode.'&customernumber=16998');
     foreach($productList as $product) {
         $sku = $product->ProductNumber;
-        $status = ($product->IsDiscontinued) ? 2 : 1;
-        if ($status==2)
-            echo 'Product: '.$sku.' has status: '.$status.'<br>';
+        $status = ($product->IsDiscontinued) ? 0 : 1;
         $updateProduct = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
-        $updateProduct->setStatus($status);
-        $updateProduct->save();
-        sleep(rand(1,2));
-    } 
-    sleep(rand(2,3));
+        if ($updateProduct){
+            $status0=$updateProduct->getStatus();
+            if ($status!=$status0){
+                $updateProduct->setStatus($status);
+                $updateProduct->save();
+                echo 'Product: '.$sku.' has status: '.$status.'<br>';
+            }
+//            echo ($sku);
+        }
+        else{
+//            echo 'No Product: '.$sku.'<br>';
+//            print_r($product);
+//            print_r($productChunk);
+//            die;
+        }
+//        sleep(rand(1,2));
+    }
+
+    sleep(rand(1,2));
 }
 
 function _sendRequest($endpoint) {

@@ -10,7 +10,7 @@
    
   //increase execution time to 900seconds for larger stores
   ini_set('max_execution_time', 900);
-   
+
   //require Magento
   require_once 'app/Mage.php';
   $app = Mage::app('admin');
