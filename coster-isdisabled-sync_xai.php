@@ -6,6 +6,10 @@
 echo "<pre>";
 // per a day
 //https://pricebusters.furniture/coster-isdisabled-sync_xai.php
+//4/6- total 3848  disable-1, enable- 2747  (before remove)
+//4/7- total 3293  disable-1  enable- 2747  before manual delete
+//4/7- total 2748  disable-1  enable- 2747  coaster-2645 manual delete  disabled item sku-5900 Silverton Platinum  id=13258
+
 ini_set('max_execution_time', 0);
 //set_time_limit(0);
 require_once('app/Mage.php'); 
@@ -27,7 +31,10 @@ foreach( $allProducts as $zProduct) {
         $prods[] = $zProduct->getSku();
     }
 }
+//echo ('count:'.count($prods).'<br>');
+
 $productChunks = array_chunk($prods , 50);
+Mage::register('isSecureArea', true);
 foreach($productChunks as $productChunk) {
 //    print_r($productChunk);
     $filtercode = _sendRequest('getFilter?ProductNumber='.implode(',', $productChunk));
@@ -35,15 +42,31 @@ foreach($productChunks as $productChunk) {
     foreach($productList as $product) {
         $sku = $product->ProductNumber;
         $status = ($product->IsDiscontinued) ? 0 : 1;
+        $qty=$product->PackQty;
         $updateProduct = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
         if ($updateProduct){
-            $status0=$updateProduct->getStatus();
-            if ($status!=$status0){
-                $updateProduct->setStatus($status);
-                $updateProduct->save();
-                echo 'Product: '.$sku.' has status: '.$status.'<br>';
+            if ($status==0){
+                try {
+                    $updateProduct->delete();
+                    echo $sku . " Deleted<br>";
+                } catch (Exception $e) {
+                    echo $sku . " Not Deleted<br>";
+                    echo $e;
+                }
             }
-//            echo ($sku);
+//            elseif ($qty==0){
+//                $updateProduct->setStatus(0);  //auto disable
+//                $updateProduct->save();
+//                echo $sku . " qty:".$qty."<br>";
+//            }
+            else{  //status=1
+                $status0=$updateProduct->getStatus();
+                if ($status!=$status0){  //status0=0
+                    $updateProduct->setStatus($status);
+                    $updateProduct->save();
+                    echo $sku.' status: '.$status.'<br>';
+                }
+            }
         }
         else{
 //            echo 'No Product: '.$sku.'<br>';
@@ -53,10 +76,9 @@ foreach($productChunks as $productChunk) {
         }
 //        sleep(rand(1,2));
     }
-
     sleep(rand(1,2));
 }
-
+Mage::unregister('isSecureArea');
 function _sendRequest($endpoint) {
     $curl = curl_init();
 

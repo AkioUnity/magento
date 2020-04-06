@@ -3,6 +3,7 @@ echo "<pre>";
 ini_set('max_execution_time', 0);
 require_once('app/Mage.php'); 
 umask(0);
+//https://pricebusters.furniture/set_weight_xai.php
 Mage::app();
 $chunk = 50;
 echo date('d-m-Y h:i:s a') . ' >> Set Weight....<br>';
@@ -24,11 +25,11 @@ $cn=0;
 echo 'cnt:'.count($allProducts);
 foreach( $allProducts as $zProduct) {
     $cn++;
-//    if ($cn>50)
-//        break;
+    if ($cn>50)
+        break;
     $_product = Mage::getModel('catalog/product')->load($zProduct->getId());
-//    $_product->setWeight(200);
-//    $_product->save();
+    $_product->setWeight(200);
+    $_product->save();
     print_r($cn.' ');
 //    print_r('sku:'.$_product->getSku());
     print_r('  '.$_product->getWeight());
