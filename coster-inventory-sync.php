@@ -8,7 +8,7 @@
  */
 ini_set('max_execution_time', 0);
 //set_time_limit(0);
-
+//https://pricebusters.furniture/coster-inventory-sync.php
 require_once('app/Mage.php'); 
 umask(0);
 Mage::app();

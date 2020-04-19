@@ -5,7 +5,7 @@
  * @SGDEV
  * v:1.1
  */
-//https://pricebusters.furniture/coster-cost-sync.php
+//https://pricebusters.furniture/cai-coster-cost-sync.php
 ini_set('max_execution_time', 0);
 //set_time_limit(0);
 
@@ -18,7 +18,8 @@ print_r (date('d-m-Y h:i:s a') . ' >> Started updating cost....<br>');
 $allProducts = Mage::getModel('catalog/product')->getCollection()
     ->addAttributeToFilter(
         array(
-            array('attribute'=>'status', 'eq'=>'1'),
+//            array('attribute'=>'status', 'eq'=>'1'),
+            array('attribute' => 'price', 'eq' => '0'),
         )
     );
 $ids = $allProducts->getAllIds();
@@ -43,7 +44,7 @@ foreach ($productChunks as $productChunk) {
             $updateProduct = Mage::getModel('catalog/product')->loadByAttribute('sku', $productSku);
             $curPrice = $updateProduct->getPrice();
             if ($curPrice == 0)
-                echo $productSku . '- $' . $productPrice . "\n";
+                echo $productSku . '- $' . $productPrice . "<br>\n";
             $updateProduct->setPrice($productPrice * 1.92);
 //                    $updateProduct->setStatus(1);
             $updateProduct->save();

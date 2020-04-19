@@ -9,7 +9,8 @@ echo "<pre>";
 //4/6- total 3848  disable-1, enable- 2747  (before remove)
 //4/7- total 3293  disable-1  enable- 2747  before manual delete
 //4/7- total 2748  disable-1  enable- 2747  coaster-2645 manual delete  disabled item sku-5900 Silverton Platinum  id=13258
-
+//4/12- total 2748 enable-2057 disable-1
+//4/15 - total 3210  enable-2370  disable-1
 ini_set('max_execution_time', 0);
 //set_time_limit(0);
 require_once('app/Mage.php'); 
