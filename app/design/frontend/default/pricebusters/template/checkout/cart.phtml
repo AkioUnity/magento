@@ -31,9 +31,21 @@
  * @see Mage_Checkout_Block_Cart
  */
 ?>
+<!--template/checkout/cart.phtml-->
 <div class="cart">
     <div class="page-title title-buttons">
         <h1><?php echo $this->__('Shopping Cart') ?></h1>
+<!--        <a href="#" style="text-align: center">-->
+            <div style="text-align: center;  margin-top: 70px;">
+                <img src="<?php echo $this->getSkinUrl('') ?>images/sync_card.png"
+                     style="width:120px"/>
+                <p style="width: 36%;   display: inline-block;    color: #616060;    margin: 17px;    font-weight: 600;
+    font-size: 17px;   vertical-align: middle;">Promotional Financing available for 12 Months*
+                    with your Synchrony HOME Credit Card.
+                </p>
+                <button type="button" title="Proceed to Checkout" class="button btn-proceed-checkout btn-checkout" onclick="window.location='https://pricebusters.furniture/checkout/onepage/';"><span style="background: #3FA2F7;   border-radius: 5px;    padding-right: 33px;   padding-left: 33px;">Proceed to Checkout</span></button>
+            </div>
+<!--        </a>-->
     </div>
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php echo $this->getChildHtml('form_before') ?>

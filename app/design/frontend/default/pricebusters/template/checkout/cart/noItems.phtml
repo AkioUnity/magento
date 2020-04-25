@@ -24,10 +24,22 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<!--checkout/cart/noItems.phtml-->
 <div class="page-title">
     <h1><?php echo $this->__('Shopping Cart is Empty') ?></h1>
 </div>
 <div class="cart-empty">
+<!--    <a href="#" >-->
+        <div style="margin-bottom: 30px;">
+            <img src="<?php echo $this->getSkinUrl('') ?>images/sync_card.png"
+                 style="width:120px"/>
+            <p style="width: 36%;   display: inline-block;    color: #616060;    margin: 17px;    font-weight: 600;
+    font-size: 17px;   vertical-align: middle;">Promotional Financing available for 12 Months*
+                with your Synchrony HOME Credit Card.
+            </p>
+            <button type="button" title="Proceed to Checkout" class="button btn-proceed-checkout btn-checkout" onclick="window.location='https://pricebusters.furniture/checkout/onepage/';"><span style="background: #3FA2F7;   border-radius: 5px;    padding-right: 33px;   padding-left: 33px;">Proceed to Checkout</span></button>
+        </div>
+<!--    </a>-->
     <?php echo $this->getMessagesBlock()->toHtml() ?>
     <?php echo $this->getChildHtml('checkout_cart_empty_widget'); ?>
     <p><?php echo $this->__('You have no items in your shopping cart.') ?></p>

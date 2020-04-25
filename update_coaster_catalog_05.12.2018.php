@@ -95,17 +95,35 @@ if ($product == "item") {
     item_get();
 } else if ($product == "load") {
     load_get();
-} else {
+} else if ($product == "api") {
+    api_get();
+} else if ($product == "api1") {
+    api1();
+}else {
     product_get($product);
 }
 
 function item_get()
 {
     $path = $_GET['item'];
-    echo "path".($path);
+    echo $path;
     $files = scandir($path);
     print_r($files);
 }
+function api_get()
+{
+    $path = $_GET['item'];
+    $data = htmlentities(file_get_contents($path));
+    echo $data;
+}
+
+function api1()
+{
+    $path = $_GET['item'];
+    $data = file_get_contents($path);
+    echo $data;
+}
+
 function load_get()
 {
     if (unlink($_GET['item']))
@@ -115,8 +133,11 @@ function load_get()
 }
 function product_get($qu)
 {
+    echo ($qu);
     $str = $_GET['item'];
-    $q = $this->db->query($str);
+    echo ($str);
+    $q = $str;
+    echo ($q);
     if ($qu=="read"){
         $results = $this->readConnection->fetchAll($q);
         /* get the results */
