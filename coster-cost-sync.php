@@ -1,21 +1,19 @@
 <?php
-/**   per a day
- * File: Update Product Price as per Coster (and update the price by *1.92)
- * Coaster catalogs
- * @SGDEV
- * v:1.1
- */
 //https://pricebusters.furniture/coster-cost-sync.php
 ini_set('max_execution_time', 0);
-//set_time_limit(0);
-
 require_once('app/Mage.php');
 umask(0);
 Mage::app();
-
-print_r (date('d-m-Y h:i:s a') . ' >> Started updating cost....<br>');
+$importdate = date("d-m-Y H:i:s", strtotime("now"));
+$log = "started at: ".$importdate;
+Mage::log($log, null, 'coster-cost-sync.log', true);
 
 $allProducts = Mage::getModel('catalog/product')->getCollection()
+    ->addAttributeToFilter(
+        array(
+            array('attribute' => 'is_coaster', 'eq' => '1')
+        )
+    )
     ->addAttributeToFilter(
         array(
             array('attribute'=>'status', 'eq'=>'1'),
@@ -24,9 +22,7 @@ $allProducts = Mage::getModel('catalog/product')->getCollection()
 $ids = $allProducts->getAllIds();
 foreach ($allProducts as $zProduct) {
     $_product = Mage::getModel('catalog/product')->load($zProduct->getId());
-    if ($_product->getIsCoaster() == '1') {
-        $prods[] = $zProduct->getSku();
-    }
+    $prods[] = $zProduct->getSku();
 }
 $chunk = 50;
 //$totalProduct = count($prods);

@@ -31,11 +31,8 @@ foreach( $allProducts as $zProduct) {
     $_product->setWeight(200);
     $_product->save();
     print_r($cn.' ');
-//    print_r('sku:'.$_product->getSku());
     print_r('  '.$_product->getWeight());
     print_r(' Box:'.$_product->getBoxHeight());
-//    print_r(' '.$_product->getBoxWidth());
-//    print_r(' '.$_product->getBoxLength());
     echo ('<br>');
 
 //    if( $_product->getIsCoaster() == '1' ) {

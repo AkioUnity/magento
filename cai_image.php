@@ -15,7 +15,7 @@ Mage::app();
 // $chunk = 50;
 //https://pricebusters.furniture/cai_image.php
 echo "<pre>";
-echo date('d-m-Y h:i:s a') . ' >> Started updating....<br>';
+echo date('d-m-Y h:i:s a') . ' >> image updating....<br>';
 
 // The API
 $_products = Mage::getModel('catalog/product')->getCollection()

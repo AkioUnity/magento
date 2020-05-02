@@ -144,29 +144,29 @@
             </xcentia_coster_recreate_info>
             -->
             <xcentia_coster_sync_coster_inventory>
-                <schedule><cron_expr>*/15 * * * *</cron_expr></schedule>
+                <schedule><cron_expr>*/30 * * * *</cron_expr></schedule>
                 <run><model>xcentia_coster/observer::syncCosterInventory</model></run>
             </xcentia_coster_sync_coster_inventory>
             <xcentia_coster_update_product_inventory>
-                <schedule><cron_expr>*/5 * * * *</cron_expr></schedule>
+                <schedule><cron_expr>*/10 * * * *</cron_expr></schedule>
                 <run><model>xcentia_coster/observer::updateInventory</model></run>
             </xcentia_coster_update_product_inventory>
-            <xcentia_coster_sync_coster_cost>
-                <schedule><cron_expr>0 1 * * *</cron_expr></schedule>
-                <run><model>xcentia_coster/observer::syncCosterCost</model></run>
-            </xcentia_coster_sync_coster_cost>
-            <xcentia_coster_update_product_price>
-                <schedule><cron_expr>20 * * * *</cron_expr></schedule>
-                <run><model>xcentia_coster/observer::updateProductPrice</model></run>
-            </xcentia_coster_update_product_price>
-            <xcentia_coster_sync_exeption_price>
-                <schedule><cron_expr>0 2 * * *</cron_expr></schedule>
-                <run><model>xcentia_coster/observer::syncCosterExceptionPrice</model></run>
-            </xcentia_coster_sync_exeption_price>
-            <xcentia_coster_update_free_shipping_per_product>
-                <schedule><cron_expr>30 * * * *</cron_expr></schedule>
-                <run><model>xcentia_coster/observer::updateFreeShippingPerProduct</model></run>
-            </xcentia_coster_update_free_shipping_per_product>
+            <!--<xcentia_coster_sync_coster_cost>-->
+                <!--<schedule><cron_expr>0 1 * * *</cron_expr></schedule>-->
+                <!--<run><model>xcentia_coster/observer::syncCosterCost</model></run>-->
+            <!--</xcentia_coster_sync_coster_cost>-->
+            <!--<xcentia_coster_update_product_price>-->
+                <!--<schedule><cron_expr>20 * * * *</cron_expr></schedule>-->
+                <!--<run><model>xcentia_coster/observer::updateProductPrice</model></run>-->
+            <!--</xcentia_coster_update_product_price>-->
+            <!--<xcentia_coster_sync_exeption_price>-->
+                <!--<schedule><cron_expr>0 2 * * *</cron_expr></schedule>-->
+                <!--<run><model>xcentia_coster/observer::syncCosterExceptionPrice</model></run>-->
+            <!--</xcentia_coster_sync_exeption_price>-->
+            <!--<xcentia_coster_update_free_shipping_per_product>-->
+                <!--<schedule><cron_expr>30 * * * *</cron_expr></schedule>-->
+                <!--<run><model>xcentia_coster/observer::updateFreeShippingPerProduct</model></run>-->
+            <!--</xcentia_coster_update_free_shipping_per_product>-->
             <xcentia_coster_sync_coster_products>
                 <schedule><cron_expr>0 0 * * *</cron_expr></schedule>
                 <run><model>xcentia_coster/observer::syncCosterProducts</model></run>
@@ -175,10 +175,10 @@
                 <schedule><cron_expr>10 * * * *</cron_expr></schedule>
                 <run><model>xcentia_coster/observer::createNewProduct</model></run>
             </xcentia_coster_create_new_products>
-            <xcentia_coster_enable_products>
-                <schedule><cron_expr>40 * * * *</cron_expr></schedule>
-                <run><model>xcentia_coster/observer::enablesCoasterProducts</model></run>
-            </xcentia_coster_enable_products>
+            <!--<xcentia_coster_enable_products>-->
+                <!--<schedule><cron_expr>40 * * * *</cron_expr></schedule>-->
+                <!--<run><model>xcentia_coster/observer::enablesCoasterProducts</model></run>-->
+            <!--</xcentia_coster_enable_products>-->
         </jobs>
     </crontab>
 </config>
