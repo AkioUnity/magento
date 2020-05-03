@@ -15,7 +15,7 @@ class FME_Layerednav_Block_Rewrite_RewriteCatalogCategoryView extends Mage_Catal
     public function getProductListHtml()
     {
     	
-        $html .= parent::getProductListHtml();
+        $html = parent::getProductListHtml();  //amg
         if ($this->getCurrentCategory()->getIsAnchor()){
             $html = Mage::helper('layerednav')->wrapProducts($html);
         }

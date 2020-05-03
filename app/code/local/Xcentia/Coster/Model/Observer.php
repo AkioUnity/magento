@@ -480,7 +480,6 @@ class Xcentia_Coster_Model_Observer
 
     public function updateProducts()
     {
-
         $iproducts = Mage::getModel('xcentia_coster/product')
             ->getCollection();
         $newarray = array();
@@ -625,18 +624,14 @@ class Xcentia_Coster_Model_Observer
             return json_decode($response);
         }
     }
-
-    // This function updates the cost column in xcentia_coster/product table with the API.
+//0 1 * * *    https://pricebusters.furniture/coster/product/synccostercost?key=gorhdufzk
     public function syncCosterCost()
     {
-
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
         $log = "Cost sync started at: " . $importdate;
         Mage::log($log, null, 'price_sync.log', true);
-
         try {
-            $cPriceList = $this->_sendRequest('GetPriceList');
-
+            $cPriceList = $this->_sendRequest('GetPriceList?customernumber=16998');
             foreach ($cPriceList[0]->PriceList as $cProduct) {
                 $iProduct = Mage::getModel('xcentia_coster/product')->load($cProduct->ProductNumber, 'sku');
                 if ($iProduct->getSku() && $iProduct->cost != $cProduct->Price) {
@@ -646,7 +641,7 @@ class Xcentia_Coster_Model_Observer
                 }
             }
             $importdate = date("d-m-Y H:i:s", strtotime("now"));
-            $log = "Cost sync finished at: " . $importdate;
+            $log = "Cost sync finished at: " . $importdate."\n";
             Mage::log($log, null, 'price_sync.log', true);
 
         } catch (Exception $e) {
@@ -654,13 +649,12 @@ class Xcentia_Coster_Model_Observer
         }
     }
 
-    // This function updates the product price in magento with the xcentia_coster/product table.
+//0 */2 * * *  https://pricebusters.furniture/coster/product/updateproductprice?key=gorhdufzk
     public function updateProductPrice()
     {
-
         $start = microtime(true);
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "Product price update started at: " . $importdate;
+        $log = "started at: " . $importdate;
         Mage::log($log, null, 'price_sync.log', true);
 
         $iProducts = Mage::getModel('xcentia_coster/product')
@@ -668,35 +662,31 @@ class Xcentia_Coster_Model_Observer
             ->addFieldToFilter('cost_status', '1')
             ->setPageSize(500)
             ->setCurPage(1);
-
-        if ($iProducts->getSize() > 0) {
-
-            foreach ($iProducts as $iProduct) {
-
-                $iProductObject = Mage::getModel('xcentia_coster/product')->load($iProduct->getId());
-
-                if ($iProductObject->getSku()) {
-                    $price = $iProductObject->getCost() * self::MARGIN;
-                    $productId = Mage::getModel('catalog/product')->getIdBySku($iProductObject->getSku());
-                    if ($productId) {
-                        $product = Mage::getModel('catalog/product')->load($productId);
-                        $product->setPrice($price);
-                        try {
+        try {
+            if ($iProducts->getSize() > 0) {
+                foreach ($iProducts as $iProduct) {
+                    $iProductObject = Mage::getModel('xcentia_coster/product')->load($iProduct->getId());
+                    $iProductObject->setCost_status(0)->save();
+                    $sku = $iProductObject->getSku();
+                    if ($sku) {
+                        $price = $iProductObject->getCost() * self::MARGIN;
+                        $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
+                        if ($product && $product->getPrice()!=$price) {
+                            $product->setPrice($price);
                             $product->save();
-                            $iProductObject->setCost_status(0)->save();
-                            $log = "\n" . 'updating price for SKU [' . $iProductObject->getSku() . '] ID [' . $iProductObject->getEntity_id() . "]\n";
+                            $log = 'updating price ' . $sku . ' $' . $price;
                             Mage::log($log, null, 'price_sync.log', true);
-                        } catch (Exception $e) {
-                            Mage::logException($e);
                         }
                     }
                 }
             }
+        } catch (Exception $e) {
+            Mage::logException($e);
         }
 
         $time_elapsed_secs = microtime(true) - $start;
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "Product price update finished at: " . $importdate . " Done in " . round($time_elapsed_secs) . " seconds!";
+        $log = "finished at: " . $importdate . " Done in " . round($time_elapsed_secs) . " seconds!"."\n";
         Mage::log($log, null, 'price_sync.log', true);
     }
 
@@ -781,12 +771,12 @@ class Xcentia_Coster_Model_Observer
     }
 
     //This function checks the products with the API, adds new products to the xcentia_coster/product table
-//0 0 * * *
+//0 0 * * *  https://pricebusters.furniture/coster/product/syncCosterProducts?key=gorhdufzk
     public function syncCosterProducts()
     {
 
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "Product sync started at: " . $importdate;
+        $log = "Sync started at: " . $importdate;
         Mage::log($log, null, 'product_sync.log', true);
 
         try {
@@ -798,9 +788,9 @@ class Xcentia_Coster_Model_Observer
                     $iProduct->sku = $cProduct->ProductNumber;
                     $iProduct->content = json_encode($cProduct);
                     $iProduct->create_product_status = "1";
-                    $iProduct->cost_status = "1";
+                    $iProduct->cost_status = "0";
                     $iProduct->inventory_status = "0";
-                    $iProduct->price_status = "1";
+                    $iProduct->price_status = "0";  //for exception price
                     $iProduct->state = "1";
                     $iProduct->save();
 
@@ -810,7 +800,7 @@ class Xcentia_Coster_Model_Observer
             }
 
             $importdate = date("d-m-Y H:i:s", strtotime("now"));
-            $log = "Product sync finished at: " . $importdate;
+            $log = "Product sync finished at: " . $importdate."\n";
             Mage::log($log, null, 'product_sync.log', true);
 
         } catch (Exception $e) {
@@ -819,13 +809,13 @@ class Xcentia_Coster_Model_Observer
     }
 
     //This function creates new products in magento
-//10 * * * *
+//10 * * * *     https://pricebusters.furniture/coster/product/createNewProduct?key=gorhdufzk
     public function createNewProduct()
     {
 
         $start = microtime(true);
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "Create new products started at: " . $importdate;
+        $log = "started at: " . $importdate;
         Mage::log($log, null, 'product_sync.log', true);
 
         $iProducts = Mage::getModel('xcentia_coster/product')
@@ -845,10 +835,13 @@ class Xcentia_Coster_Model_Observer
             foreach ($iProducts as $iProduct) {
                 //echo '<pre>'; print_r($iProduct);die("ok");
                 $iProductObject = Mage::getModel('xcentia_coster/product')->load($iProduct->getId());
-                $productId = Mage::getModel('catalog/product')->getIdBySku($iProductObject->getSku());
+                $sku = $iProductObject->getSku();
+                $productId = Mage::getModel('catalog/product')->getIdBySku($sku);
                 $prodInfo = json_decode($iProductObject->getContent());
                 //echo '<pre>'; print_r($prodInfo);die("ok");
-                if ($prodInfo->NumImages > 0 && false === $productId && $prodInfo->IsDiscontinued == false) {
+                $lastSku = substr($sku, -2);
+                $B1 = ($lastSku == "B1" || $lastSku == "B2" || $lastSku == "B3") ? true : false;
+                if ($prodInfo->NumImages > 0 && false === $productId && $prodInfo->IsDiscontinued == false && !$B1) {
                     $product = Mage::getModel('catalog/product');
 
                     $images = array();
@@ -949,50 +942,38 @@ class Xcentia_Coster_Model_Observer
                     }
                     //echo '<pre>'; print_r($product); die('OK');
                     try {
-                        $product->save();
                         $iProductObject->setCreate_product_status(0)->save();
-                        $iProductObject->setInventory_status(1)->save();
-                        $log = 'new product SKU [' . $iProductObject->getSku() . '] ID ' . $iProductObject->getEntity_id() . "";
+                        $log = 'new product ' . $iProductObject->getSku() . ' saved';
                         Mage::log($log, null, 'product_sync.log', true);
+                        $product->save();
                     } catch (Exception $e) {
                         Mage::logException($e);
-                        $log = "\n" . 'Could not save product for SKU [' . $iProductObject->getSku() . '] ID [' . $iProductObject->getEntity_id() . "]\n";
+                        $log = "\n" . 'Could not save product ' . $iProductObject->getSku() . ' ID [' . $iProductObject->getEntity_id() . "]\n";
                         Mage::log($log, null, 'product_sync.log', true);
                     }
-                } elseif ($prodInfo->IsDiscontinued != false) {
-                    $iProductObject->setCreate_product_status(2)->save();
-                    $iProductObject->setInventory_status(2)->save();
-                    $iProductObject->setCost_status(2)->save();
-                    $iProductObject->setPrice_status(2)->save();
-                    $log = 'not create SKU [' . $iProductObject->getSku() . '] ID [' . $iProductObject->getEntity_id() . "] - Product Discontinued";
-                    Mage::log($log, null, 'product_sync.log', true);
-                } elseif ($prodInfo->NumImages <= 0) {
-                    $iProductObject->setCreate_product_status(2)->save();
-                    $iProductObject->setInventory_status(2)->save();
-                    $iProductObject->setCost_status(2)->save();
-                    $iProductObject->setPrice_status(2)->save();
-                    $log = 'not create SKU [' . $iProductObject->getSku() . '] ID ' . $iProductObject->getEntity_id() . "- No image";
-                    Mage::log($log, null, 'product_sync.log', true);
-                } elseif ($productId !== false) {
-                    $iProductObject->setCreate_product_status(2)->save();
-                    $iProductObject->setInventory_status(2)->save();
-                    $iProductObject->setCost_status(2)->save();
-                    $iProductObject->setPrice_status(2)->save();
-                    $log = 'not create SKU [' . $iProductObject->getSku() . '] ID [' . $iProductObject->getEntity_id() . "] - Product Id already exist";
-                    Mage::log($log, null, 'product_sync.log', true);
                 } else {
                     $iProductObject->setCreate_product_status(2)->save();
                     $iProductObject->setInventory_status(2)->save();
                     $iProductObject->setCost_status(2)->save();
                     $iProductObject->setPrice_status(2)->save();
-                    $log = 'not create SKU [' . $iProductObject->getSku() . '] ID ' . $iProductObject->getEntity_id() . "";
+                    if ($prodInfo->IsDiscontinued != false) {
+                        $log = 'not create ' . $iProductObject->getSku() . ' Discontinued';
+                    } elseif ($prodInfo->NumImages <= 0) {
+                        $log = 'not create ' . $iProductObject->getSku() . ' No image';
+                    } elseif ($productId !== false) {
+                        $log = 'not create ' . $iProductObject->getSku() . ' Product Id already exist';
+                    } elseif ($B1) {
+                        $log = 'not create ' . $iProductObject->getSku() . ' ' . $lastSku;
+                    } else {
+                        $log = 'not create ' . $iProductObject->getSku() . ' other reason ';
+                    }
                     Mage::log($log, null, 'product_sync.log', true);
                 }
             }
         }
         $time_elapsed_secs = microtime(true) - $start;
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "Create new products finished at: " . $importdate . " Done in " . round($time_elapsed_secs) . " seconds!";
+        $log = "Create new products finished at: " . $importdate . " Done in " . round($time_elapsed_secs) . " seconds!"."\n";
         Mage::log($log, null, 'product_sync.log', true);
     }
 
@@ -1046,25 +1027,25 @@ class Xcentia_Coster_Model_Observer
 
         $time_elapsed_secs = microtime(true) - $start;
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "Enabling coaster product finished at: " . $importdate . " Done in " . round($time_elapsed_secs) . " seconds!";
+        $log = "Enabling coaster product finished at: " . $importdate . " Done in " . round($time_elapsed_secs) . " seconds!"."\n";
         Mage::log($log, null, 'product_sync.log', true);
     }
 
     // This function updates the qty column in xcentia_coster/product table with the API.
-//>*/30 * * * *
+//>*/30 * * * * pricebusters.furniture/coster/product/syncCosterInventory?key=gorhdufzk
     public function syncCosterInventory()
     {
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "Inventory sync started at: " . $importdate;
+        $log = "sync started at: " . $importdate;
         Mage::log($log, null, 'inventory_sync.log', true);
 
         try {
             $cInventory = $this->_sendRequest('GetInventoryList');
-            $inventoryList = $cInventory[0]->InventoryList;
+            $inventoryList = $cInventory[1]->InventoryList;  //AT   0->TX
             for ($i = 0; $i < count($inventoryList); $i++) {
                 $cProduct = $inventoryList[$i];
                 $iProduct = Mage::getModel('xcentia_coster/product')->load($cProduct->ProductNumber, 'sku');
-                $qty = ($cProduct->QtyAvail > 0) ? $cProduct->QtyAvail : $cInventory[1]->InventoryList[$i]->QtyAvail;
+                $qty = ($cProduct->QtyAvail > 0) ? $cProduct->QtyAvail : $cInventory[0]->InventoryList[$i]->QtyAvail;
                 if ($iProduct->getSku() && $iProduct->qty != $qty) {
                     $iProduct->qty = $qty;
                     $iProduct->inventory_status = "1";
@@ -1072,7 +1053,7 @@ class Xcentia_Coster_Model_Observer
                 }
             }
             $importdate = date("d-m-Y H:i:s", strtotime("now"));
-            $log = "Inventory sync finished at: " . $importdate;
+            $log = "Inventory sync finished at: " . $importdate."\n";
             Mage::log($log, null, 'inventory_sync.log', true);
 
         } catch (Exception $e) {
@@ -1081,12 +1062,12 @@ class Xcentia_Coster_Model_Observer
     }
 
     // This function updates the product qty in magento with the xcentia_coster/product table.
-//*/10 * * * *
+//*/10 * * * *    https://pricebusters.furniture/coster/product/updateInventory?key=gorhdufzk
     public function updateInventory()
     {
         $start = microtime(true);
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "Update Inventory started at: " . $importdate;
+        $log = "started at: " . $importdate;
         Mage::log($log, null, 'inventory_sync.log', true);
 
         $iProducts = Mage::getModel('xcentia_coster/product')
@@ -1099,20 +1080,20 @@ class Xcentia_Coster_Model_Observer
                 $iProductObject = Mage::getModel('xcentia_coster/product')->load($iProduct->getId());
                 $sku = $iProductObject->getSku();
                 $qty = $iProductObject->getQty();
+                $iProductObject->setInventory_status(0)->save();
                 $updateProduct = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
                 if (!$updateProduct) {
-                    $iCStatus=$iProductObject->getCreate_product_status();
-                    $log = 'No Product ' . $sku . ' qty:' . $qty . ' Create_product_status:' .$iCStatus ;
+                    $iCStatus = $iProductObject->getCreate_product_status();
+                    $log = 'No Product ' . $sku . ' qty:' . $qty . ' Create_product_status:' . $iCStatus;
                     if ($iCStatus == "2") {
                         $log = $log . ' disabled';
                     } else if ($iCStatus == "1") {
                         $log = $log . ' yet not created,wait';
                     } else {
-                        $log = $log . ' recreate again ';
-                        $iProductObject->setCreate_product_status(1)->save();
+                        $log = $log . ' recreate again??? ';
+//                        $iProductObject->setCreate_product_status(1)->save();
                     }
                     Mage::log($log, null, 'inventory_sync.log', true);
-                    $iProductObject->setInventory_status(2)->save();
                     continue;
                 }
                 $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($updateProduct->getId());
@@ -1121,11 +1102,11 @@ class Xcentia_Coster_Model_Observer
                     $stockItem->setQty((int)$qty);
                     $stockItem->setIsInStock((int)((int)$qty > 0));
                     try {
+                        if ($updateProduct->getStatus(2))
                         $updateProduct->setStatus((int)((int)$qty > 0));
                         $updateProduct->save();
 
                         $stockItem->save();
-                        $iProductObject->setInventory_status(0)->save();
                         $log = 'updating ' . $sku . '-' . $qty;
                         Mage::log($log, null, 'inventory_sync.log', true);
                     } catch (Exception $e) {
@@ -1141,7 +1122,7 @@ class Xcentia_Coster_Model_Observer
         }
         $time_elapsed_secs = microtime(true) - $start;
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "Update Inventory finished at: " . $importdate . " Done in " . round($time_elapsed_secs) . " seconds!";
+        $log = "Update Inventory finished at: " . $importdate . " Done in " . round($time_elapsed_secs) . " seconds!\n";
         Mage::log($log, null, 'inventory_sync.log', true);
     }
 

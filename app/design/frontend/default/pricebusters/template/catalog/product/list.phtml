@@ -107,7 +107,7 @@ $_helper = $this->helper('catalog/output');
             <?php /* */ ?>
             <?php
             $item_per_page = 24;
-            $current_page = ($_GET['p']) ? $_GET['p'] : '1';
+            $current_page = (isset($_GET['p']) && $_GET['p']) ? $_GET['p'] : '1';
             $total_records = $_productCollection->getSize();
             $total_pages = ceil($total_records / $item_per_page);
             $currentUrl = Mage::helper('core/url')->getCurrentUrl();
@@ -187,7 +187,7 @@ $_helper = $this->helper('catalog/output');
                 <label>Sort By</label>
                 <?php
                 parse_str($url->getQuery(), $sort_query1);
-                $set_sort = ($sort_query1['order']) ? $sort_query1['order'] : '';
+                $set_sort = (isset($sort_query1['order']) && $sort_query1['order']) ? $sort_query1['order'] : '';
                 unset($sort_query1['dir']);
                 unset($sort_query1['order']);
                 if (!empty($sort_query1)) {
@@ -208,8 +208,8 @@ $_helper = $this->helper('catalog/output');
                 </select>
                 <?php
                 parse_str($url->getQuery(), $sort_query);
-                $set_sort_order = ($sort_query['order']) ? $sort_query['order'] : 'price';
-                $set_sort_arrow = ($sort_query['dir']) ? $sort_query['dir'] : 'asc';
+                $set_sort_order = (isset($sort_query['order']) && $sort_query['order']) ? $sort_query['order'] : 'price';
+                $set_sort_arrow = (isset($sort_query['dir']) && $sort_query['dir']) ? $sort_query['dir'] : 'asc';
                 unset($sort_query['dir']);
                 unset($sort_query['order']);
                 if (!empty($sort_query)) {
@@ -273,7 +273,7 @@ $_helper = $this->helper('catalog/output');
         <?php /* */ ?>
         <?php
         $item_per_page = 24;
-        $current_page = ($_GET['p']) ? $_GET['p'] : '1';
+        $current_page = (isset($_GET['p']) && $_GET['p']) ? $_GET['p'] : '1';
         $total_records = $_productCollection->getSize();
         $total_pages = ceil($total_records / $item_per_page);
         $currentUrl = Mage::helper('core/url')->getCurrentUrl();
@@ -350,7 +350,7 @@ $_helper = $this->helper('catalog/output');
             <label>Sort By</label>
             <?php
             parse_str($url->getQuery(), $sort_query1);
-            $set_sort = ($sort_query1['order']) ? $sort_query1['order'] : '';
+            $set_sort = (isset($sort_query1['order']) && $sort_query1['order']) ? $sort_query1['order'] : '';
             unset($sort_query1['dir']);
             unset($sort_query1['order']);
             if (!empty($sort_query1)) {
@@ -371,8 +371,8 @@ $_helper = $this->helper('catalog/output');
             </select>
             <?php
             parse_str($url->getQuery(), $sort_query);
-            $set_sort_order = ($sort_query['order']) ? $sort_query['order'] : 'price';
-            $set_sort_arrow = ($sort_query['dir']) ? $sort_query['dir'] : 'asc';
+            $set_sort_order = (isset($sort_query['order']) && $sort_query['order']) ? $sort_query['order'] : 'price';
+            $set_sort_arrow = (isset($sort_query['dir']) && $sort_query['dir']) ? $sort_query['dir'] : 'asc';
             unset($sort_query['dir']);
             unset($sort_query['order']);
             if (!empty($sort_query)) {

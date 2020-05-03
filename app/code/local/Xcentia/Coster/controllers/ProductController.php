@@ -220,7 +220,7 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
 	}
 
     public function synccosterproductsAction() {
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
             Mage::getModel('xcentia_coster/observer')->syncCosterProducts();
             echo "Done!";
         }else{
@@ -229,7 +229,7 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     public function synccosterinventoryAction() {
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
             Mage::getModel('xcentia_coster/observer')->syncCosterInventory();
             echo "Done!";
         }else{
@@ -238,7 +238,7 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     public function synccostercostAction() {
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
             Mage::getModel('xcentia_coster/observer')->syncCosterCost();
             echo "Done!";
         }else{
@@ -247,7 +247,7 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     public function synccosterexceptionpriceAction() {
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
             Mage::getModel('xcentia_coster/observer')->syncCosterExceptionPrice();
             echo "Done!";
         }else{
@@ -256,7 +256,7 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     public function updateInventoryAction() {
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
             Mage::getModel('xcentia_coster/observer')->updateInventory();
             echo "Done!";
         }else{
@@ -265,7 +265,7 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     public function updateproductpriceAction() {
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
             Mage::getModel('xcentia_coster/observer')->updateProductPrice();
             echo "Done!";
         }else{
@@ -274,7 +274,7 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     public function updatefreeshippingperproductAction() {
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
             Mage::getModel('xcentia_coster/observer')->updateFreeShippingPerProduct();
             echo "Done!";
         }else{
@@ -283,7 +283,7 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     public function createnewproductAction() {
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
             Mage::getModel('xcentia_coster/observer')->createNewProduct();
             echo "Done!";
         }else{
@@ -292,7 +292,7 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     public function enablescoasterproductsAction() {
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
             Mage::getModel('xcentia_coster/observer')->enablesCoasterProducts();
             echo "Done!";
         }else{
@@ -302,12 +302,12 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
 
 
     //This function reset the state to 0
-    //http://pricebusters.local/index.php/coster/product/resetstate?key=QUqAOPybkj
+    //http://pricebusters.local/index.php/coster/product/resetstate?key=gorhdufzk
     public function resetstateAction(){
 
         $start = microtime(true);
 
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
 
             $iProducts = Mage::getModel('xcentia_coster/product')
                 ->getCollection();
@@ -327,12 +327,12 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     //This function reset the Create_product_status to 0
-    //http://pricebusters.local/index.php/coster/product/reset_create_product_status?key=QUqAOPybkj
+    //http://pricebusters.local/index.php/coster/product/reset_create_product_status?key=gorhdufzk
     public function reset_create_product_statusAction(){
 
         $start = microtime(true);
 
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
 
             $iProducts = Mage::getModel('xcentia_coster/product')
                 ->getCollection();
@@ -352,12 +352,12 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     //This function set coaster products
-    //http://pricebusters.local/index.php/coster/product/setcoasterproduct?key=QUqAOPybkj
+    //http://pricebusters.local/index.php/coster/product/setcoasterproduct?key=gorhdufzk
     public function setcoasterproductAction(){
 
         $start = microtime(true);
 
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
 
             $iProducts = Mage::getModel('xcentia_coster/product')
                 ->getCollection()
@@ -399,12 +399,12 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
     //This function reset the update_product_status to 0
-    //http://pricebusters.local/index.php/coster/product/reset_update_product_status?key=QUqAOPybkj
+    //http://pricebusters.local/index.php/coster/product/reset_update_product_status?key=gorhdufzk
     public function reset_update_product_statusAction(){
 
         $start = microtime(true);
 
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
 
             $iProducts = Mage::getModel('xcentia_coster/product')
                 ->getCollection();
@@ -424,12 +424,12 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
     }
 
 
-    //http://pricebusters.local/index.php/coster/product/setshippingprice?key=QUqAOPybkj
+    //http://pricebusters.local/index.php/coster/product/setshippingprice?key=gorhdufzk
     public function setshippingpriceAction(){
 
         $start = microtime(true);
 
-        if($this->getRequest()->getParam('key') == "QUqAOPybkj"){
+        if($this->getRequest()->getParam('key') == "gorhdufzk"){
 
             $iProducts = Mage::getModel('xcentia_coster/product')
                 ->getCollection()
