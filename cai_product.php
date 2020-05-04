@@ -8,7 +8,7 @@ Mage::app();
 
 print_r (date('d-m-Y h:i:s a') . ' >> Started ....<br>');
 
-$sku='215761QB1';
+$sku='301091KE';
 $curProduct = Mage::getModel('catalog/product')->loadByAttribute('sku',$sku);
 //print_r($curProduct->getStatus());
 print_r($curProduct->getData());

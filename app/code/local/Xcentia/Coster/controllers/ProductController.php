@@ -31,6 +31,16 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
 
     const MARGIN      = '1.92';
 
+    //https://pricebusters.furniture/coster/product/coster?sku=CB60RT
+    public function costerAction() {
+        $sku=$this->getRequest()->getParam('sku');
+        $iProduct = Mage::getModel('xcentia_coster/product')->load($sku, 'sku');
+//        echo "qty".$iProduct->qty;
+//        echo "  inventory_status:".$iProduct->inventory_status;
+        print_r($iProduct->getData());
+//        $proObj->content = json_encode($product);
+//        $proObj->save();
+    }
 
     public function testAction() {
         $iproducts = Mage::getModel('xcentia_coster/product')
@@ -72,7 +82,8 @@ class Xcentia_Coster_ProductController extends Mage_Core_Controller_Front_Action
 		Mage::getModel('xcentia_coster/observer')->getProducts();
         echo 'hello'; exit;
 	}
-	public function recreateAction() {
+
+  	public function recreateAction() {
 	    echo 'hello'; exit;
 	    die;
 	    Mage::getModel('xcentia_coster/observer')->updateProducts();
