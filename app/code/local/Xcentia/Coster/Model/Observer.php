@@ -27,12 +27,12 @@ class Xcentia_Coster_Model_Observer
 
     const MARGIN = '1.92';
     const SHIPPING_RATE = '150';
-    const Init_Status='6';
-    const Created_Status='5';
-    const Price_Status='4';
-    const Qty_Status='3';
-    const Enable_Status='1';
-    const Disable_Status='0';
+    const Init_Status = '6';
+    const Created_Status = '5';
+    const Price_Status = '4';
+    const Qty_Status = '3';
+    const Enable_Status = '1';
+    const Disable_Status = '0';
 
 
     public function getProducts()
@@ -655,18 +655,22 @@ class Xcentia_Coster_Model_Observer
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
         $log = "Cost sync started at: " . $importdate;
         Mage::log($log, null, 'price_sync.log', true);
+        $cn=0;
         try {
             $cPriceList = $this->_sendRequest('GetPriceList?customernumber=16998');
             foreach ($cPriceList[0]->PriceList as $cProduct) {
                 $iProduct = Mage::getModel('xcentia_coster/product')->load($cProduct->ProductNumber, 'sku');
-                if ($iProduct->getSku() && $iProduct->cost != $cProduct->Price  && $iProduct->status<self::Init_Status) {
+                if ($iProduct->getSku() && abs($iProduct->cost-$cProduct->Price)>1 && $iProduct->status < self::Init_Status) {
+                    $log = $iProduct->cost."->" . $cProduct->Price;
+                    Mage::log($log, null, 'price_sync.log', true);
                     $iProduct->cost = $cProduct->Price;
-                    $iProduct->cost_status = "1";
+                    $iProduct->cost_status = "3";
                     $iProduct->save();
+                    $cn++;
                 }
             }
             $importdate = date("d-m-Y H:i:s", strtotime("now"));
-            $log = "Cost sync finished at: " . $importdate . "\n";
+            $log = "sync finished cn: ".$cn."  at: " . $importdate . "\n";
             Mage::log($log, null, 'price_sync.log', true);
 
         } catch (Exception $e) {
@@ -679,47 +683,54 @@ class Xcentia_Coster_Model_Observer
     {
         $start = microtime(true);
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
-        $log = "started at: " . $importdate;
+        $log = "-----------------------started at: " . $importdate;
         Mage::log($log, null, 'price_sync.log', true);
 
         $iProducts = Mage::getModel('xcentia_coster/product')
             ->getCollection()
-            ->addFieldToFilter('cost_status', '1')
+            ->addFieldToFilter('cost_status', '3')
             ->setPageSize(500)
             ->setCurPage(1);
         try {
+            Mage::register('isSecureArea', true);
             if ($iProducts->getSize() > 0) {
+                $log = "getSize " . $iProducts->getSize();
+                Mage::log($log, null, 'price_sync.log', true);
                 foreach ($iProducts as $iProduct) {
                     $iProductObject = Mage::getModel('xcentia_coster/product')->load($iProduct->getId());
                     $sku = $iProductObject->getSku();
                     if ($sku) {
                         $price = $iProductObject->getCost() * self::MARGIN;
                         $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
-                        if ($product && $product->getPrice() != $price) {
-                            $product->setPrice($price);
-
-                            $log = 'updating price ' . $sku . ' $' . $price;
-                            Mage::log($log, null, 'price_sync.log', true);
-
+                        if ($product) {
+//                            if (abs($product->getPrice()-0.1)>1)
+//                                continue;
                             $iProductObject->setCost_status(0)->save();
-
+                            $log = 'updating price ' . $sku . ' $' . $product->getPrice() . '-> $' . $price;
+                            $product->setPrice($price);
                             if ($iProductObject->status == self::Created_Status) { //init
                                 $iProductObject->setStatus(self::Price_Status)->save(); //Inventory Updates Init.
-                            } else if ($iProductObject->status == self::Qty_Status){
+                            } else if ($iProductObject->status == self::Qty_Status) {
                                 if ($product->getStatus() < 2) {
                                     $product->setStatus((int)((int)$iProductObject->qty > 0));
                                 }
                                 $iProductObject->setStatus((int)((int)$iProductObject->qty > 0))->save();
                             }
                             $product->save();
+                        } else {
+                            $log = '----------------no Product will remove iProduct ' . $sku;
+                            $iProductObject->delete();
                         }
+                    } else {
+                        $log = '----------------no SKU ' . $sku;
                     }
+                    Mage::log($log, null, 'price_sync.log', true);
                 }
             }
+            Mage::unregister('isSecureArea');
         } catch (Exception $e) {
             Mage::logException($e);
         }
-
         $time_elapsed_secs = microtime(true) - $start;
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
         $log = "finished at: " . $importdate . " Done in " . round($time_elapsed_secs) . " seconds!" . "\n";
@@ -733,13 +744,16 @@ class Xcentia_Coster_Model_Observer
         $importdate = date("d-m-Y H:i:s", strtotime("now"));
         $log = "Sync started at: " . $importdate;
         Mage::log($log, null, 'product_sync.log', true);
+        $cn=0;
         try {
             $cProducts = $this->_sendRequest('GetProductList');
             Mage::register('isSecureArea', true);
             foreach ($cProducts as $cProduct) {
                 $sku = $cProduct->ProductNumber;
+                $lastSku = substr($sku, -2);
+                $B1 = ($lastSku == "B1" || $lastSku == "B2" || $lastSku == "B3") ? true : false;
                 $iProduct = Mage::getModel('xcentia_coster/product')->load($sku, 'sku');
-                if (!$iProduct->getSku() && !$cProduct->IsDiscontinued) {
+                if (!$iProduct->getSku() && !$cProduct->IsDiscontinued && $cProduct->NumImages > 0 && !$B1) {
                     $iProduct->sku = $sku;
                     $iProduct->content = json_encode($cProduct);
                     $iProduct->create_product_status = "1";
@@ -749,10 +763,10 @@ class Xcentia_Coster_Model_Observer
                     $iProduct->state = "1";
                     $iProduct->status = self::Init_Status;  //init
                     $iProduct->save();
-
+                    $cn++;
                     $log = "New iProduct: " . $sku;
                     Mage::log($log, null, 'product_sync.log', true);
-                } else if ($iProduct->getSku() && $cProduct->IsDiscontinued) {
+                } else if ($iProduct->getSku() && ($cProduct->IsDiscontinued || $cProduct->NumImages == 0 || $B1)) {
                     $log = "Delete: " . $sku;
                     Mage::log($log, null, 'product_sync.log', true);
                     $iProduct->delete();
@@ -763,7 +777,7 @@ class Xcentia_Coster_Model_Observer
             }
 
             $importdate = date("d-m-Y H:i:s", strtotime("now"));
-            $log = "Product sync finished at: " . $importdate . "\n";
+            $log = "sync finished cn:".$cn." at: " . $importdate . "\n";
             Mage::log($log, null, 'product_sync.log', true);
 
         } catch (Exception $e) {
@@ -834,7 +848,6 @@ class Xcentia_Coster_Model_Observer
 
                     $description .= 'Model Number: ' . $iProductObject->getSku() . '<br />';
 
-
                     if ($prodInfo->MeasurementList[0]->Width && $prodInfo->MeasurementList[0]->Length && $prodInfo->MeasurementList[0]->Height) {
                         $description .= 'Dimensions: Width: ' . $prodInfo->MeasurementList[0]->Width . '  x  Depth: ' . $prodInfo->MeasurementList[0]->Length . '  x  Height: ' . $prodInfo->MeasurementList[0]->Height . '<br />';
                     }
@@ -891,6 +904,7 @@ class Xcentia_Coster_Model_Observer
                             'qty' => (int)$iProductObject->getQty()
                         )
                     );
+                    $noImage=false;
                     foreach ($images as $n => $image) {
                         if (file_exists($path . $image)) {
                             if ($n == 1)
@@ -900,9 +914,16 @@ class Xcentia_Coster_Model_Observer
                             $log = $path . $image;
                             Mage::log($log, null, 'product_sync.log', true);
                         } else {
+                            $noImage=true;
                             Mage::log("no image", null, 'product_sync.log', true);
                         }
                     }
+                    if ($noImage){
+                        $log = 'no Image ' . $iProductObject->getSku() . ' will be recreate---------';
+                        Mage::log($log, null, 'product_sync.log', true);
+                        continue;
+                    }
+
                     //echo '<pre>'; print_r($product); die('OK');
                     try {
                         $iProductObject->setCreate_product_status(0)->save();
@@ -924,7 +945,7 @@ class Xcentia_Coster_Model_Observer
                     if ($prodInfo->IsDiscontinued != false) {
                         $log = 'not create ' . $iProductObject->getSku() . ' Discontinued';
                     } elseif ($prodInfo->NumImages <= 0) {
-                        $log = 'not create ' . $iProductObject->getSku() . ' No image';
+                        $log = 'not create ' . $iProductObject->getSku() . 'NumImages=0';
                     } elseif ($productId !== false) {
                         $log = 'not create ' . $iProductObject->getSku() . ' Product Id already exist';
                     } elseif ($B1) {
@@ -957,7 +978,7 @@ class Xcentia_Coster_Model_Observer
                 $cProduct = $inventoryList[$i];
                 $iProduct = Mage::getModel('xcentia_coster/product')->load($cProduct->ProductNumber, 'sku');
                 $qty = ($cProduct->QtyAvail > 0) ? $cProduct->QtyAvail : $cInventory[0]->InventoryList[$i]->QtyAvail;
-                if ($iProduct->getSku() && $iProduct->qty != $qty && $iProduct->status<self::Init_Status) {
+                if ($iProduct->getSku() && $iProduct->qty != $qty && $iProduct->status < self::Init_Status) {
                     $iProduct->qty = $qty;
                     $iProduct->inventory_status = "1";
                     $iProduct->save();
@@ -1008,7 +1029,7 @@ class Xcentia_Coster_Model_Observer
 
                         if ($iProductObject->status == self::Created_Status) { //init
                             $iProductObject->setStatus(self::Qty_Status)->save(); //Inventory Updates Init.
-                        } else if ($iProductObject->status != self::Qty_Status){
+                        } else if ($iProductObject->status != self::Qty_Status) {
                             if ($updateProduct->getStatus() < 2) {
                                 $updateProduct->setStatus((int)((int)$qty > 0));
                             }

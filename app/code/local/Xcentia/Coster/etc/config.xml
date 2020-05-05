@@ -156,7 +156,7 @@
                 <run><model>xcentia_coster/observer::syncCosterCost</model></run>
             </xcentia_coster_sync_coster_cost>
             <xcentia_coster_update_product_price>
-                <schedule><cron_expr>0 */2 * * *</cron_expr></schedule>
+                <schedule><cron_expr>0/40 * * * *</cron_expr></schedule>
                 <run><model>xcentia_coster/observer::updateProductPrice</model></run>
             </xcentia_coster_update_product_price>
             <!--<xcentia_coster_sync_exeption_price>-->

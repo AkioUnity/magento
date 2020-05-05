@@ -44,7 +44,6 @@ try {
         foreach ($productList as $pList) {
             // SKU Matched, so we will start the Image URL Fetching
             $sku = $pList->ProductNumber;
-            $product = Mage::getModel('catalog/product')->loadByAttribute('sku', $sku);
             $prodNums['prodSku'] = $sku;
             $prodImages = array();
             for ($i = 1; $i <= $pList->NumImages; $i++) {

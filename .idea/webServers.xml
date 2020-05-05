@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="ede80a79-3606-413e-86d9-e577fdae0a96" name="pricebusters.furniture" url="http://pricebusters.furniture">
-        <fileTransfer host="pricebusters.furniture" port="21" rootFolder="/public_html">
+      <webServer id="ede80a79-3606-413e-86d9-e577fdae0a96" name="pricebusters.furniture" url="http://50.28.16.243">
+        <fileTransfer host="50.28.16.243" port="21" rootFolder="/public_html">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
           </advancedOptions>
