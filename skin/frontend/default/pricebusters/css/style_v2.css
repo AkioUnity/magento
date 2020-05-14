@@ -3891,6 +3891,13 @@ h1.SpecialPrice.onlyprice {
     display: none;
 }
 
+.sco .special-price {
+    display: none;
+}
+
+.sco .old-price .price {
+    display: initial;
+}
 
 .dropdown-menu {
     left: 17px;

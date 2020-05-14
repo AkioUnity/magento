@@ -1023,10 +1023,10 @@ class Xcentia_Coster_Model_Observer
                 }
                 $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($updateProduct->getId());
                 if ($stockItem->getId() > 0 and $stockItem->getManageStock()) {
+                    $log = 'updating ' . $sku . ' '.$stockItem->getQty(). ' -> ' . $qty;
                     $stockItem->setQty((int)$qty);
                     $stockItem->setIsInStock((int)((int)$qty > 0));
                     try {
-
                         if ($iProductObject->status == self::Created_Status) { //init
                             $iProductObject->setStatus(self::Qty_Status)->save(); //Inventory Updates Init.
                         } else if ($iProductObject->status != self::Qty_Status) {
@@ -1035,11 +1035,8 @@ class Xcentia_Coster_Model_Observer
                             }
                             $iProductObject->setStatus((int)((int)$qty > 0))->save();
                         }
-
                         $updateProduct->save();
-
                         $stockItem->save();
-                        $log = 'updating ' . $sku . ' ' . $qty;
                         Mage::log($log, null, 'inventory_sync.log', true);
                     } catch (Exception $e) {
                         $log = "\n" . 'Exception [' . $sku . '] - [' . $qty . "]\n";
