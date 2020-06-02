@@ -46,6 +46,7 @@
                 <styleSheet>css/magestore/storepickup/gmapfooter.css</styleSheet>
             </action>
             <action method="addJs">
+                <script>jquery/jquery-ui.js</script>
                 <script>magestore/storepickupcheckout.js</script>
             </action>
             <action method="addCss">

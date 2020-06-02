@@ -33,8 +33,8 @@
 ?>
 
 <?php
-    $methods = $this->getMethods();
-    $oneMethod = count($methods) <= 1;
+$methods = $this->getMethods();
+$oneMethod = count($methods) <= 1;
 ?>
 <?php if (empty($methods)): ?>
     <dt>
@@ -43,23 +43,33 @@
 <?php else:
     foreach ($methods as $_method):
         $_code = $_method->getCode();
-?>
-    <dt id="dt_method_<?php echo $_code ?>">
-    <?php if(!$oneMethod): ?>
-        <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->escapeHtml($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio" />
-    <?php else: ?>
-        <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
-        <?php $oneMethod = $_code; ?>
+        ?>
+
+        <img src="<?php echo $this->getSkinUrl('images/credit_card.png') ?>" alt="<?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?>" style="width:40%;" />
+
+        <dt id="dt_method_<?php echo $_code ?>">
+            <?php if (!$oneMethod): ?>
+                <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio"
+                       name="payment[method]" title="<?php echo $this->escapeHtml($_method->getTitle()) ?>"
+                       onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if ($this->getSelectedMethodCode() == $_code): ?> checked="checked"<?php endif; ?>
+                       class="radio"/>
+            <?php else: ?>
+                <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>"
+                                                type="radio" name="payment[method]" checked="checked"
+                                                class="radio"/></span>
+                <?php $oneMethod = $_code; ?>
+            <?php endif; ?>
+            <label for="p_method_<?php echo $_code ?>">
+                <?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?><?php echo $this->getMethodLabelAfterHtml($_method) ?>
+            </label>
+        </dt>
+        <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
+        <dd id="dd_method_<?php echo $_code ?>">
+            <?php echo $html; ?>
+        </dd>
     <?php endif; ?>
-        <label for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
-    </dt>
-    <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
-    <dd id="dd_method_<?php echo $_code ?>">
-        <?php echo $html; ?>
-    </dd>
-    <?php endif; ?>
-<?php endforeach;
-    endif;
+    <?php endforeach;
+endif;
 ?>
 <?php echo $this->getChildChildHtml('additional'); ?>
 <script type="text/javascript">
@@ -68,6 +78,6 @@
     payment.init();
     <?php if (is_string($oneMethod)): ?>
     payment.switchMethod('<?php echo $oneMethod ?>');
-        <?php endif; ?>
+    <?php endif; ?>
     //]]>
 </script>
